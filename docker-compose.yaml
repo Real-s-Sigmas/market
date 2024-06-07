@@ -1,0 +1,44 @@
+version: '3.8'
+
+services:
+  adminer:
+  flask-app:
+    build:
+      context: ./server
+      dockerfile: Dockerfile
+    container_name: flask-app
+    ports: 
+      - "8081:80"
+    networks:
+      - netw
+    environment:
+      - PASSWORD_PG=ApdzIpc28gFvYMYu
+      - PORT_PG=5432
+      - HOST_PG=postgres-db
+      - USER_PG=postgres
+    #   - MEDIA=/app/media
+    #   - AVATAR=/app/avatar
+    # volumes:
+    #   - ./media:/app/media
+    #   - ./avatar:/app/avatar
+      
+  postgres-db:
+    image: postgres:latest
+    container_name: postgres-db
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: postgres
+    ports:
+      - "5432:5432"
+    networks:
+      - netw
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+
+networks:
+  netw:
+    driver: bridge
+
+volumes:
+  postgres-data:
