@@ -11,7 +11,7 @@ export default {
 <template>
     <div class="header">
         <div class="div-ob logo-title">
-            <div class="logo"></div>
+            <img src="../assets/icons/logo.svg" width="50" alt="">
             <p class="title">Строительство и Ремонт</p>
         </div>
         <ul>
