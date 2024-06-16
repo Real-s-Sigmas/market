@@ -1,0 +1,24 @@
+<script>
+export default {
+    data() {
+        return {
+
+        }
+    }
+}
+</script>
+
+<template>
+    <div class="footer">
+
+    </div>
+</template>
+
+<style>
+    .footer {
+        margin-top: 20px;
+        width: 100%;
+        height: 200px;
+        background-color: #9F9F9F;
+    }
+</style>

@@ -1,7 +1,17 @@
-<script></script>
+<script>
+import MainPage from './Main/MainPage.vue'
+import HeaderPage from './HeaderAndFooter/HeaderPage.vue'
+
+export default {
+  components: {
+    MainPage,
+    HeaderPage,
+  }
+}
+</script>
 
 <template>
-  <div
+  <!-- <div
     class="p-6 max-w-sm mx-auto bg-white rounded-xl shadow-lg flex items-center space-x-4 mt-7"
   >
     <div class="shrink-0">
@@ -15,7 +25,9 @@
       <div class="text-xl font-medium text-black">Market</div>
       <p class="text-slate-500">У вас новое сообщение!</p>
     </div>
-  </div>
+  </div> -->
+  <!-- <header-page></header-page> -->
+  <main-page></main-page>
 </template>
 
 <style scoped></style>
