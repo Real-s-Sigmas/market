@@ -182,6 +182,16 @@ export default {
 
     .ban-btn {
         position: absolute;
+
+        transition: all 100ms;
+    }
+
+    .ban-btn:hover {
+        background-color: #b9b9b9;
+    }
+
+    .ban-btn:active {
+        background-color: #a1a1a1;
     }
 
     .btn-left {
