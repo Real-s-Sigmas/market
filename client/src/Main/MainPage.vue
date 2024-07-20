@@ -47,7 +47,6 @@ export default {
 
 <template>
     <div class="main-page-window">
-        <header-page></header-page>
         <div class="search">
             <input type="text" name="" id="" class="search-inp">
             <button class="find-btn">Найти</button>
@@ -56,13 +55,16 @@ export default {
         <div class="category-and-banner">
             <div class="category">
                 <ul>
-                    <li class="categ-item">Электроинструменты</li>
+                    <li class="categ-item item-electro">Электроинструменты</li>
                     <!-- <li class="categ-item"></li> -->
                     <li class="categ-item">Ручные инструменты</li>
                     <li class="categ-item">Крепеж</li>
                     <li class="categ-item">Отделочные материалы</li>
                     <li class="categ-item">Тепловые пушки</li>
                 </ul>
+            </div>
+            <div class="categories-visible">
+                
             </div>
             <div class="banner">
                 <button class="ban-btn btn-left" @click="minus"><</button>
@@ -71,7 +73,6 @@ export default {
             </div>
         </div>
     </div>
-    <footer-page></footer-page>
 </template>
 
 <style>
@@ -131,7 +132,9 @@ export default {
         display: flex;
         align-items: center;
         justify-content: center;
-        gap: 200px;
+        gap: 150px;
+
+        position: relative;
 
         width: 100%;
         height: 750px;
@@ -179,6 +182,19 @@ export default {
     .banner img {
         width: 841px;
     }
+
+    .categories-visible {
+        width: 1150px;
+        height: 750px;
+        background-color: #fff;
+        position: absolute;
+        left: 350px;
+        z-index: 0;
+    }
+
+    
+
+
 
     .ban-btn {
         position: absolute;
