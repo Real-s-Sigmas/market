@@ -370,6 +370,7 @@
 
         .search {
             gap: 10px;
+            height: 80px;
         }
     }
 
