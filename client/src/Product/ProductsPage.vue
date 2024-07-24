@@ -9,6 +9,9 @@
 </script>
 
 <template>
+    <div class="dark" v-if="this.isOpen">
+
+    </div>
     <div class="main-page-window">
         <div class="search">
             <input type="text" name="" id="" class="search-inp">
@@ -16,21 +19,9 @@
         </div>
 
         <div class="category-and-products">
-            <div class="category" v-if="!this.isOpen">
+            <div class="category" :class="{'open': this.isOpen}">
                 <ul>
-                    <button @click="this.isOpen = !this.isOpen"><img src="../assets/menu.svg" alt=""></button>
-                    <li class="categ-item item-electro">Электроинструменты</li>
-                    <!-- <li class="categ-item"></li> -->
-                    <li class="categ-item">Ручные инструменты</li>
-                    <li class="categ-item">Крепеж</li>
-                    <li class="categ-item">Отделочные материалы</li>
-                    <li class="categ-item">Тепловые пушки</li>
-                </ul>
-            </div>
-
-            <div class="category-sm" v-if="this.isOpen">
-                <ul>
-                    <button @click="this.isOpen = !this.isOpen"><img src="../assets/menu.svg" alt=""></button>
+                    <button @click="this.isOpen = !this.isOpen" :class="{'btn-open': this.isOpen}"><img src="../assets/menu.svg" alt=""></button>
                     <li class="categ-item item-electro">Электроинструменты</li>
                     <!-- <li class="categ-item"></li> -->
                     <li class="categ-item">Ручные инструменты</li>
@@ -123,12 +114,22 @@
 
 <style>
 
+    .dark {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        background-color: #000;
+        opacity: 0.4;
+        z-index: 51;
+
+    }
+
     .margin-products {
         margin-left: 2.90%;
     }
 
     .main-page-window {
-        margin: 0 50px 0 50px;
+        margin: 0 20px 0 20px;
         display: flex;
         flex-direction: column;
 
@@ -212,6 +213,7 @@
     .category ul {
         display: flex;
         flex-direction: column;
+        
         gap: 5px;
 
         margin-top: 10px;
@@ -241,7 +243,7 @@
         width: 100%;
         height: 100%;
         /* border: 3px solid #000; */
-        padding-top: 40px;
+        padding-top: 10px;
         
         display: flex;
         flex-wrap: wrap;
@@ -277,53 +279,74 @@
         border-radius: 12px;
     }
 
-    .category-sm {
-        display: flex;
-        justify-content: center;
-        color: #fff;
-
+    .category.open {
+        margin-left: -30px;
+        border-radius: 15px;
+        padding: 10px 40px 0 10px;
+        width: 250px;
         position: absolute;
-        z-index: 52;
 
-        padding: 10px 20px 0 20px;
-
-        width: 170px;
-        height: 750px;
-        background-color: #FF812C;
-        /* border: 2px solid #FF812C; */
-        border-radius: 0 12px 12px 0;
-        margin-left: -50px;
-
-        transition: all 400ms;
     }
+
+    .btn-open {
+        position: absolute;
+        margin-left: 180px !important;
+        margin-top: -10px;
+        
+
+    }
+
+    
 
     @media (min-width: 800px) {
         .category button {
             display: none;
+
         }
     }
 
     @media (max-width: 800px) {
-        .category li {
+        /* .category li {
             display: none;
+        } */
+
+        
+
+        .category button {
+            margin-left: 200px;
+            position: absolute;
         }
 
-        .category {
-            margin-left: -50px;
-            padding: 0;
-            width: 50px;
-            border-radius: 0 15px 15px 0;
+        /* .btn-open {
+            margin-left: 20px   ;
+        } */
 
-            transition: all 400ms;
-            
+        .category {
+            margin-left: -270px;
+            padding: 0;
+            /* width: 50px; */
+            border-radius: 0 10px 15px 0;
+            position: absolute;
+            z-index: 52;
+
+            transition: all 400ms;   
         }
 
         .cards {
-            gap: 20px;
+            gap: 70px;
+            justify-content: center;
         }
         
         .category-and-products {
             gap: 20px;
+        }
+
+        .products {
+            margin-left: 40px;
+        }
+
+        .products h2 {
+            font-size: 30px;
         }
 
         .prod-card {
@@ -343,6 +366,37 @@
         .btn-price {
             height: 30px;
             font-size: 20px;
+        }
+
+        .search {
+            gap: 10px;
+        }
+    }
+
+    @media (max-width: 650px) {
+        .prod-card {
+            width: 190px;
+            height: 260px;
+        }
+
+        .prod-card img {
+            width: 190px;
+            height: 280px;
+        }
+
+        .cards {
+            padding-top: 0;
+        }
+    }
+
+    @media (max-width: 530px) {
+        .prod-card {
+            width: 160px;
+            height: 220px;
+        }
+
+        .cards {
+            gap: 10px;
         }
     }
 

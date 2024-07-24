@@ -2,14 +2,14 @@
 export default {
     data() {
         return {
-
+            isOpen: false,
         }
     }
 }
 </script>
 
 <template>
-    <div class="header">
+    <div class="header" :class="{'open': this.isOpen}">
         <div class="div-ob logo-title">
             <img src="../assets/icons/logo.svg" width="50" alt="">
             <p class="title">Строительство и Ремонт</p>
@@ -27,6 +27,9 @@ export default {
             <button class="acc">Войти</button>
         </div>
     </div>
+    <div class="btn-top">
+        <button @click="this.isOpen = !this.isOpen"><img src="../assets/menuTop.svg" alt=""></button>
+    </div>
 </template>
 
 <style>
@@ -40,12 +43,21 @@ export default {
         border-bottom: 2px solid #000;
 
         padding: 0 20px 0 20px;
+
+        transition: all 300ms;
+
     }
 
     .header ul {
         /* margin-left: 450px; */
         display: flex;
         gap: 100px;
+    }
+
+    .btn-top {
+        display: flex;
+        justify-content: end;
+        padding-right: 20px;
     }
 
     .title {
@@ -101,4 +113,48 @@ export default {
         align-items: center;
     }
 
+    .open {
+        margin-top: 0px !important;
+    }
+
+    @media (min-width: 800px) {
+        .btn-top {
+            display: none;
+        }
+    }
+
+    @media (max-width: 800px) {
+        .header {
+            margin-top: -220px;
+            flex-direction: column;
+            align-items: start;
+            height: 200px;
+            gap: 10px;
+            border-bottom: none;
+
+            transition: all 300ms;
+            
+            /* padding-bottom: 50px; */
+            /* background-color: #FF812C; */
+        }
+
+        .header ul {
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .header li, p {
+            font-size: 22px;
+        }
+
+        .btn-top {
+            margin-top: 30px;
+        }
+    }
+
+    /* @media (max-width: 700px) {
+        .header ul {
+            gap: 20px;
+        }
+    } */
 </style>
