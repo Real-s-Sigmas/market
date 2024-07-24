@@ -14,13 +14,14 @@ export default {
             <img src="../assets/icons/logo.svg" width="50" alt="">
             <p class="title">Строительство и Ремонт</p>
         </div>
-        <ul>
-            <li class="header-link"><a href="#!">Главная</a></li>
-            <li class="header-link"><a href="#!">О нас</a></li>
-        </ul>
+        <div class="links">
+
+            <button class="link-btn"><a class="header-link" href="#!">Главная</a></button>
+            <button class="link-btn"><a class="header-link" href="#!">О нас</a></button>
+        </div>
         <div class="div-ob fav-acc">
             <a href="#!">
-                <svg class="favorite" width="25px" height="25px" viewBox="0 0 24 24" fill="white" xmlns="http://www.w3.org/2000/svg">
+                <svg class="favorite" width="35px" height="35px" viewBox="0 0 24 24" fill="white" xmlns="http://www.w3.org/2000/svg">
                 <path fill-rule="evenodd" clip-rule="evenodd" d="M12 6.00019C10.2006 3.90317 7.19377 3.2551 4.93923 5.17534C2.68468 7.09558 2.36727 10.3061 4.13778 12.5772C5.60984 14.4654 10.0648 18.4479 11.5249 19.7369C11.6882 19.8811 11.7699 19.9532 11.8652 19.9815C11.9483 20.0062 12.0393 20.0062 12.1225 19.9815C12.2178 19.9532 12.2994 19.8811 12.4628 19.7369C13.9229 18.4479 18.3778 14.4654 19.8499 12.5772C21.6204 10.3061 21.3417 7.07538 19.0484 5.17534C16.7551 3.2753 13.7994 3.90317 12 6.00019Z" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
             </a>
 
@@ -48,10 +49,32 @@ export default {
 
     }
 
-    .header ul {
+    .links {
         /* margin-left: 450px; */
         display: flex;
-        gap: 100px;
+        gap: 300px;
+    }
+    
+    .link-btn {
+        width: 160px;
+        height: 50px;
+
+        border-radius: 12px;
+
+        transition: all 100ms;
+    }
+
+    .link-btn a {
+        font-size: 22px;
+    }
+
+    .link-btn:hover {
+        background-color: #262626;
+        color: #fff;
+    }
+
+    .link-btn:active {
+        background-color: #191919
     }
 
     .btn-top {
@@ -61,7 +84,9 @@ export default {
     }
 
     .title {
+        font-weight: 700;
         margin-left: 20px;
+        font-size: 25px;
     }
 
     .logo {
@@ -73,10 +98,12 @@ export default {
     }
 
     .acc {
-        width: 100px;
-        height: 35px;
+        width: 160px;
+        height: 50px;
         border-radius: 12px;
         border: 2px solid #FF812C;
+
+        font-size: 22px;
 
         transition: all 100ms;
     }
@@ -92,7 +119,7 @@ export default {
     }
 
     .fav-acc a {
-        margin-right: 20px;
+        margin-right: 40px;
     }
 
     .fav-acc svg {
@@ -123,9 +150,25 @@ export default {
         }
     }
 
+    @media (max-width: 950px) {
+        .header ul {
+            gap: 40px;
+        }
+
+        .fav-acc a {
+            margin-right: 10px;
+        }
+    }
+
+    @media (max-width: 830px) {
+        .header ul {
+            gap: 25px;
+        }
+    }
+
     @media (max-width: 800px) {
         .header {
-            margin-top: -220px;
+            margin-top: -230px;
             flex-direction: column;
             align-items: start;
             height: 200px;
@@ -148,7 +191,7 @@ export default {
         }
 
         .btn-top {
-            margin-top: 30px;
+            margin-top: 35px;
         }
     }
 
