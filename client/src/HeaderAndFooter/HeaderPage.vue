@@ -144,9 +144,22 @@ export default {
         margin-top: 0px !important;
     }
 
+    
     @media (min-width: 800px) {
         .btn-top {
             display: none;
+        }
+    }
+    
+    @media (max-width: 1230px) {
+        .links {
+            gap: 30px;
+        }
+    }
+
+    @media (max-width: 900px) {
+        .links {
+            gap: 10px;
         }
     }
 
@@ -181,13 +194,13 @@ export default {
             /* background-color: #FF812C; */
         }
 
-        .header ul {
+        .links {
             flex-direction: column;
             gap: 15px;
         }
 
-        .header li, p {
-            font-size: 22px;
+        .link-btn {
+            width: 100px;
         }
 
         .btn-top {
