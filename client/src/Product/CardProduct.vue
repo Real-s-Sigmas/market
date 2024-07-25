@@ -196,6 +196,71 @@
                         </select>
                     </div>
                 </div>
+
+                <!-- Блок с отзываом покупателя -->
+                <div class="comment-cont">
+                    <h4 class="user-name">Имя пользователя</h4>
+                    <div class="user-text">
+                        <!-- Отзыв покупателя -->
+                        <textarea class="user-comment" readonly></textarea>
+
+                        <!-- Оценка покупателя -->
+                        <p class="star">Оценка: 
+                                    <img src="../assets/star-full.svg" alt="">
+                                    <img src="../assets/star-full.svg" alt="">
+                                    <img src="../assets/star-full.svg" alt="">
+                                    <img src="../assets/star-full.svg" alt="">
+                                    <img src="../assets/star-empty.svg" alt="">
+                        </p>
+                    </div>
+
+                    <h4 class="user-name">Имя пользователя</h4>
+                    <div class="user-text">
+                        <!-- Отзыв покупателя -->
+                        <textarea class="user-comment" readonly></textarea>
+
+                        <!-- Оценка покупателя -->
+                        <p class="star">Оценка: 
+                                    <img src="../assets/star-full.svg" alt="">
+                                    <img src="../assets/star-full.svg" alt="">
+                                    <img src="../assets/star-full.svg" alt="">
+                                    <img src="../assets/star-full.svg" alt="">
+                                    <img src="../assets/star-empty.svg" alt="">
+                        </p>
+                    </div>
+
+                    <h4 class="user-name">Имя пользователя</h4>
+                    <div class="user-text">
+                        <!-- Отзыв покупателя -->
+                        <textarea class="user-comment" readonly></textarea>
+
+                        <!-- Оценка покупателя -->
+                        <p class="star">Оценка: 
+                                    <img src="../assets/star-full.svg" alt="">
+                                    <img src="../assets/star-full.svg" alt="">
+                                    <img src="../assets/star-full.svg" alt="">
+                                    <img src="../assets/star-full.svg" alt="">
+                                    <img src="../assets/star-empty.svg" alt="">
+                        </p>
+                    </div>
+
+                    <h4 class="user-name">Имя пользователя</h4>
+                    <div class="user-text">
+                        <!-- Отзыв покупателя -->
+                        <textarea class="user-comment" readonly></textarea>
+
+                        <!-- Оценка покупателя -->
+                        <p class="star">Оценка: 
+                                    <img src="../assets/star-full.svg" alt="">
+                                    <img src="../assets/star-full.svg" alt="">
+                                    <img src="../assets/star-full.svg" alt="">
+                                    <img src="../assets/star-full.svg" alt="">
+                                    <img src="../assets/star-empty.svg" alt="">
+                        </p>
+                    </div>
+                </div>
+
+                
             </div>
         </div>
     </div>
@@ -224,7 +289,9 @@
     user-select: text;
     padding: 0 20px 0 20px;
 
-    overflow-x: hidden;    
+    overflow-x: hidden;
+    overflow-y: hidden;
+
 }
 
 .product-info {
@@ -561,7 +628,7 @@
     padding: 0 30px 60px 30px;
 
     width: 100%;
-    height: 2000px;  /* Изменить на auto*/ 
+    height: 1500px;  /* Изменить на auto*/ 
 }
 
 .feedback-cont h2 {
@@ -681,9 +748,15 @@
 /* Другие отзывы */
 
 .other-comments {
+    display: flex;
+    flex-direction: column;
+    gap: 35px;
+
+    overflow-y: auto;
+
     width: 100%;
-    height: 500px;
-    border: 1px solid #000;
+    height: 1000px;
+    /* border: 1px solid #000; */
 }
 
 .title-sort {
@@ -697,11 +770,142 @@
 
     color: #fff;
     background-color: #262626;
-    border: 1px solid #000; 
     border-radius: 12px;
-    width: auto;
+    max-width: auto;
     height: 50px;
     padding: 2px 10px 2px 10px;
+}
+
+
+
+
+/* Блок с отзывом покупателя */
+
+.comment-cont {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+
+    
+    
+    width: 100%;
+    height: 300px;
+    /* border: 1px solid #000; */
+}
+
+.user-name {
+    font-size: 26px;
+    padding: 0 5px 0 5px;
+    width: 244px;
+    border: 2px solid #000;
+    border-radius: 12px;
+}
+
+.user-text {
+    padding: 5px;
+    height: 320px;
+    border: 2px solid #000;
+    border-radius: 12px;
+
+    margin-bottom: 20px;
+    
+
+}
+
+.user-comment {
+    width: 100%;
+    height: 230px;
+    padding: 5px;
+
+    font-size: 24px;
+}
+
+.user-comment:focus {
+    outline: none
+}
+
+
+
+
+
+/* АДАПТИВКА */
+
+@media (max-width: 1600px) {
+    .star-price-sum-order-fav {
+        justify-content: start;
+        gap: 250px;
+    }
+
+    .short-description {
+        width: 100%;
+    }
+
+}
+
+@media (max-width: 1500px) {
+    .star-price-sum-order-fav {
+        gap: 100px
+    }
+
+    .sum {
+        align-items: start;
+    }
+
+    .order-fav {
+        margin-top: -40px;
+    }
+
+    .short-description {
+        font-size: 24px;
+    }
+}
+
+@media (max-width: 1355px) {
+    .star-price-sum-order-fav {
+        gap: 50px;
+    }
+}
+
+@media (max-width: 1300px) {
+    .anc-link {
+        font-size: 24px;
+    }
+
+    .star {
+        font-size: 24px
+    }
+
+    .price {
+        font-size: 24px;
+        width: 200px;
+    }
+
+    .sum {
+        height: 50px;
+    }
+
+    .order-fav {
+        margin-top: 10px;
+    }
+
+    .order button {
+        width: 200px;
+        height: 70px;
+        font-size: 24px
+    }
+
+    .fav {
+        width: 70px;
+        height: 70px;
+    }
+
+    .star-price-sum-order-fav {
+        gap: 0;
+    }
+
+    .star-price {
+        width: 300px;
+    }
 }
 
 </style>
