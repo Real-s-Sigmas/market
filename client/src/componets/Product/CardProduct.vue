@@ -101,7 +101,7 @@
         
         <!-- Блок с информацией о товара (с картинкой) -->
         <div class="product-info">
-            <img class="prod-img"src="../assets/shup.png" alt="">
+            <img class="prod-img"src="../../assets/shup.png" alt="">
 
             <!-- Бллок с информацией о товаре -->
             <div class="main-info">
@@ -132,10 +132,10 @@
                         <div class="sum">
                             <p>Количество: </p>
                             <div class="buts-count">
-                                <button @click="plus" class="plus-btn"><img src="../assets/Plus.svg" alt=""></button>
+                                <button @click="plus" class="plus-btn"><img src="../../assets/Plus.svg" alt=""></button>
                                 <!-- input проверяет, чтобы в поле вводились только числа -->
                                 <input @input="checkCount" v-model="product_count" class="count"  onkeyup="this.value = this.value.replace(/[^\d]/g,'');">
-                                <button @click="minus" class="minus-btn"><img src="../assets/minus.svg" alt=""></button>
+                                <button @click="minus" class="minus-btn"><img src="../../assets/minus.svg" alt=""></button>
                             </div>
                         </div>
 

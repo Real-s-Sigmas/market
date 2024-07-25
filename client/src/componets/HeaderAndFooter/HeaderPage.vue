@@ -11,7 +11,7 @@ export default {
 <template>
     <div class="header" :class="{'open': this.isOpen}">
         <div class="div-ob logo-title">
-            <img src="../assets/icons/logo.svg" width="50" alt="">
+            <img src="../../assets/icons/logo.svg" width="50" alt="">
             <p class="title">Строительство и Ремонт</p>
         </div>
         <div class="links">
@@ -29,7 +29,7 @@ export default {
         </div>
     </div>
     <div class="btn-top">
-        <button @click="this.isOpen = !this.isOpen"><img src="../assets/menu.svg" alt=""></button>
+        <button @click="this.isOpen = !this.isOpen"><img src="../../assets/menu.svg" alt=""></button>
     </div>
 </template>
 

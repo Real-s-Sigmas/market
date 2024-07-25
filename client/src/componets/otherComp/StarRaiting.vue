@@ -31,7 +31,7 @@
             @mouseleave="showCurrentRating(0)"
             @click="setCurrentSelectedRating(n)">
             
-                <img src="../assets/star-empty.svg" alt="">
+                <img src="../../assets/star-empty.svg" alt="">
         
         </span>
     </div>
@@ -44,9 +44,9 @@
 }
 
 .filled {
-    background: url('../assets/star-full.svg') no-repeat;
+    background: url('../../assets/star-full.svg') no-repeat;
 }
 .empty {
-    background: url('../assets/star-empty.svg') no-repeat;
+    background: url('../../assets/star-empty.svg') no-repeat;
 }
 </style>
