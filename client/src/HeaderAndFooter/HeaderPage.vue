@@ -29,7 +29,7 @@ export default {
         </div>
     </div>
     <div class="btn-top">
-        <button @click="this.isOpen = !this.isOpen"><img src="../assets/menuTop.svg" alt=""></button>
+        <button @click="this.isOpen = !this.isOpen"><img src="../assets/menu.svg" alt=""></button>
     </div>
 </template>
 
@@ -181,7 +181,7 @@ export default {
 
     @media (max-width: 800px) {
         .header {
-            margin-top: -230px;
+            margin-top: -260px;
             flex-direction: column;
             align-items: start;
             height: 200px;
@@ -201,10 +201,18 @@ export default {
 
         .link-btn {
             width: 100px;
+            text-align: start;
+            padding: 0 5px 0 5px;
         }
 
         .btn-top {
-            margin-top: 35px;
+            margin-top: 75px;
+        }
+
+        .btn-top button {
+            background-color: #191919;
+            padding: 5px;
+            border-radius: 12px;
         }
     }
 
