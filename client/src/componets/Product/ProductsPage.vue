@@ -1,404 +1,327 @@
 <script>
-    export default {
-        data() {
-            return {
-                isOpen: false,
-            }
-        }
-    }
+import ProductComp from "./ProductComp.vue";
+export default {
+  data() {
+    return {
+      isOpen: false,
+    };
+  },
+  components: {
+    ProductComp,
+  },
+};
 </script>
 
 <template>
-    <div class="dark" v-if="this.isOpen">
-
+  <div class="dark" v-if="this.isOpen"></div>
+  <div class="main-page-window">
+    <div class="search">
+      <input type="text" name="" id="" class="search-inp" />
+      <button class="find-btn">Найти</button>
     </div>
-    <div class="main-page-window">
-        <div class="search">
-            <input type="text" name="" id="" class="search-inp">
-            <button class="find-btn">Найти</button>
+
+    <div class="category-and-products">
+      <div class="category" :class="{ open: this.isOpen }">
+        <ul>
+          <button
+            @click="this.isOpen = !this.isOpen"
+            :class="{ 'btn-open': this.isOpen }"
+          >
+            <img src="../../assets/menu.svg" alt="" />
+          </button>
+          <li class="categ-item item-electro">Электроинструменты</li>
+          <!-- <li class="categ-item"></li> -->
+          <li class="categ-item">Ручные инструменты</li>
+          <li class="categ-item">Крепеж</li>
+          <li class="categ-item">Отделочные материалы</li>
+          <li class="categ-item">Тепловые пушки</li>
+        </ul>
+      </div>
+
+      <div class="products">
+        <h2>Название категории</h2>
+        <div class="cards">
+            <product-comp/>
         </div>
-
-        <div class="category-and-products">
-            <div class="category" :class="{'open': this.isOpen}">
-                <ul>
-                    <button @click="this.isOpen = !this.isOpen" :class="{'btn-open': this.isOpen}"><img src="../assets/menu.svg" alt=""></button>
-                    <li class="categ-item item-electro">Электроинструменты</li>
-                    <!-- <li class="categ-item"></li> -->
-                    <li class="categ-item">Ручные инструменты</li>
-                    <li class="categ-item">Крепеж</li>
-                    <li class="categ-item">Отделочные материалы</li>
-                    <li class="categ-item">Тепловые пушки</li>
-                </ul>
-            </div>
-
-            
-            <div class="products">
-                <h2>Название категории</h2>
-                <div class="cards">
-                    <div class="prod-card">
-                        <img src="../assets/shup.png" alt="">
-                        <h4 class="product-name">Название</h4>
-                        <button class="btn-price">Цена</button>
-                    </div>
-                    <div class="prod-card">
-                        <img src="../assets/shup.png" alt="">
-                        <h4 class="product-name">Название</h4>
-                        <button class="btn-price">Цена</button>
-                    </div>
-                    <div class="prod-card">
-                        <img src="../assets/shup.png" alt="">
-                        <h4 class="product-name">Название</h4>
-                        <button class="btn-price">Цена</button>
-                    </div>
-                    <div class="prod-card">
-                        <img src="../assets/shup.png" alt="">
-                        <h4 class="product-name">Название</h4>
-                        <button class="btn-price">Цена</button>
-                    </div>
-                    <div class="prod-card">
-                        <img src="../assets/shup.png" alt="">
-                        <h4 class="product-name">Название</h4>
-                        <button class="btn-price">Цена</button>
-                    </div>
-                    <div class="prod-card">
-                        <img src="../assets/shup.png" alt="">
-                        <h4 class="product-name">Название</h4>
-                        <button class="btn-price">Цена</button>
-                    </div>
-                    <div class="prod-card">
-                        <img src="../assets/shup.png" alt="">
-                        <h4 class="product-name">Название</h4>
-                        <button class="btn-price">Цена</button>
-                    </div>
-                    <div class="prod-card">
-                        <img src="../assets/shup.png" alt="">
-                        <h4 class="product-name">Название</h4>
-                        <button class="btn-price">Цена</button>
-                    </div>
-                    <div class="prod-card">
-                        <img src="../assets/shup.png" alt="">
-                        <h4 class="product-name">Название</h4>
-                        <button class="btn-price">Цена</button>
-                    </div>
-                    <div class="prod-card">
-                        <img src="../assets/shup.png" alt="">
-                        <h4 class="product-name">Название</h4>
-                        <button class="btn-price">Цена</button>
-                    </div>
-                    <div class="prod-card">
-                        <img src="../assets/shup.png" alt="">
-                        <h4 class="product-name">Название</h4>
-                        <button class="btn-price">Цена</button>
-                    </div>
-                    <div class="prod-card">
-                        <img src="../assets/shup.png" alt="">
-                        <h4 class="product-name">Название</h4>
-                        <button class="btn-price">Цена</button>
-                    </div>
-                    <div class="prod-card">
-                        <img src="../assets/shup.png" alt="">
-                        <h4 class="product-name">Название</h4>
-                        <button class="btn-price">Цена</button>
-                    </div>
-                    <div class="prod-card">
-                        <img src="../assets/shup.png" alt="">
-                        <h4 class="product-name">Название</h4>
-                        <button class="btn-price">Цена</button>
-                    </div>
-
-                </div>
-            </div>
-        </div>
+      </div>
     </div>
+  </div>
 </template>
 
 <style>
+.dark {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background-color: #000;
+  opacity: 0.4;
+  z-index: 51;
+}
 
-    .dark {
-        position: absolute;
-        width: 100%;
-        height: 100%;
-        background-color: #000;
-        opacity: 0.4;
-        z-index: 51;
+.margin-products {
+  margin-left: 2.9%;
+}
 
-    }
+.main-page-window {
+  margin: 0 20px 0 20px;
+  display: flex;
+  flex-direction: column;
 
-    .margin-products {
-        margin-left: 2.90%;
-    }
+  user-select: none;
+}
 
-    .main-page-window {
-        margin: 0 20px 0 20px;
-        display: flex;
-        flex-direction: column;
+.search {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 60px;
 
-        user-select: none;
-    }
+  width: 100%;
+  height: 100px;
 
-    .search {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        gap: 60px;
+  /* Убрать потом */
+  /* border: 2px solid #000; */
+}
 
-        width: 100%;
-        height: 100px;
-        
-        /* Убрать потом */
-        /* border: 2px solid #000; */
-    }
-    
-    .search-inp {
-        outline: none;
-        border: 2px solid #FF812C;
-        border-radius: 12px;
-        padding: 0 20px 0 20px;
+.search-inp {
+  outline: none;
+  border: 2px solid #ff812c;
+  border-radius: 12px;
+  padding: 0 20px 0 20px;
 
-        width: 800px;
-        height: 42px;
-    }
+  width: 800px;
+  height: 42px;
+}
 
-    .find-btn {
-        border: 2px solid #FF812C;
-        border-radius: 12px;
-        
-        width: 100px;
-        height: 42px;
-        
-        transition: all 100ms;
-    }
+.find-btn {
+  border: 2px solid #ff812c;
+  border-radius: 12px;
 
-    .find-btn:hover {
-        background-color: #FF812C;
-        color: #fff;
-    }
+  width: 100px;
+  height: 42px;
 
-    .find-btn:active {
-        background-color: #d95700;
-        border-color: #d95700;
-    }
-    
+  transition: all 100ms;
+}
 
-    .category-and-products {
-        display: flex;
-        align-items: center;
-        /* justify-content: center; */
-        gap: 60px;
+.find-btn:hover {
+  background-color: #ff812c;
+  color: #fff;
+}
 
-        position: relative;
+.find-btn:active {
+  background-color: #d95700;
+  border-color: #d95700;
+}
 
-        width: 100%;
-        height: 750px;
-        /* border: 2px solid #000; */
-    }
+.category-and-products {
+  display: flex;
+  align-items: center;
+  /* justify-content: center; */
+  gap: 60px;
 
-    .category {
-        display: flex;
-        justify-content: center;
-        color: #fff;
+  position: relative;
 
-        padding: 0 20px 0 20px;
+  width: 100%;
+  height: 750px;
+  /* border: 2px solid #000; */
+}
 
-        width: 300px;
-        height: 750px;
-        background-color: #FF812C;
-        /* border: 2px solid #FF812C; */
-        border-radius: 12px;
+.category {
+  display: flex;
+  justify-content: center;
+  color: #fff;
 
-        transition: all 400ms;
+  padding: 0 20px 0 20px;
 
-    }
+  width: 300px;
+  height: 750px;
+  background-color: #ff812c;
+  /* border: 2px solid #FF812C; */
+  border-radius: 12px;
 
-    .category ul {
-        display: flex;
-        flex-direction: column;
-        
-        gap: 5px;
+  transition: all 400ms;
+}
 
-        margin-top: 10px;
-    }
+.category ul {
+  display: flex;
+  flex-direction: column;
 
-    .categ-item {
-        cursor: pointer;
-        font-size: 16px;
-    }
+  gap: 5px;
 
-    .products {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        gap: 40px;
-        width: 100%;
-        height: 100%;
-        /* border: 3px solid #000; */
-    }
+  margin-top: 10px;
+}
 
-    .products h2 {
-        width: 100%;
-        font-size: 45px;
-    }
+.categ-item {
+  cursor: pointer;
+  font-size: 16px;
+}
 
-    .cards {
-        width: 100%;
-        height: 100%;
-        /* border: 3px solid #000; */
-        padding-top: 10px;
-        
-        display: flex;
-        flex-wrap: wrap;
-        gap: 40px;
+.products {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 40px;
+  width: 100%;
+  height: 100%;
+  /* border: 3px solid #000; */
+}
 
-        overflow-y: scroll;
-    }
+.products h2 {
+  width: 100%;
+  font-size: 45px;
+}
 
-    .prod-card {
-        width: 260px;
-        height: 330px;
-        /* border: 3px solid #000; */
+.cards {
+  width: 100%;
+  height: 100%;
+  /* border: 3px solid #000; */
+  padding-top: 10px;
 
-        display: flex;
-        flex-direction: column;
-    }
+  display: flex;
+  flex-wrap: wrap;
+  gap: 40px;
 
-    .prod-card img {
-        width: 300px;
-        height: 255px;
-    }
+  overflow-y: scroll;
+}
 
-    .product-name {
-        font-size: 30px;
-        color: #505050;
-    }
+.prod-card {
+  width: 260px;
+  height: 330px;
+  /* border: 3px solid #000; */
 
-    .btn-price {
-        color: #fff;
-        background-color: #FF812C;
-        height: 50px;
-        font-size: 30px;
-        border-radius: 12px;
-    }
+  display: flex;
+  flex-direction: column;
+}
 
-    .category.open {
-        margin-left: -30px;
-        border-radius: 15px;
-        padding: 10px 40px 0 10px;
-        width: 250px;
-        position: absolute;
+.prod-card img {
+  width: 300px;
+  height: 255px;
+}
 
-    }
+.product-name {
+  font-size: 30px;
+  color: #505050;
+}
 
-    .btn-open {
-        position: absolute;
-        margin-left: 180px !important;
-        margin-top: -10px;
-        
+.btn-price {
+  color: #fff;
+  background-color: #ff812c;
+  height: 50px;
+  font-size: 30px;
+  border-radius: 12px;
+}
 
-    }
+.category.open {
+  margin-left: -30px;
+  border-radius: 15px;
+  padding: 10px 40px 0 10px;
+  width: 250px;
+  position: absolute;
+}
 
-    
+.btn-open {
+  position: absolute;
+  margin-left: 180px !important;
+  margin-top: -10px;
+}
 
-    @media (min-width: 800px) {
-        .category button {
-            display: none;
+@media (min-width: 800px) {
+  .category button {
+    display: none;
+  }
+}
 
-        }
-    }
-
-    @media (max-width: 800px) {
-        /* .category li {
+@media (max-width: 800px) {
+  /* .category li {
             display: none;
         } */
 
-        
+  .category button {
+    margin-left: 200px;
+    position: absolute;
+  }
 
-        .category button {
-            margin-left: 200px;
-            position: absolute;
-        }
-
-        /* .btn-open {
+  /* .btn-open {
             margin-left: 20px   ;
         } */
 
-        .category {
-            margin-left: -270px;
-            padding: 0;
-            /* width: 50px; */
-            border-radius: 0 10px 15px 0;
-            position: absolute;
-            z-index: 52;
+  .category {
+    margin-left: -270px;
+    padding: 0;
+    /* width: 50px; */
+    border-radius: 0 10px 15px 0;
+    position: absolute;
+    z-index: 52;
 
-            transition: all 400ms;   
-        }
+    transition: all 400ms;
+  }
 
-        .cards {
-            gap: 70px;
-            justify-content: center;
-        }
-        
-        .category-and-products {
-            gap: 20px;
-        }
+  .cards {
+    gap: 70px;
+    justify-content: center;
+  }
 
-        .products {
-            margin-left: 40px;
-        }
+  .category-and-products {
+    gap: 20px;
+  }
 
-        .products h2 {
-            font-size: 30px;
-        }
+  .products {
+    margin-left: 40px;
+  }
 
-        .prod-card {
-            width: 250px;
-            height: 300px;
-        }
+  .products h2 {
+    font-size: 30px;
+  }
 
-        .prod-card img {
-            width: 250px;
-            height: 300px;
-        }
+  .prod-card {
+    width: 250px;
+    height: 300px;
+  }
 
-        .product-name {
-            font-size: 20px;
-        }
+  .prod-card img {
+    width: 250px;
+    height: 300px;
+  }
 
-        .btn-price {
-            height: 30px;
-            font-size: 20px;
-        }
+  .product-name {
+    font-size: 20px;
+  }
 
-        .search {
-            gap: 10px;
-            height: 80px;
-        }
-    }
+  .btn-price {
+    height: 30px;
+    font-size: 20px;
+  }
 
-    @media (max-width: 650px) {
-        .prod-card {
-            width: 190px;
-            height: 260px;
-        }
+  .search {
+    gap: 10px;
+    height: 80px;
+  }
+}
 
-        .prod-card img {
-            width: 190px;
-            height: 280px;
-        }
+@media (max-width: 650px) {
+  .prod-card {
+    width: 190px;
+    height: 260px;
+  }
 
-        .cards {
-            padding-top: 0;
-        }
-    }
+  .prod-card img {
+    width: 190px;
+    height: 280px;
+  }
 
-    @media (max-width: 530px) {
-        .prod-card {
-            width: 160px;
-            height: 220px;
-        }
+  .cards {
+    padding-top: 0;
+  }
+}
 
-        .cards {
-            gap: 10px;
-        }
-    }
+@media (max-width: 530px) {
+  .prod-card {
+    width: 160px;
+    height: 220px;
+  }
 
+  .cards {
+    gap: 10px;
+  }
+}
 </style>

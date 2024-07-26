@@ -1,6 +1,6 @@
 <script>
-import HeaderPage from '../HeaderAndFooter/HeaderPage.vue';
-import FooterPage from '../HeaderAndFooter/FooterPage.vue'
+import HeaderPage from '../reuse/HeaderPage.vue';
+import FooterPage from '../reuse/FooterPage.vue'
 
 export default {
     data() {

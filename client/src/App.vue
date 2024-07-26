@@ -1,9 +1,9 @@
 <script>
 import MainPage from './componets/Main/MainPage.vue'
-import HeaderPage from './componets/HeaderAndFooter/HeaderPage.vue'
-import FooterPage from './componets/HeaderAndFooter/FooterPage.vue'
+import HeaderPage from './componets/reuse/HeaderPage.vue'
+import FooterPage from './componets/reuse/FooterPage.vue'
 import ProductsPage from './componets/Product/ProductsPage.vue';
-import CardProduct from './componets/Product/CardProduct.vue'
+import CardProduct from './componets/Product/ProductPage.vue'
 import StarRaiting from './componets/otherComp/StarRaiting.vue'
 
 export default {
