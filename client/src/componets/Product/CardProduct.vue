@@ -218,11 +218,11 @@
 
                         <!-- Оценка покупателя -->
                         <p class="star">Оценка: 
-                                    <img src="../assets/star-full.svg" alt="">
-                                    <img src="../assets/star-full.svg" alt="">
-                                    <img src="../assets/star-full.svg" alt="">
-                                    <img src="../assets/star-full.svg" alt="">
-                                    <img src="../assets/star-empty.svg" alt="">
+                                    <img src="../../assets/star-full.svg" alt="">
+                                    <img src="../../assets/star-full.svg" alt="">
+                                    <img src="../../assets/star-full.svg" alt="">
+                                    <img src="../../assets/star-full.svg" alt="">
+                                    <img src="../../assets/star-empty.svg" alt="">
                         </p>
                     </div>
 
@@ -233,11 +233,11 @@
 
                         <!-- Оценка покупателя -->
                         <p class="star">Оценка: 
-                                    <img src="../assets/star-full.svg" alt="">
-                                    <img src="../assets/star-full.svg" alt="">
-                                    <img src="../assets/star-full.svg" alt="">
-                                    <img src="../assets/star-full.svg" alt="">
-                                    <img src="../assets/star-empty.svg" alt="">
+                                    <img src="../../assets/star-full.svg" alt="">
+                                    <img src="../../assets/star-full.svg" alt="">
+                                    <img src="../../assets/star-full.svg" alt="">
+                                    <img src="../../assets/star-full.svg" alt="">
+                                    <img src="../../assets/star-empty.svg" alt="">
                         </p>
                     </div>
 
@@ -248,11 +248,11 @@
 
                         <!-- Оценка покупателя -->
                         <p class="star">Оценка: 
-                                    <img src="../assets/star-full.svg" alt="">
-                                    <img src="../assets/star-full.svg" alt="">
-                                    <img src="../assets/star-full.svg" alt="">
-                                    <img src="../assets/star-full.svg" alt="">
-                                    <img src="../assets/star-empty.svg" alt="">
+                                    <img src="../../assets/star-full.svg" alt="">
+                                    <img src="../../assets/star-full.svg" alt="">
+                                    <img src="../../assets/star-full.svg" alt="">
+                                    <img src="../../assets/star-full.svg" alt="">
+                                    <img src="../../assets/star-empty.svg" alt="">
                         </p>
                     </div>
 
@@ -263,11 +263,11 @@
 
                         <!-- Оценка покупателя -->
                         <p class="star">Оценка: 
-                                    <img src="../assets/star-full.svg" alt="">
-                                    <img src="../assets/star-full.svg" alt="">
-                                    <img src="../assets/star-full.svg" alt="">
-                                    <img src="../assets/star-full.svg" alt="">
-                                    <img src="../assets/star-empty.svg" alt="">
+                                    <img src="../../assets/star-full.svg" alt="">
+                                    <img src="../../assets/star-full.svg" alt="">
+                                    <img src="../../assets/star-full.svg" alt="">
+                                    <img src="../../assets/star-full.svg" alt="">
+                                    <img src="../../assets/star-empty.svg" alt="">
                         </p>
                     </div>
                 </div>
