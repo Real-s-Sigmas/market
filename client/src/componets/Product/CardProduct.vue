@@ -105,7 +105,7 @@
 
             <!-- Бллок с информацией о товаре -->
             <div class="main-info">
-                <h3>{{ this.product.title }} dsdgdfgd</h3>
+                <h3>{{ this.product.title }}</h3>
 
                 <!-- Блок с коротким описанием товара -->
                 <p class="short-description">
@@ -183,7 +183,7 @@
                             @mouseleave="showCurrentRating(0)"
                             @click="setCurrentSelectedRating(n)">
                             
-                                <img src="../assets/star-empty.svg" alt="">
+                                <img src="../../assets/star-empty.svg" alt="">
                         
                         </span>
                     </div>
@@ -721,11 +721,11 @@
 }
 
 .filled {
-    background: url('../assets/star-full.svg') no-repeat;
+    background: url('../../assets/star-full.svg') no-repeat;
 }
 
 .empty {
-    background: url('../assets/star-empty.svg') no-repeat;
+    background: url('../../assets/star-empty.svg') no-repeat;
 }
 
 
