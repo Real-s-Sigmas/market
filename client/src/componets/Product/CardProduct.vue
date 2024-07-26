@@ -105,7 +105,7 @@
 
             <!-- Бллок с информацией о товаре -->
             <div class="main-info">
-                <h3>{{ this.product.title }}</h3>
+                <h3>{{ this.product.title }} dsdgdfgd</h3>
 
                 <!-- Блок с коротким описанием товара -->
                 <p class="short-description">

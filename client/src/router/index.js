@@ -7,6 +7,11 @@ const router = createRouter({
       name: 'home',
       component: () => import('../componets/Main/MainPage.vue')
     },
+    {
+      path: '/Product',
+      name: 'home',
+      component: () => import('../componets/Product/CardProduct.vue')
+    },
   ]
 })
 
