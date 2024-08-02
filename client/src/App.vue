@@ -7,8 +7,6 @@ import CardProduct from './componets/Product/ProductPage.vue'
 import StarRaiting from './componets/otherComp/StarRaiting.vue'
 import CategoryComp from './componets/reuse/CategoryComp.vue'
 
-
-
 export default {
   components: {
     MainPage,
@@ -35,4 +33,4 @@ export default {
   <footer-page></footer-page>
 </template>
 
-<style scoped></style>
+<style></style>

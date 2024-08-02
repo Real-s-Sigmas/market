@@ -52,7 +52,7 @@ export default {
   </div>
 </template>
 
-<style>
+<style scoped>
 .dark {
   position: absolute;
   width: 100%;

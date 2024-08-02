@@ -27,7 +27,7 @@ export default {
   </div>
 </template>
 
-<style>
+<style scoped>
 .category {
   display: flex;
   justify-content: center;
