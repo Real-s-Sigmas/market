@@ -94,7 +94,6 @@
         }
     }
 </script>
-
 <template>
     <!-- Главное окно -->
     <div class="main-page-window">
