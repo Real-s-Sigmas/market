@@ -1,13 +1,16 @@
 <script>
 import ProductComp from "./ProductComp.vue";
+import CategoryComp from '../reuse/CategoryComp.vue'
+
 export default {
   data() {
     return {
-      isOpen: false,
+      // isOpen: false,
     };
   },
   components: {
     ProductComp,
+    CategoryComp,
   },
 };
 </script>
@@ -21,7 +24,7 @@ export default {
     </div>
 
     <div class="category-and-products">
-      <div class="category" :class="{ open: this.isOpen }">
+      <!-- <div class="category" :class="{ open: this.isOpen }">
         <ul>
           <button
             @click="this.isOpen = !this.isOpen"
@@ -30,13 +33,14 @@ export default {
             <img src="../../assets/menu.svg" alt="" />
           </button>
           <li class="categ-item item-electro">Электроинструменты</li>
-          <!-- <li class="categ-item"></li> -->
           <li class="categ-item">Ручные инструменты</li>
           <li class="categ-item">Крепеж</li>
           <li class="categ-item">Отделочные материалы</li>
           <li class="categ-item">Тепловые пушки</li>
         </ul>
-      </div>
+      </div> -->
+
+      <category-comp></category-comp>
 
       <div class="products">
         <h2>Название категории</h2>
@@ -48,7 +52,7 @@ export default {
   </div>
 </template>
 
-<style>
+<style scoped>
 .dark {
   position: absolute;
   width: 100%;
@@ -63,6 +67,9 @@ export default {
 }
 
 .main-page-window {
+  width: 100%;
+  height: 100vh;
+
   margin: 0 20px 0 20px;
   display: flex;
   flex-direction: column;
@@ -75,6 +82,8 @@ export default {
   justify-content: center;
   align-items: center;
   gap: 60px;
+
+  margin-top: 20px;
 
   width: 100%;
   height: 100px;
@@ -115,17 +124,13 @@ export default {
 
 .category-and-products {
   display: flex;
-  align-items: center;
-  /* justify-content: center; */
   gap: 60px;
 
   position: relative;
 
   width: 100%;
-  height: 750px;
-  /* border: 2px solid #000; */
 }
-
+/*
 .category {
   display: flex;
   justify-content: center;
@@ -136,7 +141,6 @@ export default {
   width: 300px;
   height: 750px;
   background-color: #ff812c;
-  /* border: 2px solid #FF812C; */
   border-radius: 12px;
 
   transition: all 400ms;
@@ -154,7 +158,7 @@ export default {
 .categ-item {
   cursor: pointer;
   font-size: 16px;
-}
+} */
 
 .products {
   display: flex;
@@ -211,7 +215,7 @@ export default {
   border-radius: 12px;
 }
 
-.category.open {
+/* .category.open {
   margin-left: -30px;
   border-radius: 15px;
   padding: 10px 40px 0 10px;
@@ -223,38 +227,29 @@ export default {
   position: absolute;
   margin-left: 180px !important;
   margin-top: -10px;
-}
+} */
 
-@media (min-width: 800px) {
+/* @media (min-width: 800px) {
   .category button {
     display: none;
   }
-}
+} */
 
 @media (max-width: 800px) {
-  /* .category li {
-            display: none;
-        } */
-
-  .category button {
+  /* .category button {
     margin-left: 200px;
     position: absolute;
   }
 
-  /* .btn-open {
-            margin-left: 20px   ;
-        } */
-
   .category {
     margin-left: -270px;
     padding: 0;
-    /* width: 50px; */
     border-radius: 0 10px 15px 0;
     position: absolute;
     z-index: 52;
 
     transition: all 400ms;
-  }
+  } */
 
   .cards {
     gap: 70px;

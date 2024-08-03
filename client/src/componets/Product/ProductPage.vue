@@ -19,7 +19,7 @@
                     short_description: "Очень хороший аппарат, всем советую прям вообще во такой.ааааааааа аааааааа аааааааа аааааааа аааааааарааааа ааааааааааааа аааааабааааа",
                     price: "8 800",
                     full_desctiption: "Аппарат Шуруповерт сверлило 3000 ультра мега про макс, это не только ваша уверенность в том, что вы самодостаточный, гордый мужчина, это еще и проход (как метро люблино) в трусики любой уважающей себя даме. Как говориться мужчина рожден с дрелью в руках. Покажи всем свое величие. Жена ругается, что руки у тебя кривее чем волосы на жопе, а поправить ты можешь только свой вес и то в большую сторону? У нас есть для тебя решение: Шуруповерт сверлило 3000 ультра мега про макс. Купи этот крутейший аппарат и отдолби ее до потери сознания, докажи кто в доме маТчо!",
-                    rating_product: 4,
+                    rating_product: 3,
                 }
             }
         },
@@ -176,7 +176,7 @@
     
                     <!-- Выбор оценки -->
                     <div class="rate"><p>Оценка: </p>
-                        <span v-for="n in 5" :key="n"
+                        <span class='transition-all duration-200' v-for="n in 5" :key="n"
                             :class="['star', { filled: n <= (mouseOverRating || rating), empty: n > ( mouseOverRating || rating) }]"
                             @mouseover="showCurrentRating(n)"
                             @mouseleave="showCurrentRating(0)"
@@ -352,7 +352,7 @@
     font-weight: 700;
     color: #FF812C;
 
-    transition: all 100ms;
+    transition: all 200ms;
 }
 
 .anc-link:hover {
@@ -478,7 +478,7 @@
     background-color: #d9d9d9;
     font-size: 24px;
 
-    transition: all 100ms;
+    transition: all 200ms;
 }
 
 .buts-count button:hover {
@@ -534,7 +534,7 @@
 
     user-select: none;
 
-    transition: all 100ms;
+    transition: all 200ms;
 }
 
 .order button:hover {
@@ -560,7 +560,7 @@
     border: 2px solid #505050;
     border-radius: 12px;
 
-    transition: all 100ms;
+    transition: all 200ms;
 
     user-select: none;
 }
@@ -594,7 +594,7 @@
     background-color: #FF812C;
     border-radius: 12px;
 
-    transition: all 100ms;
+    transition: all 200ms;
 
     user-select: none;
 }
@@ -740,7 +740,7 @@
     color: #fff;
 
     border-radius: 12px;
-    transition: all 100ms;
+    transition: all 200ms;
     
     user-select: none;
 }

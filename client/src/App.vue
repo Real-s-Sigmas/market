@@ -5,6 +5,7 @@ import FooterPage from './componets/reuse/FooterPage.vue'
 import ProductsPage from './componets/Product/ProductsPage.vue';
 import CardProduct from './componets/Product/ProductPage.vue'
 import StarRaiting from './componets/otherComp/StarRaiting.vue'
+import CategoryComp from './componets/reuse/CategoryComp.vue'
 
 export default {
   components: {
@@ -14,6 +15,7 @@ export default {
     ProductsPage,
     CardProduct,
     StarRaiting,
+    CategoryComp,
   }
 }
 </script>
@@ -25,9 +27,10 @@ export default {
   <!-- <products-page></products-page> -->
   <!-- <card-product></card-product> -->
   <!-- <star-raiting></star-raiting> -->
-   <router-view/>
+  <!-- <category-comp></category-comp>  -->
+  <router-view/>
    
   <footer-page></footer-page>
 </template>
 
-<style scoped></style>
+<style></style>
