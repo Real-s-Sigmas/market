@@ -11,13 +11,12 @@ export default {
 <template>
     <div class="header" :class="{'open': this.isOpen}">
         <div class="div-ob logo-title cursor-pointer" @click="this.$router.push('/')">
-            <img src="../../assets/icons/logo.svg" width="50" alt="">
+            <img src="../../assets/icons/logo.svg" width="50" alt="СИР">
             <p class="title">Строительство и Ремонт</p>
         </div>
         <div class="links">
-
             <button class="link-btn" @click="this.$router.push('/')">Главная</button>
-            <button class="link-btn" @click="this.$router.push('/')">О нас</button>
+            <button class="link-btn" @click="this.$router.push('/about-us')">О нас</button>
         </div>
         <div class="div-ob fav-acc">
             <a href="#!">
@@ -29,6 +28,8 @@ export default {
         </div>
     </div>
     <div class="btn-top">
+        <img :class="{'opacity-0': isOpen}" class='transition-all duration-300' src="../../assets/icons/logo.svg" width="50" alt="СИР">
+        <!-- <span v-else></span> -->
         <button @click="this.isOpen = !this.isOpen"><img src="../../assets/menu.svg" alt=""></button>
     </div>
 </template>
@@ -79,8 +80,9 @@ export default {
 
     .btn-top {
         display: flex;
-        justify-content: end;
-        padding-right: 20px;
+        justify-content: space-between;
+        align-items: center;
+        padding: 0 20px 15px 20px;
     }
 
     .title {
@@ -146,7 +148,7 @@ export default {
 
     
     @media (min-width: 800px) {
-        .btn-top {
+        .btn-top img {
             display: none;
         }
     }
@@ -213,6 +215,10 @@ export default {
             background-color: #191919;
             padding: 5px;
             border-radius: 12px;
+        }
+
+        .btn-top {
+            border-bottom: 2px solid #000;
         }
     }
 

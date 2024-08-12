@@ -42,7 +42,7 @@ export default {
 <template>
     <div class="orders-container mx-10">
         <h2 class='mt-10 text-3xl font-bold'>Ваши заказы</h2>
-        <form @submit.prevent='' class='flex gap-8 mx-10 my-6'>
+        <form @submit.prevent='' class='flex gap-8 xl:mx-10 my-6'>
             <input class='w-full' >
             <button class="btn" type="submit">Найти</button>
         </form>
@@ -70,6 +70,31 @@ export default {
 
 
 <style scoped>
+@media (max-width: 800px) {
+    .info-card {
+        flex-direction: column;
+        position: relative;
+        gap: 0px;
+    }
+
+    .info-card img {
+        width: 100% !important;
+        height: 250px;
+    }
+
+    .info-container {
+        flex-direction: column;
+    }
+
+    .info-block span {
+        position: relative;
+    }
+
+    .actions {
+        justify-content: space-between
+    }
+}
+
 .order-btn {
     width: 200px;
     height: 50px;
