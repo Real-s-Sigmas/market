@@ -1,6 +1,7 @@
 <script>
 import HeaderPage from '../reuse/HeaderPage.vue';
 import FooterPage from '../reuse/FooterPage.vue'
+import CategoryComp from '../reuse/CategoryComp.vue'
 
 export default {
     data() {
@@ -16,6 +17,7 @@ export default {
     components: {
         HeaderPage,
         FooterPage,
+        CategoryComp,
     },
 
     methods: {
@@ -58,8 +60,15 @@ export default {
 
         <!-- Блок с категориями и баннером -->
         <div class="category-and-banner">
+
+            <!-- Блок с категориями -->
             <div class="category">
-                
+                <category-comp></category-comp>
+            </div>
+
+            <!-- Блок с баннером -->
+            <div class="banner">
+
             </div>
         </div>
     </div>
@@ -121,5 +130,23 @@ export default {
         .find-btn:active {
         background-color: #d95700;
         border-color: #d95700;
+    }
+
+
+    /* Категория и баннер */
+    .category-and-banner {
+        display: flex;
+        justify-content: space-between;
+
+    }
+
+
+    /* Блок с баннерoм */
+    .banner {
+        width: 400px;
+        height: 400px;
+        border: 1px solid #000;
+
+        margin-right: 200px;
     }
 </style>

@@ -47,6 +47,16 @@ const router = createRouter({
       name: "AddProduct",
       component: () => import("../componets/admin/AddProduct.vue"),
     },
+    {
+      path: "/Login",
+      name: "Login",
+      component: () => import("../componets/Forms/EmailPage.vue"),
+    },
+    {
+      path: "/EnterEmail",
+      name: "EnterEmail",
+      component: () => import("../componets/Forms/EnterPage.vue"),
+    },
 ],
 });
 
