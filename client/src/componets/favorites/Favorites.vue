@@ -19,7 +19,8 @@ export default {
                     description: `Чё то там`,
                     price: 52000,
                 },
-            ]
+            ],
+            title: ``,
         }
     },
 
@@ -40,6 +41,15 @@ export default {
                 }
             });
             this.loadProducts();
+        },
+
+        async findProducts() {
+            let res = await axios.get('/favorites/find-by-title', {
+                params: {
+                    title: this.title,
+                }
+            });
+            this.products = res.data;
         }
     }
 }
@@ -49,8 +59,8 @@ export default {
 <template>
     <div class="orders-container mx-10">
         <h2 class='mt-10 text-3xl font-bold'>Избранные товары</h2>
-        <form @submit.prevent='' class='flex gap-8 xl:mx-10 my-6'>
-            <input class='w-full' >
+        <form @submit.prevent='findProducts()' class='flex gap-8 xl:mx-10 my-6'>
+            <input class='w-full' v-model='title'>
             <button class="btn" type="submit">Найти</button>
         </form>
 
