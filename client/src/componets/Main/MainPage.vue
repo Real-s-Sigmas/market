@@ -66,7 +66,15 @@ export default {
 
             <!-- Блок с категориями -->
             <div class="category">
-                <category-comp></category-comp>
+                <ul>
+                    
+                    <li class="categ-item item-electro">Электроинструменты</li>
+                    <!-- <li class="categ-item"></li> -->
+                    <li class="categ-item">Ручные инструменты</li>
+                    <li class="categ-item">Крепеж</li>
+                    <li class="categ-item">Отделочные материалы</li>
+                    <li class="categ-item">Тепловые пушки</li>
+                </ul>
             </div>
 
             <!-- Блок с баннером -->
@@ -102,7 +110,7 @@ export default {
         gap: 60px;
 
         width: 100%;
-        height: 100px;
+        height: 55px;
 
         /* Убрать потом */
         /* border: 2px solid #000; */
@@ -207,6 +215,124 @@ export default {
 
         border-radius: 12px 0 0 12px;
         right: 6px;
+    }
+
+
+    /* Блок с категориями */
+
+    .category {
+        display: flex;
+        justify-content: center;
+        color: #fff;
+
+        margin-top: 10px;
+
+        padding: 0 5px 0 5px;
+
+        min-width: 250px;
+        height: 750px;
+        background-color: #ff812c;
+        /* border: 2px solid #FF812C; */
+        border-radius: 12px;
+
+        transition: all 400ms;
+
+
+    }
+
+    .category ul {
+        display: flex;
+        flex-direction: column;
+
+        gap: 5px;
+
+        margin-top: 10px;
+    }
+
+    .categ-item {
+        cursor: pointer;
+        font-size: 16px;
+    }
+
+
+    /* АДАПТИВКА */
+
+    @media (max-width: 1550px) {
+        .banner {
+            margin-right: 100px;
+        }
+    }
+
+    @media (max-width: 1450px) {
+        .left-btn {
+            border-left: 2px solid #000;
+            left: 0;
+        }
+
+        .right-btn {
+            border-right: 2px solid #000;
+            right: 0;
+        }
+    }
+
+    @media (max-width: 1060px) {
+        .search {
+            gap: 40px;
+            /* margin-right: 80px; */
+        }
+
+        .search-inp {
+            width: 600px;
+        }
+
+    }
+
+    @media (max-width: 1000px) {
+        .banner img {
+            width: 600px;
+            height: 585px;
+        }
+
+        .banner button {
+            width: 100px;
+            height: 70px;
+            font-size: 30px;
+        }
+    }
+
+    @media (max-width: 900px) {
+        .banner {
+            display: none;
+        }
+
+        .category {
+            width: 95%;
+        }
+
+        .category ul {
+            flex-direction: row;
+            gap: 20px;
+            flex-wrap: wrap;
+            justify-content: start;
+            height: 20px;
+        }
+    }
+
+
+    @media (max-width: 850px) {
+        .search {
+            width: 95%;
+        }
+
+        .search-inp {
+            width: 400px;
+        }
+    }
+
+    @media (max-width: 450px) {
+        .search {
+            gap: 10px;
+        }
     }
 
 </style>
