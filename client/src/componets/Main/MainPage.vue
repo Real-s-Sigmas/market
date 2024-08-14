@@ -8,7 +8,10 @@ export default {
         return {
             images: [
                 'src/assets/1111.jpeg',
-                'src/assets/112.jpg'
+                'src/assets/112.jpg',
+                'src/assets/123.webp',
+                'src/assets/124.webp',
+                'src/assets/125.webp',
             ],
             index: 0,
         }
@@ -34,7 +37,7 @@ export default {
             if (this.index > 0) {
                 this.index--;
             } else {
-                this.index = 1;
+                this.index = this.images.length-1;
             } 
         },
     },
@@ -68,7 +71,9 @@ export default {
 
             <!-- Блок с баннером -->
             <div class="banner">
-
+                <button class="left-btn" @click="minus"><</button>
+                <img :src="images[index]" alt="">
+                <button class="right-btn" @click="plus">></button>
             </div>
         </div>
     </div>
@@ -84,7 +89,8 @@ export default {
         flex-direction: column;
         
         width: 100%;
-        height: 100vh;
+        height: auto;
+
     }
 
 
@@ -137,16 +143,70 @@ export default {
     .category-and-banner {
         display: flex;
         justify-content: space-between;
+        gap: 100px;
 
     }
 
 
     /* Блок с баннерoм */
     .banner {
-        width: 400px;
-        height: 400px;
-        border: 1px solid #000;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        
+        margin-top: 30px;
+        width: 1000px;
+        height: 600px;
+        border: 2px solid #000;
+        /* background-color: #ff812c; */
+        border-radius: 14px;
 
-        margin-right: 200px;
+        margin-right: 180px;
+
+        position: relative;
     }
+
+    .banner img {
+
+        border: 2px solid #000;
+
+        object-fit: cover;
+        width: 985px;
+        height: 585px;
+
+        border-radius: 12px;
+    }
+
+    .banner button {
+        position: absolute;
+        top: 50%;
+        border-top: 2px solid #000;
+        border-bottom: 2px solid #000;
+        z-index: 100;
+
+        background-color: #fff;
+
+
+        font-size: 35px;
+        font-weight: 200;
+
+        width: 120px;
+        height: 80px;
+
+    }
+
+    .left-btn {
+        border-right: 2px solid #000;
+
+        border-radius: 0 12px 12px 0;
+        left: 6px;
+    }
+    
+    .right-btn { 
+        border-left: 2px solid #000;
+
+        border-radius: 12px 0 0 12px;
+        right: 6px;
+    }
+
 </style>
