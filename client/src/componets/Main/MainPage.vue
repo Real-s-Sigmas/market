@@ -114,9 +114,9 @@ export default {
 
         /* Убрать потом */
         /* border: 2px solid #000; */
-        }
+    }
 
-        .search-inp {
+    .search-inp {
         outline: none;
         border: 2px solid #ff812c;
         border-radius: 12px;
@@ -124,9 +124,9 @@ export default {
 
         width: 800px;
         height: 42px;
-        }
+    }
 
-        .find-btn {
+    .find-btn {
         border: 2px solid #ff812c;
         border-radius: 12px;
 
@@ -134,14 +134,14 @@ export default {
         height: 42px;
 
         transition: all 100ms;
-        }
+    }
 
-        .find-btn:hover {
+    .find-btn:hover {
         background-color: #ff812c;
         color: #fff;
-        }
+    }
 
-        .find-btn:active {
+    .find-btn:active {
         background-color: #d95700;
         border-color: #d95700;
     }
