@@ -4,14 +4,10 @@ import psycopg2
 from psycopg2 import extras, Error
 from flask import Flask, jsonify, request, session, make_response, send_from_directory
 from flask_cors import CORS
-import smtplib
-from email.mime.text import MIMEText
-import random
 from datetime import datetime
 from dotenv import load_dotenv
 import base64
 import logging
-import asyncio
 
 load_dotenv()
 
@@ -67,63 +63,8 @@ def add_tables():
                         id uuid,
                         username text,
                         email text,
-                        password text,
-                        name text,
-                        surname text,
-                        interestings text,
-                        about text,
-                        country text,
-                        region text,
-                        city text,
-                        telegram text,
-                        skype text,
-                        discord text,
-                        facebook text,
-                        phonenumber text,
-                        github text,
-                        avatar text,
-                        admin bool,
                         data_c timestamp
                     )""")
-        cursor.execute(f"""CREATE TABLE IF NOT EXISTS questions(
-                    id uuid,
-                    descriptions text,
-                    details text,
-                    dificulty text,
-                    tag text,
-                    id_u uuid,
-                    data timestamp,
-                    is_solved bool
-                )""")
-        cursor.execute(f"""CREATE TABLE IF NOT EXISTS states(
-                    id uuid,
-                    descriptions text,
-                    details text,
-                    tag text,   
-                    id_u uuid,
-                    data timestamp
-                )""")
-        cursor.execute(f"""create table if not exists answers(
-                    id text,
-                    id_u text, 
-                    id_q text,
-                    text text,
-                    data timestamp
-                )""")
-        cursor.execute(f"""create table if not exists comments(
-                    id text,
-                    id_u text, 
-                    id_s text,
-                    text text,
-                    data timestamp
-                )""")
-        cursor.execute(f"""create table if not exists helper(
-                id uuid,
-                msg text,
-                phone text,
-                email text,
-                id_u uuid
-            )""")
 
         pg.commit()
     except (Exception, Error) as error:
