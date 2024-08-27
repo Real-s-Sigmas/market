@@ -57,6 +57,11 @@ const router = createRouter({
       name: "EnterEmail",
       component: () => import("../componets/Forms/EnterPage.vue"),
     },
+    {
+      path: "/edit",
+      name: "Edit",
+      component: () => import("../componets/TestsComp/MenuComp.vue")
+    }
 ],
 });
 

@@ -14,6 +14,10 @@ export default {
                 'src/assets/125.webp',
             ],
             index: 0,
+            categories: [
+                {name: 'Электроинструменты', subItems: ['Аккумуляторные отвертки', 'Лобзики', 'Полировальные машины']},
+                {}
+            ]
         }
     },
 
@@ -76,6 +80,7 @@ export default {
                     <li class="categ-item">Тепловые пушки</li>
                 </ul>
             </div>
+            <div class="test">fffffff</div>
 
             <!-- Блок с баннером -->
             <div class="banner">
@@ -89,6 +94,14 @@ export default {
 
 <style scoped>
 
+    /* TESTS */
+    .test {
+        width: 200px;
+        height: 200px;
+        background-color: #a5a5a5;
+
+        display: none;
+    }
 
     /* Главное окно */
     .main-page-window {
@@ -252,6 +265,10 @@ export default {
     .categ-item {
         cursor: pointer;
         font-size: 16px;
+    }
+
+    .categ-item:hover + .test {
+        display: block;
     }
 
 
