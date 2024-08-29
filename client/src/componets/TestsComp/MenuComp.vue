@@ -22,7 +22,6 @@ export default {
             ],
             activeIndex: null,
             activeSubIndex: null,
-            mousePosition: { x: 0, y: 0 }
         };
     },
 
@@ -30,63 +29,38 @@ export default {
         showSubMenu(index) {
             this.activeIndex = index;
             this.activeSubIndex = null;
-            console.log("show");
         },
         
         showSubSubMenu(subIndex) {
             this.activeSubIndex = subIndex;
-            console.log("show-show");
         },
 
         hideAllMenus() {
             this.activeIndex = null;
             this.activeSubIndex = null;
-            console.log("hide");
-        },
-
-        updateMousePosition(event) {
-            this.mousePosition = { x: event.clientX, y: event.clientY };
-        },
-
-        onSubItemMouseLeave(event, index) {
-            if (this.isOutsideElement(event, index)) {
-                this.activeSubIndex = null;
-            }
-        },
-
-        isOutsideElement(event, index) {
-            const subMenuRect = this.$refs[`subMenu-${index}`]?.getBoundingClientRect();
-            if (!subMenuRect) return false;
-            return (
-                event.clientX < subMenuRect.left ||
-                event.clientX > subMenuRect.right ||
-                event.clientY < subMenuRect.top ||
-                event.clientY > subMenuRect.bottom
-            );
         }
     }
 };
 </script>
 
 <template>
-    <div class="category" @mouseleave="hideAllMenus" @mousemove="updateMousePosition">
+    <div class="category" @mouseleave="hideAllMenus">
         <ul>
             <li v-for="(item, index) in categories"
                 :key="index"
                 class="categ-item"
                 @mouseenter="showSubMenu(index)">
                 {{ item.name }}
-                <div class="submenu" v-if="activeIndex === index" ref="subMenu">
+                <div class="submenu" v-show="activeIndex === index">
                     <ul>
                         <li v-for="(subItem, subIndex) in item.subItems"
                             :key="subIndex"
-                            @mouseenter="showSubSubMenu(subIndex)"
-                            @mouseleave="onSubItemMouseLeave($event, index)">
+                            @mouseenter="showSubSubMenu(subIndex)">
                             {{ subItem.name }}
-                            <div class="subsubmenu" v-if="activeSubIndex === subIndex">
+                            <div class="subsubmenu" v-show="activeSubIndex === subIndex">
                                 <ul>
-                                    <li v-for="(subSubItem, subSubIndex) in subItem.subSubItems" :key="subSubIndex" @click="selectItem(subSubItem)">
-                                        <a href="http://localhost:5174/edit">{{ subSubItem }}</a>
+                                    <li v-for="(subSubItem, subSubIndex) in subItem.subSubItems" :key="subSubIndex">
+                                        <a href="http://localhost:5173">{{ subSubItem }}</a>
                                     </li>
                                 </ul>
                             </div>
@@ -114,8 +88,7 @@ export default {
 
 .submenu {
     position: absolute;
-    width: 140px;
-    height: 150px;
+    width: 200px;
     left: 200px;
     top: 0;
     background-color: #a9a9a9;
@@ -123,6 +96,7 @@ export default {
     padding: 10px;
     display: block;
     white-space: nowrap;
+    z-index: 10000;
 }
 
 .submenu ul {
@@ -136,25 +110,33 @@ export default {
 }
 
 .subsubmenu {
-  position: absolute;
-  width: 200px;
-  height: 100px;
-  left: 150px;
-  top: 0;
-  background-color: #e9e9e9;
-  border: 1px solid #bbb;
-  padding: 10px;
-  white-space: nowrap;
+    position: absolute;
+    width: 200px;
+    left: 200px;
+    top: 0;
+    background-color: #e9e9e9;
+    border: 1px solid #bbb;
+    padding: 10px;
+    white-space: nowrap;
+    z-index: 20000;
 }
 
 .subsubmenu ul {
-  list-style-type: none;
-  padding: 0;
-  margin: 0;
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
 }
 
 .subsubmenu li {
-  padding: 5px 0;
+    padding: 5px 0;
 }
 
+a {
+    text-decoration: none;
+    color: black;
+}
+
+a:hover {
+    text-decoration: underline;
+}
 </style>
