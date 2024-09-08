@@ -339,6 +339,8 @@ export default {
         display: block;
         white-space: nowrap;
         z-index: 10000;
+
+        color: #000;
     }
 
     .submenu ul {
@@ -359,7 +361,7 @@ export default {
         background-color: #D9D9D9;
         /* border: 1px solid #bbb; */
         border-radius: 15px;
-        margin-left: 20px;
+        margin-left: 10px;
         padding: 10px;
         white-space: nowrap;
         z-index: 20000;
