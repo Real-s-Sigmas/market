@@ -60,7 +60,7 @@ export default {
                             <div class="subsubmenu" v-show="activeSubIndex === subIndex">
                                 <ul>
                                     <li v-for="(subSubItem, subSubIndex) in subItem.subSubItems" :key="subSubIndex">
-                                        <a href="http://localhost:5173">{{ subSubItem }}</a>
+                                        <a href="#!">{{ subSubItem }}</a>
                                     </li>
                                 </ul>
                             </div>
@@ -91,8 +91,9 @@ export default {
     width: 200px;
     left: 200px;
     top: 0;
-    background-color: #a9a9a9;
-    border: 1px solid #000;
+    background-color: #D9D9D9;
+    /* border: 1px solid #000; */
+    border-radius: 15px;
     padding: 10px;
     display: block;
     white-space: nowrap;
@@ -114,8 +115,10 @@ export default {
     width: 200px;
     left: 200px;
     top: 0;
-    background-color: #e9e9e9;
-    border: 1px solid #bbb;
+    background-color: #D9D9D9;
+    /* border: 1px solid #bbb; */
+    border-radius: 15px;
+    margin-left: 20px;
     padding: 10px;
     white-space: nowrap;
     z-index: 20000;
