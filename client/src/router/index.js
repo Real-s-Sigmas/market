@@ -61,6 +61,11 @@ const router = createRouter({
       path: "/edit",
       name: "Edit",
       component: () => import("../componets/TestsComp/MenuComp.vue")
+    },
+    {
+      path: "/aboutus",
+      name: "AboutUs",
+      component: () => import("../componets/AboutUs/AboutComp.vue")
     }
 ],
 });

@@ -347,6 +347,7 @@ export default {
         list-style-type: none;
         padding: 0;
         margin: 0;
+        position: relative;
     }
 
     .submenu li {
@@ -354,11 +355,11 @@ export default {
     }
 
     .subsubmenu {
-        position: absolute;
-        width: auto;
-        left: 200px;
+       /* position: absolute; */
+        width: 250px;
+        left: 150px;
         top: 0;
-        background-color: #D9D9D9;
+        background-color: #b3b3b3;
         /* border: 1px solid #bbb; */
         border-radius: 15px;
         margin-left: 10px;
