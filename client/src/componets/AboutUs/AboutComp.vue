@@ -42,8 +42,12 @@ export default {
   gap: 60px;
 }
 
+.text {
+  font-size: 22px;
+}
+
 .aboutus-img {
-  width: 750px;
+  width: 650px;
   border: 2px solid #000;
   border-radius: 12px;
 }

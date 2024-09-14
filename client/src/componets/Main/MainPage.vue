@@ -236,7 +236,7 @@ export default {
         /* background-color: #ff812c; */
         border-radius: 14px;
 
-        margin-right: 180px;
+        margin-right: 280px;
 
         position: relative;
     }
