@@ -58,4 +58,31 @@ h3 {
   border-bottom: 2px solid #000;
   width: 200px;
 }
+
+@media (max-width: 1000px) {
+  .aboutus-img{
+    width: 100%;
+  }
+
+  .img-text {
+    flex-direction: column;
+    gap: 20px;
+  }
+}
+
+@media (max-width: 500px) {
+  .about-title{
+    font-size: 24px;
+  }
+
+  h3{
+    font-size: 20px;
+  }
+}
+
+@media (max-width: 430px) {
+  .text {
+    font-size: 20px;
+  }
+}
 </style>
