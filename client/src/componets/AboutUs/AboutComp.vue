@@ -43,7 +43,7 @@ export default {
 }
 
 .aboutus-img {
-  width: 450px;
+  width: 750px;
   border: 2px solid #000;
   border-radius: 12px;
 }
