@@ -36,7 +36,7 @@ export default {
 </script>
 
 <template>
-   <div ref="yandexMap" style="width: 100%; height: 400px;"></div> 
+   <div ref="yandexMap" style="width: 100%; height: 600px;"></div> 
 </template>
 
 <style>

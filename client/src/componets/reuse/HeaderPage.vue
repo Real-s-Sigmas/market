@@ -16,7 +16,7 @@ export default {
         </div>
         <div class="links">
             <button class="link-btn" @click="this.$router.push('/')">Главная</button>
-            <button class="link-btn" @click="this.$router.push('/about-us')">О нас</button>
+            <button class="link-btn" @click="this.$router.push('/aboutus')">О нас</button>
         </div>
         <div class="div-ob fav-acc">
             <a href="#!">
