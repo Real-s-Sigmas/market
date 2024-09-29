@@ -76,7 +76,7 @@ export default {
             this.activeSubIndex = null;
         },
         
-        showSubSubMenu(subIndex) {
+        showSubSubMenu(subIndex, show) {
             this.activeSubIndex = subIndex;
         },
 
@@ -114,13 +114,13 @@ export default {
                     <li v-for="(item, index) in categories"
                         :key="index"
                         class="categ-item"
-                        @mouseenter="showSubMenu(index)">
+                        @touchstart="showSubMenu(index)">
                         {{ item.name }}
                         <div class="submenu" v-show="activeIndex === index">
                             <ul>
                                 <li v-for="(subItem, subIndex) in item.subItems"
                                     :key="subIndex"
-                                    @mouseenter="showSubSubMenu(subIndex)">
+                                    @touchstart="showSubSubMenu(subIndex)">
                                     {{ subItem.name }}
                                     <div class="subsubmenu" v-show="activeSubIndex === subIndex">
                                         <ul>
@@ -142,7 +142,6 @@ export default {
                     <li class="categ-item">Тепловые пушки</li> -->
                 </ul>
             </div>
-            <div class="test">fffffff</div>
 
             <!-- Блок с баннером -->
             <div class="banner">
@@ -450,12 +449,21 @@ export default {
             width: 95%;
         }
 
+        
+
+        .submenu {
+            height: auto;
+            width: 210px;
+            left: 0;
+            top: 32px;
+        }
+
         .category ul {
             flex-direction: row;
             gap: 20px;
             flex-wrap: wrap;
             justify-content: start;
-            height: 20px;
+            height: auto;
         }
     }
 
