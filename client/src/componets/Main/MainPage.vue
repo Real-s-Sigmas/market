@@ -19,31 +19,98 @@ export default {
                 {
                     name: 'Электроинструменты',
                     subItems: [
-                        { name: 'Дрели', subSubItems: ['Аккумуляторные дрели', 'Сетевые дрели'] },
-                        { name: 'Перфораторы', subSubItems: ['SDS+', 'SDS Max'] },
-                        { name: 'Шуруповерты', subSubItems: ['Сетевые шуруповерты', 'Аккумуляторные шуруповерты'] },
+                        {
+                            name: 'Дрели',
+                            subSubItems: ['Аккумуляторные дрели', 'Сетевые дрели'],
+                        },
+                        {
+                            name: 'Перфораторы',
+                            subSubItems: ['SDS+', 'SDS Max'],
+                        },
                     ],
                 },
                 {
                     name: 'Ручные инструменты',
                     subItems: [
-                        { name: 'Молотки', subSubItems: ['Кувалды', 'Столярные молотки'] },
-                        { name: 'Отвертки', subSubItems: ['Крестовые', 'Плоские'] },
-                        { name: 'Клещи', subSubItems: ['Комбинированные клещи', 'Длинногубцы'] },
+                        {
+                            name: 'Молотки',
+                            subSubItems: ['Кувалды', 'Столярные молотки'],
+                        },
+                        {
+                            name: 'Отвертки',
+                            subSubItems: ['Крестовые', 'Плоские'],
+                        },
                     ],
                 },
                 {
-                    name: 'Сад и дача',
+                    name: 'fffffffffffffffffffff',
                     subItems: [
-                        { name: 'Садовая техника', subSubItems: ['Бензопилы', 'Культиваторы', 'Пилы цепные электрические', 'Мотоблоки', 'Газонокосилки', 'Опрыскиватели'] },
-                        { name: 'Насосы и оборудование', subSubItems: ['Насосы', 'Фитинги ПНД', 'Насосные станции', 'Соединительные элементы и фильтры', 'Автоматика для насосов', 'Хомуты'] },
-                        { name: 'Садовый инструмент', subSubItems: ['Все для рассады', 'Совки посадочные', 'Лопаты', 'Пилы и ножовки садовые', 'Топоры', 'Ножи садовые'] }
+                        {
+                            name: 'fff',
+                            subSubItems: ['fff', 'ffff'],
+                        },
+                        {
+                            name: 'ffffff',
+                            subSubItems: ['fff', 'fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff'],
+                        },
                     ]
-                }
+                },
+                {
+                    name: 'fffffffffffffffffffff',
+                    subItems: [
+                        {
+                            name: 'fff',
+                            subSubItems: ['fff', 'ffff'],
+                        },
+                        {
+                            name: 'ffffff',
+                            subSubItems: ['fff', 'ffffffff'],
+                        },
+                    ]
+                },
+                {
+                    name: 'fffffffffffffffffffff',
+                    subItems: [
+                        {
+                            name: 'fff',
+                            subSubItems: ['fff', 'ffff'],
+                        },
+                        {
+                            name: 'ffffff',
+                            subSubItems: ['fff', 'ffffffff'],
+                        },
+                    ]
+                },
+                {
+                    name: 'fffffffffffffffffffff',
+                    subItems: [
+                        {
+                            name: 'fff',
+                            subSubItems: ['fff', 'ffff'],
+                        },
+                        {
+                            name: 'ffffff',
+                            subSubItems: ['fff', 'ffffffff'],
+                        },
+                    ]
+                },
+                {
+                    name: 'fffffffffffffffffffff',
+                    subItems: [
+                        {
+                            name: 'fff',
+                            subSubItems: ['fff', 'ffff'],
+                        },
+                        {
+                            name: 'ffffff',
+                            subSubItems: ['fff', 'ffffffff'],
+                        },
+                    ]
+                },
             ],
+            activeCategory: null, // Активная категория
+            activeSubCategory: null, // Активная подкатегория
 
-            activeIndex: null,
-            activeSubIndex: null,
         }
     },
 
@@ -71,21 +138,23 @@ export default {
             } 
         },
 
-        showSubMenu(index) {
-            this.activeIndex = index;
-            this.activeSubIndex = null;
-        },
-        
-        showSubSubMenu(subIndex, show) {
-            this.activeSubIndex = subIndex;
+        selectCategory(index) {
+            this.activeCategory = index;
+            this.activeSubCategory = null; // Сбрасываем подкатегорию при выборе другой категории
         },
 
-        hideAllMenus() {
-            this.activeIndex = null;
-            this.activeSubIndex = null;
-        }
+            // Выбор подкатегории
+        selectSubCategory(subIndex) {
+            this.activeSubCategory = subIndex;
+        },
+
+            // Переход к секции
+        goToSection(subSubItem) {
+            console.log('Переход к секции:', subSubItem);
+            // Здесь можно использовать логику для якорного перехода или другой навигации
+        }, 
     },
-    
+   
     computed: {
         
     }
@@ -109,40 +178,30 @@ export default {
         <div class="category-and-banner">
 
             <!-- Блок с категориями -->
-            <div class="category" @mouseleave="hideAllMenus">
-                <ul>
-                    <li v-for="(item, index) in categories"
-                        :key="index"
-                        class="categ-item"
-                        @touchstart="showSubMenu(index)">
-                        {{ item.name }}
-                        <div class="submenu" v-show="activeIndex === index">
-                            <ul>
-                                <li v-for="(subItem, subIndex) in item.subItems"
-                                    :key="subIndex"
-                                    @touchstart="showSubSubMenu(subIndex)">
-                                    {{ subItem.name }}
-                                    <div class="subsubmenu" v-show="activeSubIndex === subIndex">
-                                        <ul>
-                                            <li v-for="(subSubItem, subSubIndex) in subItem.subSubItems" :key="subSubIndex">
-                                                <a href="#!">{{ subSubItem }}</a>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </li>
-                            </ul>
-                        </div>
+            <div class="category-container">
 
+                <!-- Список категорий -->
+                <ul class="categories">
+                <li v-for="(category, index) in categories" :key="index">
+                    <button @click="selectCategory(index)">{{ category.name }}</button>
+
+                    <!-- Список подкатегорий -->
+                    <ul class="subMenu" v-if="activeCategory === index">
+                    <li v-for="(subCategory, subIndex) in category.subItems" :key="subIndex">
+                        <button @click="selectSubCategory(subIndex)">{{ subCategory.name }}</button>
+
+                        <!-- Список под-подкатегорий -->
+                        <ul class="subsubUl" v-if="activeSubCategory === subIndex">
+                        <li class="subsubIt" v-for="(subSubItem, subSubIndex) in subCategory.subSubItems" :key="subSubIndex">
+                            <a href="#!" @click="goToSection(subSubItem)">- {{ subSubItem }}</a>
+                        </li>
+                        </ul>
                     </li>
-
-                    <!-- <li class="categ-item item-electro">Электроинструменты</li>
-                    <li class="categ-item">Ручные инструменты</li>
-                    <li class="categ-item">Крепеж</li>
-                    <li class="categ-item">Отделочные материалы</li>
-                    <li class="categ-item">Тепловые пушки</li> -->
+                    </ul>
+                </li>
                 </ul>
-            </div>
 
+            </div>
             <!-- Блок с баннером -->
             <div class="banner">
                 <button class="left-btn" @click="minus"><</button>
@@ -265,6 +324,7 @@ export default {
         border-top: 2px solid #000;
         border-bottom: 2px solid #000;
         z-index: 100;
+        color: #000;
 
         background-color: #fff;
 
@@ -294,104 +354,86 @@ export default {
 
     /* Блок с категориями */
 
-    .category {
-        display: flex;
-        justify-content: center;
-        color: #fff;
-
-        margin-top: 10px;
-
-        padding: 0 5px 0 5px;
-
-        min-width: 250px;
-        height: 750px;
-        background-color: #ff812c;
-        /* border: 2px solid #FF812C; */
-        border-radius: 12px;
-
-        transition: all 400ms;
-
-
-    }
-
-    .category ul {
+    .category-container {
+        border-radius: 10px;
         display: flex;
         flex-direction: column;
-
-        gap: 10px;
-
-        margin-top: 10px;
+        padding: 20px;
+        width: 300px;
+        background-color: #ff812c;
     }
 
-    .categ-item {
-        position: relative;
-        width: 200px;
-        cursor: pointer;
-        font-size: 16px;
+    .categories {
+        list-style-type: none;
+        padding: 0;
+        display: flex;
+        flex-direction: column
     }
 
-    .categ-item:hover + .test {
-        display: block;
+    .categories > li {
+        margin-bottom: 10px;
     }
 
-    .submenu {
-        position: absolute;
-        width: 200px;
-        left: 200px;
-        top: 0;
-        background-color: #D9D9D9;
-        /* border: 1px solid #000; */
-        border-radius: 15px;
+    button {
+        background-color: #ff812c;
+        border: none;
         padding: 10px;
-        display: block;
-        white-space: nowrap;
-        z-index: 10000;
+        color: white;
+        cursor: pointer;
+        border-radius: 5px;
+    }
 
+    .subMenu {
+        background-color: #e57123;
+        border-top: 2px solid #fff;
+        border-bottom: 2px solid #fff;
+    }
+
+    .subsubIt {
+        margin-bottom: 10px;   
+    }
+
+    .subsubIt a {
         color: #000;
     }
 
-    .submenu ul {
+    .subsubUl {
+        background-color: #fff;
+        margin: 5px 15px;
+        border-radius: 4px;
+        padding: 10px 0;
+    }
+
+    .subsubIt:last-child {
+        margin-bottom: 0px;
+    }
+
+    .subMenu button ul {
+    }
+
+    .subMenu button {
+        background-color: #e57123;
+    }
+
+    button:hover {
+        background-color: #e96f1c;
+    }
+
+    
+
+    ul {
         list-style-type: none;
-        padding: 0;
-        margin: 0;
-        position: relative;
-    }
-
-    .submenu li {
-        padding: 5px 0;
-    }
-
-    .subsubmenu {
-       /* position: absolute; */
-        width: 250px;
-        left: 150px;
-        top: 0;
-        background-color: #b3b3b3;
-        /* border: 1px solid #bbb; */
-        border-radius: 15px;
-        margin-left: 10px;
-        padding: 10px;
-        white-space: nowrap;
-        z-index: 20000;
-    }
-
-    .subsubmenu ul {
-        list-style-type: none;
-        padding: 0;
-        margin: 0;
-    }
-
-    .subsubmenu li {
-        padding: 5px 0;
     }
 
     a {
         text-decoration: none;
-        color: black;
+        color: #fff;
+        padding: 10px;
+        padding-left: 20px;
+        cursor: pointer;
     }
 
     a:hover {
-        text-decoration: underline;
     }
 
 
@@ -445,8 +487,14 @@ export default {
             display: none;
         }
 
-        .category {
+        .category-container {
             width: 95%;
+            flex-direction: row;
+        }
+
+        .categories {
+            flex-direction: row;
+            flex-wrap: wrap;
         }
 
         
