@@ -51,7 +51,7 @@ export default {
                         },
                         {
                             name: 'ffffff',
-                            subSubItems: ['fff', 'fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff'],
+                            subSubItems: ['fff', 'ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff'],
                         },
                     ]
                 },
@@ -261,7 +261,7 @@ export default {
 
     .find-btn {
         border: 2px solid #ff812c;
-        border-radius: 12px;
+    border-radius: 12px;
 
         width: 100px;
         height: 42px;
@@ -348,7 +348,7 @@ export default {
         border-left: 2px solid #000;
 
         border-radius: 12px 0 0 12px;
-        right: 6px;
+        right: 5px;
     }
 
 
@@ -359,7 +359,7 @@ export default {
         display: flex;
         flex-direction: column;
         padding: 20px;
-        width: 300px;
+        min-width: 300px;
         background-color: #ff812c;
     }
 
@@ -371,7 +371,6 @@ export default {
     }
 
     .categories > li {
-        margin-bottom: 10px;
     }
 
     button {
@@ -391,17 +390,26 @@ export default {
 
     .subsubIt {
         margin-bottom: 10px;   
+
+        width: 100%;
+        max-height: 30vh;
+        overflow-wrap: break-word;
+        word-break: break-all;
+        overflow-y: hidden;
     }
+
+    
 
     .subsubIt a {
         color: #000;
+        padding-left: 0;
     }
 
     .subsubUl {
         background-color: #fff;
         margin: 5px 15px;
         border-radius: 4px;
-        padding: 10px 0;
+        padding: 10px 20px;
     }
 
     .subsubIt:last-child {
@@ -512,6 +520,10 @@ export default {
             flex-wrap: wrap;
             justify-content: start;
             height: auto;
+        }
+
+        .subsubIt {
+            width: 200px;
         }
     }
 

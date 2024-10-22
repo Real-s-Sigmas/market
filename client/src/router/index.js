@@ -66,8 +66,13 @@ const router = createRouter({
       path: "/aboutus",
       name: "AboutUs",
       component: () => import("../componets/AboutUs/AboutComp.vue")
+    },
+    {
+      path: "/basket",
+      name: "MyBasket",
+      component: () => import("../componets/orders/BasketPage.vue")
     }
-],
+  ],
 });
 
 export default router;

@@ -142,7 +142,7 @@
 
                             <!-- Блок с кнопкой заказть -->
                             <div class="order">
-                                <button>Заказать</button>
+                                <button>Добавить в корзину</button>
                             </div>
 
                             <!-- Блок с кнопкой "В избранное" -->
@@ -524,12 +524,12 @@
 /* Кнопка заказать */
 
 .order button {
-    width: 260px;
+    width: 280px;
     height: 80px;
     background-color: #FF812C;
     border-radius: 12px;
     color: #fff;
-    font-size: 30px;
+    font-size: 22px;
     font-weight: 700;
 
     user-select: none;
