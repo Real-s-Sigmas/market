@@ -148,7 +148,7 @@
                             <!-- Блок с кнопкой "В избранное" -->
                             <div class="fav" :class="{'favDone': this.isFav}">
                                 <button  @click="this.isFav = !this.isFav"> 
-                                    <svg  width="40px" height="40px" viewBox="0 0 24 24" fill="white" xmlns="http://www.w3.org/2000/svg">
+                                    <svg  width="30px" height="30px" viewBox="0 0 24 24" fill="white" xmlns="http://www.w3.org/2000/svg">
                                     <path fill-rule="evenodd" clip-rule="evenodd" d="M12 6.00019C10.2006 3.90317 7.19377 3.2551 4.93923 5.17534C2.68468 7.09558 2.36727 10.3061 4.13778 12.5772C5.60984 14.4654 10.0648 18.4479 11.5249 19.7369C11.6882 19.8811 11.7699 19.9532 11.8652 19.9815C11.9483 20.0062 12.0393 20.0062 12.1225 19.9815C12.2178 19.9532 12.2994 19.8811 12.4628 19.7369C13.9229 18.4479 18.3778 14.4654 19.8499 12.5772C21.6204 10.3061 21.3417 7.07538 19.0484 5.17534C16.7551 3.2753 13.7994 3.90317 12 6.00019Z" stroke="#ff812c" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                                     </svg>
                                 </button>
@@ -298,7 +298,7 @@
     height: auto;
     margin: 0;
     user-select: text;
-    padding: 0 20px 0 20px;
+    padding: 0 120px 0 120px;
 
     overflow-x: hidden;
     overflow-y: hidden;
@@ -311,14 +311,19 @@
     gap: 40px;
 
     width: 100%;
-    height: 550px;
+    height: auto;
     
     border-bottom: 2px solid #000;
+    
+    padding-bottom: 80px;
 }
 
 .prod-img {
-    width: 460px;
-    height: 460px;
+    width: 400px;
+    height: 361px;
+
+    border: 2px solid #212121;
+    border-radius: 10px;
 }
 
 .main-info {
@@ -334,11 +339,12 @@
 
 .main-info h3 {
     font-size: 35px;
+    line-height: 38px;
     font-weight: 700;
 }
 
 .short-description {
-    font-size: 30px;
+    font-size: 24px;
     width: 1100px;
 }
 
@@ -348,7 +354,7 @@
 
 .anc-link {
     width: 350px;
-    font-size: 30px;
+    font-size: 24px;
     font-weight: 700;
     color: #FF812C;
 
@@ -373,7 +379,7 @@
     justify-content: space-between;
 
     width: 100%;
-    height: 150px;
+    height: 120px;
     
     margin-top: -25px;
     
@@ -385,7 +391,7 @@
 .star-price {
     display: flex;
     flex-direction: column;
-    gap: 25px;
+    gap: 29px;
 
     width: 300px;
     height: 140px;
@@ -396,7 +402,7 @@
     align-items: center;
     gap: 6px;
 
-    font-size: 30px;
+    font-size: 24px;
     font-weight: 700;
 
     user-select: none;
@@ -407,10 +413,10 @@
     justify-content: center;
     align-items: center;
 
-    font-size: 30px;
+    font-size: 24px;
 
-    width: 300px;
-    height: 60px;
+    width: 240px;
+    height: 55px;
 
     border: 2px solid #000;
     border-radius: 12px;
@@ -423,9 +429,9 @@
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+
+    width: 400px;
     
-    width: 450px;
-    height: 150px;
     /* border: 2px solid #000; */
 }
 
@@ -435,7 +441,6 @@
 
 .sum {
     width: 100%;
-    height: 140px;
     /* border: 2px solid #000; */
 
     user-select: none;
@@ -444,8 +449,8 @@
 .sum {
     display: flex;
     /* align-items: center; */
-    justify-content: center;
-    gap: 22px;
+    justify-content: end;
+    gap: 30px;
 
     bottom: 140px;
     right: -130px;
@@ -512,10 +517,9 @@
 
 .order-fav {
     display: flex;
-    justify-content: space-around;
+    justify-content: space-between;
 
     width: 100%;
-    height: 140px;
     /* border: 2px solid #000; */
 }
 
@@ -524,12 +528,11 @@
 /* Кнопка заказать */
 
 .order button {
-    width: 280px;
-    height: 80px;
+    padding: 15px 25px;
     background-color: #FF812C;
     border-radius: 12px;
     color: #fff;
-    font-size: 22px;
+    font-size: 24px;
     font-weight: 700;
 
     user-select: none;
@@ -554,8 +557,6 @@
     justify-content: center;
     align-items: center;
 
-    width: 80px;
-    height: 80px;
 
     border: 2px solid #505050;
     border-radius: 12px;
@@ -563,6 +564,9 @@
     transition: all 200ms;
 
     user-select: none;
+
+    height: 65px;
+    width: 65px;
 }
 
 .fav button {
@@ -570,8 +574,6 @@
     justify-content: center;
     align-items: center;
     
-    width: 80px;
-    height: 80px;
 }
 
 .fav:hover {
@@ -616,7 +618,8 @@
 }
 
 .full-description {
-    font-size: 30px;
+    font-size: 24px;
+    text-align: justify;
 }
 
 .full-description span {
@@ -691,7 +694,7 @@
 
     gap: 6px;
 
-    font-size: 30px;
+    font-size: 24px;
     font-weight: 700;
 
     user-select: none;
@@ -701,7 +704,7 @@
 .symbols-count {
     position: absolute;
 
-    font-size: 24px;
+    font-size: 20px;
     color: #959595;
     bottom: 10px;
     right: 10px;
@@ -732,11 +735,11 @@
 /* Кнопка "Отправить (отзыв)" */
 
 .send-comm {
-    width: 270px;
-    height: 75px;
+    width: 240px;
+    padding: 14px 0;
     background-color: #FF812C;
 
-    font-size: 30px;
+    font-size: 24px;
     color: #fff;
 
     border-radius: 12px;
@@ -777,7 +780,7 @@
 }
 
 .sort select {
-    font-size: 28px;
+    font-size: 24px;
 
     color: #fff;
     background-color: #262626;
@@ -785,6 +788,10 @@
     max-width: auto;
     height: 50px;
     padding: 2px 10px 2px 10px;
+}
+
+.sort option {
+    font-size: 20px;
 }
 
 
@@ -805,9 +812,10 @@
 }
 
 .user-name {
-    font-size: 26px;
-    padding: 0 5px 0 5px;
-    width: 244px;
+    font-size: 24px;
+    text-align: center;
+    padding: 5px 0;
+    width: 260px;
     border: 2px solid #000;
     border-radius: 12px;
 }
