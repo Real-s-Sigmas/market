@@ -3,6 +3,14 @@ export default {
     data() {
         return {
             isOpen: false,
+            isLogged: true,
+            burg: true,
+        }
+    },
+
+    methods: {
+        burgmenu() {
+            this.burg = !this.burg;
         }
     }
 }
@@ -25,12 +33,21 @@ export default {
             </a>
 
             <a href="/basket">
-                <svg width="40px" height="800px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <svg width="35px" height="35px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path d="M21 10L15 4M21 10H3M21 10L19.6431 16.7845C19.2692 18.6542 17.6275 20 15.7208 20H8.27922C6.37249 20 4.73083 18.6542 4.35689 16.7845L3 10M3 10L9 4" stroke="#000000" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
                 </svg>
             </a>
 
-            <button class="acc" @click="this.$router.push('/Login')">Войти</button>
+
+            <button v-if="isLogged" @click="burgmenu" class="burgmenu">
+                <svg width="35px" height="35px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M4 6H20M4 12H20M4 18H20" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+            </button>
+
+            
+            
+            <button v-else="isLogged"  class="acc" @click="this.$router.push('/Login')">Войти</button>
         </div>
     </div>
     <div class="btn-top">
@@ -226,6 +243,17 @@ export default {
         .btn-top {
             border-bottom: 2px solid #000;
         }
+
+        .fav-acc {
+            justify-content: start;
+            gap: 20px;
+        }
+
+        .fav-acc a {
+            margin: 0;
+        }
+
+        
     }
 
     /* @media (max-width: 700px) {

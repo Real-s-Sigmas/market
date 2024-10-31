@@ -345,7 +345,6 @@
 
 .short-description {
     font-size: 24px;
-    width: 1100px;
 }
 
 .short-description span {
@@ -573,6 +572,9 @@
     display: flex;
     justify-content: center;
     align-items: center;
+
+    width: 65px;
+    height: 65px;
     
 }
 
@@ -586,19 +588,11 @@
 
 
 .favDone {
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    
 
-    width: 80px;
-    height: 80px;
 
     background-color: #FF812C;
-    border-radius: 12px;
-
-    transition: all 200ms;
-
-    user-select: none;
+    
 }
 
 
@@ -851,19 +845,15 @@
 
 @media (max-width: 1600px) {
     .star-price-sum-order-fav {
-        justify-content: start;
-        gap: 250px;
     }
 
     .short-description {
-        width: 100%;
     }
 
 }
 
 @media (max-width: 1500px) {
     .star-price-sum-order-fav {
-        gap: 100px
     }
 
     .sum {
@@ -879,6 +869,32 @@
     }
 }
 
+@media (max-width: 1420px) {
+    .prod-img {
+        width: 300px;
+        height: 280px;
+    }
+
+    .main-info h3 {
+        font-size: 28px;
+    }
+
+    .short-description {
+        font-size: 20px;
+    }
+
+    .product-info {
+        position: relative;
+        padding-bottom: 200px;
+    }
+
+    .star-price-sum-order-fav {
+        position: absolute;
+        left: 0;
+        bottom: 40px;
+    }
+}
+
 @media (max-width: 1355px) {
     .star-price-sum-order-fav {
         gap: 50px;
@@ -886,45 +902,7 @@
 }
 
 @media (max-width: 1300px) {
-    .anc-link {
-        font-size: 24px;
-    }
-
-    .star {
-        font-size: 24px
-    }
-
-    .price {
-        font-size: 24px;
-        width: 200px;
-    }
-
-    .sum {
-        height: 50px;
-    }
-
-    .order-fav {
-        margin-top: 10px;
-    }
-
-    .order button {
-        width: 200px;
-        height: 70px;
-        font-size: 24px
-    }
-
-    .fav {
-        width: 70px;
-        height: 70px;
-    }
-
-    .star-price-sum-order-fav {
-        gap: 0;
-    }
-
-    .star-price {
-        width: 300px;
-    }
+    
 }
 
 @media (max-width: 1265px) {
@@ -933,135 +911,31 @@
     }
 }
 
-@media (max-width: 1230px) {
-    .star-price-sum-order-fav {
-        flex-direction: column;
-        height: 300px;
-    }
-
-    .sum-order-fav {
-        gap: 20px;
-    }
-
-    .sum {
-        justify-content: start;
-    }
-
-    .order-fav {
-        justify-content: start;
-        gap: 70px
-    }
-
-    .product-info {
-        height: auto;
-    }
-
-    .full-description p {
-        font-size: 24px;
+@media (max-width: 1000px) {
+    .main-page-window {
+        padding: 0 20px;
     }
 }
 
 @media (max-width: 900px) {
-    .product-info {
-        position: relative;
-        height: 770px;
-    }
-
-    .star-price-sum-order-fav {
-        position: absolute;
-        bottom: 0px;
-        left: 0;
-
-        flex-direction: row;
-        gap: 130px;
-    }
-
-    .full-description p {
-        font-size: 22px;
-    }
-
-    .rate {
-        /* font-size: 22px; */
-    }
-
-    .symbols-count {
-        font-size: 22px;
-    }
-
-    .send-comm {
-        width: 200px;
-        height: 50px;
-
-        font-size: 22px;
-    }
-
-    .title-sort h2 {
-        font-size: 22px;
-    }
-
-    .sort select {
-        font-size: 22px;
-    }
-
-    .user-name {
-        font-size: 22px;
-        width: 210px;
-    }
+    
 }
 
 @media (max-width: 850px) {
-    .prod-img {
-        width: 330px;
-        height: 330px;
-    }
-
-    .main-info h3 {
-        font-size: 26px;
-    }
-
-    .short-description {
-        font-size: 20px;
-    }
-
-    .product-info {
-        height: 500px;
-    }
-
-    .star-price-sum-order-fav {
-        height: 160px;
-    }
-
-    .your-comment h2 {
-        font-size: 26px;
-    }
+    
 }
 
-@media (max-width: 700px) {
-    .star-price-sum-order-fav {
-        gap: 70px;
-    }
 
-    .prod-img {
-        width: 280px;
-        height: 280px;
-    }
 
-    .product-info {
-        gap: 10px;
-        height: 550px;
-    }
-}
-
-@media (max-width: 640px) {
+@media (max-width: 740px) {
     .product-info {
         align-items: center;
         flex-direction: column;
-        height: 1170px;
     }
 
     .prod-img {
-        width: 500px;
-        height: 500px;
+        width: 350px;
+        height: 350px;
     }
 
     .main-info {
@@ -1077,27 +951,11 @@
         width: 100%;
     }
 
-    .star-price-sum-order-fav {
-        flex-direction: column;
-        gap: 40px;
-
-        position: initial;
-
-        height: auto;
-        align-items: end;
+    
+    .price {
+        font-size: 20px;
     }
-
-    .star-price {
-        align-items: end;
-    }
-
-    .sum {
-        justify-content: end;
-    }
-
-    .order-fav {
-        justify-content: end;
-    }
+    
     
     .full-description {
         padding: 0;
@@ -1128,6 +986,85 @@
     .star {
         font-size: 18px;
     }
+
+    .order button {
+        font-size: 18px;
+    }
+
+    .fav {
+        width: 57px;
+        height: 57px;
+    }
+
+    .fav button {
+        width: 57px;
+        height: 57px;
+    }
+
+    .sum p {
+        font-size: 18px;
+    }
+
+    .buts-count {
+        height: 30px;
+    }
+
+    .buts-count button {
+        height: 30px;
+    }
+
+    .plus-btn {
+        img {
+            width: 16px;
+        }
+    }
+
+    .minus-btn {
+        img {
+            width: 16px;
+        }
+    }
+
+    .buts-count {
+        .count {
+            font-size: 18px;
+            height: 30px;
+        }
+    }
+}
+
+@media (max-width: 640px) {
+    .price {
+        width: 180px;
+    }
+}
+
+@media (max-width: 590px) {
+    .star-price-sum-order-fav {
+        flex-direction: column;
+        bottom: 180px;
+    }
+
+    .order-fav {
+        margin-top: 10px;
+    }
+
+    .sum-order-fav {
+        width: 312px;
+        gap: 15px;
+    }
+
+    .sum {
+        justify-content: start;
+    }
+
+    .main-info {
+        height: 500px;
+    }
+
+    .order-fav {
+    }
+
 }
 
 @media (max-width: 460px) {
