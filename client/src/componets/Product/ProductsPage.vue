@@ -70,8 +70,8 @@ export default {
   width: 100%;
   height: 100vh;
 
-  margin: 0 20px 0 20px;
   display: flex;
+  align-items: center;
   flex-direction: column;
 
   user-select: none;
@@ -82,6 +82,8 @@ export default {
   justify-content: center;
   align-items: center;
   gap: 60px;
+
+  padding: 0 20px 0 20px;
 
   margin-top: 20px;
 
@@ -127,6 +129,7 @@ export default {
   gap: 60px;
 
   position: relative;
+  padding: 0 20px 0 20px;
 
   width: 100%;
 }
@@ -172,7 +175,9 @@ export default {
 
 .products h2 {
   width: 100%;
-  font-size: 45px;
+  font-size: 35px;
+  font-weight: 700;
+  line-height: 38px;
 }
 
 .cards {
@@ -203,7 +208,7 @@ export default {
 }
 
 .product-name {
-  font-size: 30px;
+  font-size: 24px;
   color: #505050;
 }
 
