@@ -142,13 +142,13 @@
 
                             <!-- Блок с кнопкой заказть -->
                             <div class="order">
-                                <button>Заказать</button>
+                                <button>Добавить в корзину</button>
                             </div>
 
                             <!-- Блок с кнопкой "В избранное" -->
                             <div class="fav" :class="{'favDone': this.isFav}">
                                 <button  @click="this.isFav = !this.isFav"> 
-                                    <svg  width="40px" height="40px" viewBox="0 0 24 24" fill="white" xmlns="http://www.w3.org/2000/svg">
+                                    <svg  width="30px" height="30px" viewBox="0 0 24 24" fill="white" xmlns="http://www.w3.org/2000/svg">
                                     <path fill-rule="evenodd" clip-rule="evenodd" d="M12 6.00019C10.2006 3.90317 7.19377 3.2551 4.93923 5.17534C2.68468 7.09558 2.36727 10.3061 4.13778 12.5772C5.60984 14.4654 10.0648 18.4479 11.5249 19.7369C11.6882 19.8811 11.7699 19.9532 11.8652 19.9815C11.9483 20.0062 12.0393 20.0062 12.1225 19.9815C12.2178 19.9532 12.2994 19.8811 12.4628 19.7369C13.9229 18.4479 18.3778 14.4654 19.8499 12.5772C21.6204 10.3061 21.3417 7.07538 19.0484 5.17534C16.7551 3.2753 13.7994 3.90317 12 6.00019Z" stroke="#ff812c" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                                     </svg>
                                 </button>
@@ -298,7 +298,7 @@
     height: auto;
     margin: 0;
     user-select: text;
-    padding: 0 20px 0 20px;
+    padding: 0 120px 0 120px;
 
     overflow-x: hidden;
     overflow-y: hidden;
@@ -311,14 +311,19 @@
     gap: 40px;
 
     width: 100%;
-    height: 550px;
+    height: auto;
     
     border-bottom: 2px solid #000;
+    
+    padding-bottom: 80px;
 }
 
 .prod-img {
-    width: 460px;
-    height: 460px;
+    width: 400px;
+    height: 361px;
+
+    border: 2px solid #212121;
+    border-radius: 10px;
 }
 
 .main-info {
@@ -334,12 +339,12 @@
 
 .main-info h3 {
     font-size: 35px;
+    line-height: 38px;
     font-weight: 700;
 }
 
 .short-description {
-    font-size: 30px;
-    width: 1100px;
+    font-size: 24px;
 }
 
 .short-description span {
@@ -348,7 +353,7 @@
 
 .anc-link {
     width: 350px;
-    font-size: 30px;
+    font-size: 24px;
     font-weight: 700;
     color: #FF812C;
 
@@ -373,7 +378,7 @@
     justify-content: space-between;
 
     width: 100%;
-    height: 150px;
+    height: 120px;
     
     margin-top: -25px;
     
@@ -385,7 +390,7 @@
 .star-price {
     display: flex;
     flex-direction: column;
-    gap: 25px;
+    gap: 29px;
 
     width: 300px;
     height: 140px;
@@ -396,7 +401,7 @@
     align-items: center;
     gap: 6px;
 
-    font-size: 30px;
+    font-size: 24px;
     font-weight: 700;
 
     user-select: none;
@@ -407,10 +412,10 @@
     justify-content: center;
     align-items: center;
 
-    font-size: 30px;
+    font-size: 24px;
 
-    width: 300px;
-    height: 60px;
+    width: 240px;
+    height: 55px;
 
     border: 2px solid #000;
     border-radius: 12px;
@@ -423,9 +428,9 @@
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+
+    width: 400px;
     
-    width: 450px;
-    height: 150px;
     /* border: 2px solid #000; */
 }
 
@@ -435,7 +440,6 @@
 
 .sum {
     width: 100%;
-    height: 140px;
     /* border: 2px solid #000; */
 
     user-select: none;
@@ -444,8 +448,8 @@
 .sum {
     display: flex;
     /* align-items: center; */
-    justify-content: center;
-    gap: 22px;
+    justify-content: end;
+    gap: 30px;
 
     bottom: 140px;
     right: -130px;
@@ -512,10 +516,9 @@
 
 .order-fav {
     display: flex;
-    justify-content: space-around;
+    justify-content: space-between;
 
     width: 100%;
-    height: 140px;
     /* border: 2px solid #000; */
 }
 
@@ -524,12 +527,11 @@
 /* Кнопка заказать */
 
 .order button {
-    width: 260px;
-    height: 80px;
+    padding: 15px 25px;
     background-color: #FF812C;
     border-radius: 12px;
     color: #fff;
-    font-size: 30px;
+    font-size: 24px;
     font-weight: 700;
 
     user-select: none;
@@ -554,8 +556,6 @@
     justify-content: center;
     align-items: center;
 
-    width: 80px;
-    height: 80px;
 
     border: 2px solid #505050;
     border-radius: 12px;
@@ -563,15 +563,19 @@
     transition: all 200ms;
 
     user-select: none;
+
+    height: 65px;
+    width: 65px;
 }
 
 .fav button {
     display: flex;
     justify-content: center;
     align-items: center;
+
+    width: 65px;
+    height: 65px;
     
-    width: 80px;
-    height: 80px;
 }
 
 .fav:hover {
@@ -584,19 +588,11 @@
 
 
 .favDone {
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    
 
-    width: 80px;
-    height: 80px;
 
     background-color: #FF812C;
-    border-radius: 12px;
-
-    transition: all 200ms;
-
-    user-select: none;
+    
 }
 
 
@@ -616,7 +612,8 @@
 }
 
 .full-description {
-    font-size: 30px;
+    font-size: 24px;
+    text-align: justify;
 }
 
 .full-description span {
@@ -691,7 +688,7 @@
 
     gap: 6px;
 
-    font-size: 30px;
+    font-size: 24px;
     font-weight: 700;
 
     user-select: none;
@@ -701,7 +698,7 @@
 .symbols-count {
     position: absolute;
 
-    font-size: 24px;
+    font-size: 20px;
     color: #959595;
     bottom: 10px;
     right: 10px;
@@ -732,11 +729,11 @@
 /* Кнопка "Отправить (отзыв)" */
 
 .send-comm {
-    width: 270px;
-    height: 75px;
+    width: 240px;
+    padding: 14px 0;
     background-color: #FF812C;
 
-    font-size: 30px;
+    font-size: 24px;
     color: #fff;
 
     border-radius: 12px;
@@ -777,7 +774,7 @@
 }
 
 .sort select {
-    font-size: 28px;
+    font-size: 24px;
 
     color: #fff;
     background-color: #262626;
@@ -785,6 +782,10 @@
     max-width: auto;
     height: 50px;
     padding: 2px 10px 2px 10px;
+}
+
+.sort option {
+    font-size: 20px;
 }
 
 
@@ -805,9 +806,10 @@
 }
 
 .user-name {
-    font-size: 26px;
-    padding: 0 5px 0 5px;
-    width: 244px;
+    font-size: 24px;
+    text-align: center;
+    padding: 5px 0;
+    width: 260px;
     border: 2px solid #000;
     border-radius: 12px;
 }
@@ -843,19 +845,15 @@
 
 @media (max-width: 1600px) {
     .star-price-sum-order-fav {
-        justify-content: start;
-        gap: 250px;
     }
 
     .short-description {
-        width: 100%;
     }
 
 }
 
 @media (max-width: 1500px) {
     .star-price-sum-order-fav {
-        gap: 100px
     }
 
     .sum {
@@ -871,6 +869,32 @@
     }
 }
 
+@media (max-width: 1420px) {
+    .prod-img {
+        width: 300px;
+        height: 280px;
+    }
+
+    .main-info h3 {
+        font-size: 28px;
+    }
+
+    .short-description {
+        font-size: 20px;
+    }
+
+    .product-info {
+        position: relative;
+        padding-bottom: 200px;
+    }
+
+    .star-price-sum-order-fav {
+        position: absolute;
+        left: 0;
+        bottom: 40px;
+    }
+}
+
 @media (max-width: 1355px) {
     .star-price-sum-order-fav {
         gap: 50px;
@@ -878,45 +902,7 @@
 }
 
 @media (max-width: 1300px) {
-    .anc-link {
-        font-size: 24px;
-    }
-
-    .star {
-        font-size: 24px
-    }
-
-    .price {
-        font-size: 24px;
-        width: 200px;
-    }
-
-    .sum {
-        height: 50px;
-    }
-
-    .order-fav {
-        margin-top: 10px;
-    }
-
-    .order button {
-        width: 200px;
-        height: 70px;
-        font-size: 24px
-    }
-
-    .fav {
-        width: 70px;
-        height: 70px;
-    }
-
-    .star-price-sum-order-fav {
-        gap: 0;
-    }
-
-    .star-price {
-        width: 300px;
-    }
+    
 }
 
 @media (max-width: 1265px) {
@@ -925,135 +911,31 @@
     }
 }
 
-@media (max-width: 1230px) {
-    .star-price-sum-order-fav {
-        flex-direction: column;
-        height: 300px;
-    }
-
-    .sum-order-fav {
-        gap: 20px;
-    }
-
-    .sum {
-        justify-content: start;
-    }
-
-    .order-fav {
-        justify-content: start;
-        gap: 70px
-    }
-
-    .product-info {
-        height: auto;
-    }
-
-    .full-description p {
-        font-size: 24px;
+@media (max-width: 1000px) {
+    .main-page-window {
+        padding: 0 20px;
     }
 }
 
 @media (max-width: 900px) {
-    .product-info {
-        position: relative;
-        height: 770px;
-    }
-
-    .star-price-sum-order-fav {
-        position: absolute;
-        bottom: 0px;
-        left: 0;
-
-        flex-direction: row;
-        gap: 130px;
-    }
-
-    .full-description p {
-        font-size: 22px;
-    }
-
-    .rate {
-        /* font-size: 22px; */
-    }
-
-    .symbols-count {
-        font-size: 22px;
-    }
-
-    .send-comm {
-        width: 200px;
-        height: 50px;
-
-        font-size: 22px;
-    }
-
-    .title-sort h2 {
-        font-size: 22px;
-    }
-
-    .sort select {
-        font-size: 22px;
-    }
-
-    .user-name {
-        font-size: 22px;
-        width: 210px;
-    }
+    
 }
 
 @media (max-width: 850px) {
-    .prod-img {
-        width: 330px;
-        height: 330px;
-    }
-
-    .main-info h3 {
-        font-size: 26px;
-    }
-
-    .short-description {
-        font-size: 20px;
-    }
-
-    .product-info {
-        height: 500px;
-    }
-
-    .star-price-sum-order-fav {
-        height: 160px;
-    }
-
-    .your-comment h2 {
-        font-size: 26px;
-    }
+    
 }
 
-@media (max-width: 700px) {
-    .star-price-sum-order-fav {
-        gap: 70px;
-    }
 
-    .prod-img {
-        width: 280px;
-        height: 280px;
-    }
 
-    .product-info {
-        gap: 10px;
-        height: 550px;
-    }
-}
-
-@media (max-width: 640px) {
+@media (max-width: 740px) {
     .product-info {
         align-items: center;
         flex-direction: column;
-        height: 1170px;
     }
 
     .prod-img {
-        width: 500px;
-        height: 500px;
+        width: 350px;
+        height: 350px;
     }
 
     .main-info {
@@ -1069,27 +951,11 @@
         width: 100%;
     }
 
-    .star-price-sum-order-fav {
-        flex-direction: column;
-        gap: 40px;
-
-        position: initial;
-
-        height: auto;
-        align-items: end;
+    
+    .price {
+        font-size: 20px;
     }
-
-    .star-price {
-        align-items: end;
-    }
-
-    .sum {
-        justify-content: end;
-    }
-
-    .order-fav {
-        justify-content: end;
-    }
+    
     
     .full-description {
         padding: 0;
@@ -1120,6 +986,85 @@
     .star {
         font-size: 18px;
     }
+
+    .order button {
+        font-size: 18px;
+    }
+
+    .fav {
+        width: 57px;
+        height: 57px;
+    }
+
+    .fav button {
+        width: 57px;
+        height: 57px;
+    }
+
+    .sum p {
+        font-size: 18px;
+    }
+
+    .buts-count {
+        height: 30px;
+    }
+
+    .buts-count button {
+        height: 30px;
+    }
+
+    .plus-btn {
+        img {
+            width: 16px;
+        }
+    }
+
+    .minus-btn {
+        img {
+            width: 16px;
+        }
+    }
+
+    .buts-count {
+        .count {
+            font-size: 18px;
+            height: 30px;
+        }
+    }
+}
+
+@media (max-width: 640px) {
+    .price {
+        width: 180px;
+    }
+}
+
+@media (max-width: 590px) {
+    .star-price-sum-order-fav {
+        flex-direction: column;
+        bottom: 180px;
+    }
+
+    .order-fav {
+        margin-top: 10px;
+    }
+
+    .sum-order-fav {
+        width: 312px;
+        gap: 15px;
+    }
+
+    .sum {
+        justify-content: start;
+    }
+
+    .main-info {
+        height: 500px;
+    }
+
+    .order-fav {
+    }
+
 }
 
 @media (max-width: 460px) {

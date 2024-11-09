@@ -2,103 +2,297 @@
 export default {
     data() {
         return {
-            isOpen: false,
+            images: [
+                'src/assets/1111.jpeg',
+                'src/assets/112.jpg',
+                'src/assets/123.webp',
+                'src/assets/124.webp',
+                'src/assets/125.webp',
+            ],
+            index: 0,
+            
+            categories: [
+                {
+                    name: 'Электроинструменты',
+                    subItems: [
+                        {
+                            name: 'Дрели',
+                            subSubItems: ['Аккумуляторные дрели', 'Сетевые дрели'],
+                        },
+                        {
+                            name: 'Перфораторы',
+                            subSubItems: ['SDS+', 'SDS Max'],
+                        },
+                    ],
+                },
+                {
+                    name: 'Ручные инструменты',
+                    subItems: [
+                        {
+                            name: 'Молотки',
+                            subSubItems: ['Кувалды', 'Столярные молотки'],
+                        },
+                        {
+                            name: 'Отвертки',
+                            subSubItems: ['Крестовые', 'Плоские'],
+                        },
+                    ],
+                },
+                {
+                    name: 'fffffffffffffffffffff',
+                    subItems: [
+                        {
+                            name: 'fff',
+                            subSubItems: ['fff', 'ffff'],
+                        },
+                        {
+                            name: 'ffffff',
+                            subSubItems: ['fff', 'ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff'],
+                        },
+                    ]
+                },
+                {
+                    name: 'fffffffffffffffffffff',
+                    subItems: [
+                        {
+                            name: 'fff',
+                            subSubItems: ['fff', 'ffff'],
+                        },
+                        {
+                            name: 'ffffff',
+                            subSubItems: ['fff', 'ffffffff'],
+                        },
+                    ]
+                },
+                {
+                    name: 'fffffffffffffffffffff',
+                    subItems: [
+                        {
+                            name: 'fff',
+                            subSubItems: ['fff', 'ffff'],
+                        },
+                        {
+                            name: 'ffffff',
+                            subSubItems: ['fff', 'ffffffff'],
+                        },
+                    ]
+                },
+                {
+                    name: 'fffffffffffffffffffff',
+                    subItems: [
+                        {
+                            name: 'fff',
+                            subSubItems: ['fff', 'ffff'],
+                        },
+                        {
+                            name: 'ffffff',
+                            subSubItems: ['fff', 'ffffffff'],
+                        },
+                    ]
+                },
+                {
+                    name: 'fffffffffffffffffffff',
+                    subItems: [
+                        {
+                            name: 'fff',
+                            subSubItems: ['fff', 'ffff'],
+                        },
+                        {
+                            name: 'ffffff',
+                            subSubItems: ['fff', 'ffffffff'],
+                        },
+                    ]
+                },
+            ],
+            activeCategory: null, // Активная категория
+            activeSubCategory: null, // Активная подкатегория
+
         }
+    },
+
+    
+
+    methods: {
+        
+        selectCategory(index) {
+            this.activeCategory = index;
+            this.activeSubCategory = null; // Сбрасываем подкатегорию при выборе другой категории
+        },
+
+            // Выбор подкатегории
+        selectSubCategory(subIndex) {
+            this.activeSubCategory = subIndex;
+        },
+
+            // Переход к секции
+        goToSection(subSubItem) {
+            console.log('Переход к секции:', subSubItem);
+            // Здесь можно использовать логику для якорного перехода или другой навигации
+        }, 
+    },
+   
+    computed: {
+        
     }
+
+    
 }
 </script>
 
 <template>
-  <div class="category" :class="{ open: this.isOpen }">
-      <ul>
-          <button
-              @click="this.isOpen = !this.isOpen"
-              :class="{ 'btn-open': this.isOpen }"
-              ><img src="../../assets/menu.svg" alt="" />
-          </button>
-          
-          <li class="categ-item item-electro">Электроинструменты</li>
-          <!-- <li class="categ-item"></li> -->
-          <li class="categ-item">Ручные инструменты</li>
-          <li class="categ-item">Крепеж</li>
-          <li class="categ-item">Отделочные материалы</li>
-          <li class="categ-item">Тепловые пушки</li>
-      </ul>
-  </div>
+ <!-- Блок с категориями -->
+<div class="category-container">
+
+    <!-- Список категорий -->
+    <ul class="categories">
+    <li v-for="(category, index) in categories" :key="index">
+        <button @click="selectCategory(index)">{{ category.name }}</button>
+
+        <!-- Список подкатегорий -->
+        <ul class="subMenu" v-if="activeCategory === index">
+        <li v-for="(subCategory, subIndex) in category.subItems" :key="subIndex">
+            <button @click="selectSubCategory(subIndex)">{{ subCategory.name }}</button>
+
+            <!-- Список под-подкатегорий -->
+            <ul class="subsubUl" v-if="activeSubCategory === subIndex">
+            <li class="subsubIt" v-for="(subSubItem, subSubIndex) in subCategory.subSubItems" :key="subSubIndex">
+                <a href="#!" @click="goToSection(subSubItem)">- {{ subSubItem }}</a>
+            </li>
+            </ul>
+        </li>
+        </ul>
+    </li>
+    </ul>
+
+</div>
+ 
 </template>
 
 <style scoped>
-.category {
-  display: flex;
-  justify-content: center;
-  color: #fff;
+/* Блок с категориями */
 
-  margin-top: 10px;
+    .category-container {
+        border-radius: 10px;
+        display: flex;
+        flex-direction: column;
+        padding: 20px;
+        min-width: 300px;
+        background-color: #ff812c;
+    }
 
-  padding: 0 5px 0 5px;
+    .categories {
+        list-style-type: none;
+        padding: 0;
+        display: flex;
+        flex-direction: column
+    }
 
-  width: 250px;
-  height: 750px;
-  background-color: #ff812c;
-  /* border: 2px solid #FF812C; */
-  border-radius: 12px;
+    .categories > li {
+    }
 
-  transition: all 400ms;
+    button {
+        background-color: #ff812c;
+        border: none;
+        padding: 10px;
+        color: white;
+        cursor: pointer;
+        border-radius: 5px;
+    }
 
+    .subMenu {
+        background-color: #e57123;
+        border-top: 2px solid #fff;
+        border-bottom: 2px solid #fff;
+    }
 
-}
+    .subsubIt {
+        margin-bottom: 10px;   
 
-.category ul {
-  display: flex;
-  flex-direction: column;
+        width: 100%;
+        max-height: 30vh;
+        overflow-wrap: break-word;
+        word-break: break-all;
+        overflow-y: hidden;
+    }
 
-  gap: 5px;
+    
 
-  margin-top: 10px;
-}
+    .subsubIt a {
+        color: #000;
+        padding-left: 0;
+    }
 
-.categ-item {
-  cursor: pointer;
-  font-size: 16px;
-}
+    .subsubUl {
+        background-color: #fff;
+        margin: 5px 15px;
+        border-radius: 4px;
+        padding: 10px 20px;
+    }
 
+    .subsubIt:last-child {
+        margin-bottom: 0px;
+    }
 
-.category.open {
-  margin-left: 0px;
-  border-radius: 15px;
-  padding: 10px 40px 0 10px;
-  width: 250px;
-  position: absolute;
-}
+    .subMenu button ul {
+    }
 
-.btn-open {
-  position: absolute;
-  margin-left: 180px !important;
-  margin-top: -10px;
-}
+    .subMenu button {
+        background-color: #e57123;
+    }
 
-@media (min-width: 800px) {
-  .category button {
-    display: none;
-  }
-}
+    button:hover {
+        background-color: #e96f1c;
+    }
 
-@media (max-width: 800px) {
-  .category button {
-    margin-left: 200px;
-    position: absolute;
-  }
+    
 
-  .category {
-    width: 300px;
-    margin-left: -255px;
-    padding: 0;
-    /* width: 50px; */
-    border-radius: 0 10px 15px 0;
-    position: absolute;
-    z-index: 52;
+    ul {
+        list-style-type: none;
+    }
 
-    transition: all 400ms;
-  }
-}
+    a {
+        text-decoration: none;
+        color: #fff;
+        padding: 10px;
+        padding-left: 20px;
+        cursor: pointer;
+    }
+
+    a:hover {
+    }
+
+    @media (max-width: 900px) {
+        
+
+        .category-container {
+            width: 95%;
+            flex-direction: row;
+        }
+
+        .categories {
+            flex-direction: row;
+            flex-wrap: wrap;
+        }
+
+        
+
+        .submenu {
+            height: auto;
+            width: 210px;
+            left: 0;
+            top: 32px;
+        }
+
+        .category ul {
+            flex-direction: row;
+            gap: 20px;
+            flex-wrap: wrap;
+            justify-content: start;
+            height: auto;
+        }
+
+        .subsubIt {
+            width: 200px;
+        }
+    }
 </style>

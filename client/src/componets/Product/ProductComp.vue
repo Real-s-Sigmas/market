@@ -36,7 +36,8 @@ export default {
 }
 
 .product-name {
-  font-size: 27px;
+  font-size: 24px;
+  text-align: center;
   font-weight: 450;
   color: #505050;
 }
@@ -45,7 +46,7 @@ export default {
   color: #fff;
   background-color: #ff812c;
   height: 50px;
-  font-size: 30px;
+  font-size: 24px;
   border-radius: 12px;
 }
 @media (max-width: 800px) {

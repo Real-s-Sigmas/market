@@ -73,7 +73,6 @@ export default {
   left: 5px;
 }
 .btn {
-  position: absolute;
   top: 77px;
   font-family: var(--font-family);
   font-weight: 700;
@@ -90,7 +89,6 @@ export default {
   z-index: 7000;
 }
 .btn:disabled {
-  position: absolute;
   top: 77px;
   font-family: var(--font-family);
   font-weight: 700;
@@ -126,7 +124,7 @@ export default {
   min-height: 600px;
 }
 .input {
-  margin-bottom: 40px;
+  margin-bottom: 20px;
   border-radius: 15px;
   width: 430px;
   height: 60px;
@@ -156,7 +154,7 @@ export default {
   width: 115px;
 }
 .input {
-  margin-bottom: 40px;
+  margin-bottom: 20px;
   border-radius: 15px;
   width: 430px;
   height: 60px;
