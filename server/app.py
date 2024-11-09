@@ -60,9 +60,38 @@ def add_tables():
         cursor = pg.cursor(cursor_factory=psycopg2.extras.DictCursor)
 
         cursor.execute(f"""create table if not exists users(
-                        id uuid,
+                        id uuid ,
                         username text,
                         email text,
+                        data_c timestamp
+                    )""")
+        
+        cursor.execute(f"""create table if not exists items(
+                        id uuid UNIQUE,
+                        title text VARCHAR(30),
+                        descriptions text,
+                        price float,
+                        photos []text,
+                        topic text, 
+                        data_c timestamp
+                    )""")
+        
+
+        cursor.execute(f"""create table if not exists orders (
+                        id uuid UNIQUE,
+                        ids []text,
+                        id_user uuid,
+                        comment VARCHAR(100),
+                        contacts VARCHAR(50),
+                        data_c timestamp
+                    )""")
+        
+        cursor.execute(f"""create table if not exists comments(
+                        id uuid UNIQUE,
+                        id_user uuid,
+                        id_item uuid,
+                        contetnt VARCHAR(333),
+                        stars TINYINT,
                         data_c timestamp
                     )""")
 
