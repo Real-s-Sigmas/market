@@ -63,6 +63,7 @@ def add_tables():
                         id uuid ,
                         username text,
                         email text,
+                        admin bool,
                         data_c timestamp
                     )""")
         
@@ -79,10 +80,11 @@ def add_tables():
 
         cursor.execute(f"""create table if not exists orders (
                         id uuid UNIQUE,
-                        ids []text,
+                        ids_items []text,
                         id_user uuid,
                         comment VARCHAR(100),
                         contacts VARCHAR(50),
+                        status text,
                         data_c timestamp
                     )""")
         
@@ -90,7 +92,7 @@ def add_tables():
                         id uuid UNIQUE,
                         id_user uuid,
                         id_item uuid,
-                        contetnt VARCHAR(333),
+                        content VARCHAR(333),
                         stars TINYINT,
                         data_c timestamp
                     )""")
@@ -105,8 +107,6 @@ def add_tables():
             cursor.close
             pg.close
             logging.info("Соединение с PostgreSQL закрыто")
-    
-
     
 
 from user import * 
