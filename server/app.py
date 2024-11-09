@@ -110,6 +110,10 @@ def add_tables():
     
 
 from user import * 
+from other import *
+from admin import *
+from comments import *
+from items import *
 
 
 if __name__ == '__main__':
