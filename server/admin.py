@@ -4,6 +4,7 @@ from app import app, PASSWORD_PG, PORT_PG, USER_PG, HOST_PG, MEDIA, AVATAR
 from flask import Flask, jsonify, request, session, make_response, send_from_directory
 from psycopg2 import extras, Error
 from typing import Union, Optional, Tuple
+from check import chek_for_admin
 
 logging.basicConfig(
     level=logging.DEBUG,
@@ -90,13 +91,13 @@ def OneOrder(id_user: str) -> Union[list, str]:
             logging.info("Соединение с PostgreSQL закрыто")
             return return_data
 
-@app.route('admin/order', methods=['GET'])
+@app.route('/admin/order', methods=['GET'])
+@chek_for_admin
 def one_order():
     responce_object = {'status': 'success'}
 
-    if check.IsAdmin():
-        responce_object['res'] = OneOrder(request.args.get('id'))
-    else:
-        responce_object["res"] = "Not Admin"
+
+    responce_object['res'] = OneOrder(request.args.get('id'))
+
 
     return jsonify(responce_object)

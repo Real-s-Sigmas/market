@@ -5,6 +5,7 @@ from flask import Flask, jsonify, request, session, make_response, send_from_dir
 from psycopg2 import extras, Error
 from typing import Union, Optional, Tuple
 from datetime import datetime
+from check import chek_for_user
 
 logging.basicConfig(
     level=logging.DEBUG,
@@ -52,6 +53,7 @@ def AddComment(id_user: str, id_item: str, content: str, stars: int) -> str:
 
 
 @app.route('/comments/add-comment', methods=['POST'])
+@chek_for_user
 def add_comment():
     responce_object = {'status': 'success'}
 

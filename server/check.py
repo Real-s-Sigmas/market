@@ -5,6 +5,7 @@ from psycopg2 import extras, Error
 from flask import Flask, jsonify, request, session, make_response, send_from_directory
 from flask_cors import CORS
 from datetime import datetime
+from functools import wraps
 
 logging.basicConfig(
     level=logging.DEBUG,
@@ -68,3 +69,19 @@ def EscapeQuotes(text):
 
 def UnescapeQuotes(text):
     return text.replace("''", "'")
+
+def chek_for_admin(func):
+    @wraps(func)
+    def wrapper(*args, **kwargs):
+        if session.get("isAdmin") == True:
+            func(*args, **kwargs)
+        else: return jsonify({"status": "success", "res": "Not Admin"}), 400
+    return wrapper
+
+def chek_for_user(func):
+    @wraps(func)
+    def wrapper(*args, **kwargs):
+        if "id" in session:
+            func(*args, **kwargs)
+        else: return jsonify({"status": "success", "res": "Not Admin"}), 400
+    return wrapper

@@ -4,6 +4,8 @@ from psycopg2 import Error
 from flask import jsonify, request
 from typing import Union
 from app import *
+from app import app, PASSWORD_PG, PORT_PG, USER_PG, HOST_PG, MEDIA, AVATAR
+from check import chek_for_admin
 
 logging.basicConfig(
     level=logging.DEBUG,
@@ -26,7 +28,7 @@ def PostItem(title: str, description: str, price: int, photos: list, topic: str)
         """)
 
         cursor = pg.cursor(cursor_factory=psycopg2.extras.DictCursor)
-        photos_links = getPhotos(photos)
+        photos_links = GetPhotos(photos)
 
         id = uuid.uuid4().hex
         cursor.execute(f"INSERT INTO itemes(id, title, description, price, photos, topic) VALUES('{id}', '{title}', '{description}', '{price}', '{photos_links}', '{topic}')")
@@ -45,8 +47,9 @@ def PostItem(title: str, description: str, price: int, photos: list, topic: str)
             logging.info("Соединение с PostgreSQL закрыто")
             return return_data
 
-#TODO: декоратор проверки на админа
+
 @app.route("/items/new_item", methods=["POST"])
+@chek_for_admin
 def new_item():
     response_object = {'status': 'success'} #БаZа
     
@@ -93,8 +96,8 @@ def PutItem(title: str, description: str, price: int, photos: list, topic: str, 
             return return_data
 
 
-#TODO: декоратор проверки на админа
 @app.route("/items/change-item", methods=["PUT"])
+@chek_for_admin
 def change_item():
     response_object = {'status': 'success'} #БаZа
 
@@ -141,8 +144,8 @@ def DeleteItem(id: str) -> str:
             return return_data
  
 
-#TODO: декоратор проверки на админа
 @app.route("/items/delete-item", methods=["PUT"])
+@chek_for_admin
 def delete_item():
     response_object = {'status': 'success'} #БаZа
 
@@ -190,8 +193,8 @@ def NewTopic(name: str, base: str) -> str:
             return return_data
 
 
-#TODO: декоратор проверки на админа
 @app.route("/items/new-topic", methods=["PUT"])
+@chek_for_admin
 def new_topic():
     response_object = {'status': 'success'} #БаZа
 
@@ -239,6 +242,7 @@ def DeleteTopic(id: str) -> str:
 
 
 @app.route("/items/delete-topic", methods=["PUT"])
+@chek_for_admin
 def delete_topic():
     response_object = {'status': 'success'} #БаZа
 
@@ -254,7 +258,7 @@ def delete_topic():
     return jsonify(response_object), 200
 
 
-def PutTopic(id: str, name: str, link_old: str) -> str:
+def PutTopic(id: str, name: str, link_old: str, link_new: bool) -> str:
     try:
         pg = psycopg2.connect(f"""
             host={HOST_PG}
@@ -265,7 +269,7 @@ def PutTopic(id: str, name: str, link_old: str) -> str:
         """)
 
         cursor = pg.cursor(cursor_factory=psycopg2.extras.DictCursor)
-        link = link_old if link_new=="" else check.PutPhoto(check.NewLink(id, "topic-phoyos"), link_old)
+        link = link_old if link_new else check.PutPhoto(check.NewLink(id, "topic-phoyos"), link_old)
 
         cursor.execute(f"UPDATE itemes(id, title, description, price, photos, topic) SET('{id}', '{name}', '{link}')")
 
@@ -285,14 +289,14 @@ def PutTopic(id: str, name: str, link_old: str) -> str:
             return return_data
 
 
-#TODO: декоратор проверки на админа
 @app.route("/items/change-item", methods=["PUT"])
+@chek_for_admin
 def change_topic():
     response_object = {'status': 'success'} #БаZа
 
     post_data = request.get_json()
 
-    res = PutTopic(post_data.get("id"), post_data.get("name"), post_data.get("link_old"))
+    res = PutTopic(post_data.get("id"), post_data.get("name"), post_data.get("link_old"), post_data.get("link_new"))
 
     if res == "Error":
         response_object["res"] = "Server Err"
@@ -333,7 +337,7 @@ def GetItems() -> Union[list, str]:
 def get_topics():
     response_object = {'status': 'success'} #БаZа
 
-    post_data = request.get_json()
+    # post_data = request.get_json()
 
     res = GetItems()
 
