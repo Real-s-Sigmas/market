@@ -6,7 +6,7 @@ from typing import Union
 from app import *
 from app import app, PASSWORD_PG, PORT_PG, USER_PG, HOST_PG, MEDIA, AVATAR
 from check import chek_for_admin
-
+import check
 logging.basicConfig(
     level=logging.DEBUG,
     format="%(asctime)s %(levelname)s %(message)s",
