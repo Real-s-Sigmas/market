@@ -76,7 +76,7 @@ export default {
 }
 
 
-@media (max-width: 800px) {
+@media (max-width: 1030px) {
     .info-card {
         flex-direction: column;
         position: relative;
@@ -101,14 +101,19 @@ export default {
     }
 }
 
+@media (max-width: 528px) {
+    .del-btn {
+    }
+}
+
 .del-btn {
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 250px;
     height: 50px; 
     border-radius: 12px;
     border: 2px solid #000000;
+    padding: 10px 10px;
 
     font-size: 22px;
 
