@@ -55,8 +55,8 @@ export default {
                         </div>
                     </div>
                     <div class="actions flex gap-3">
-                        <button class="del-btn mt-4" @click='deleteProduct(product.id)'>Удалить из корзины</button>
-                        <button class="order-btn mt-4" @click='this.$router.push(`/Product/${product.id}`)'>К товару</button>
+                        <button class="del-btn" @click='deleteProduct(product.id)'>Удалить из корзины</button>
+                        <button class="order-btn" @click='this.$router.push(`/Product/${product.id}`)'>К товару</button>
                     </div>
                 </div>
             </div>
@@ -75,6 +75,10 @@ export default {
   justify-content: end;
 }
 
+.actions {
+    height: 80px;
+    margin-top: 45px;
+}
 
 @media (max-width: 1030px) {
     .info-card {
@@ -115,7 +119,7 @@ export default {
     border: 2px solid #000000;
     padding: 10px 10px;
 
-    font-size: 22px;
+    font-size: 18px;
 
     transition: all 200ms;
 

@@ -225,7 +225,7 @@ export default {
 
     /* Главное окно */
     .main-page-window {
-        margin: 0 20px 0 20px;
+        padding: 0 20px 0 20px;
         display: flex;
         flex-direction: column;
         
@@ -361,6 +361,7 @@ export default {
         padding: 20px;
         min-width: 300px;
         background-color: #ff812c;
+        margin-top: 30px;
     }
 
     .categories {
@@ -495,8 +496,12 @@ export default {
             display: none;
         }
 
+        .category-and-banner {
+            justify-content: center;
+        }
+
         .category-container {
-            width: 95%;
+            width: 100%;
             flex-direction: row;
         }
 
