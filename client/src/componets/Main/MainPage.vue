@@ -261,9 +261,13 @@ export default {
 
     .find-btn {
         border: 2px solid #ff812c;
-    border-radius: 12px;
+        border-radius: 12px;
+        
+        padding: 0;
 
-        width: 100px;
+        font-size: 18px;
+
+        width: 150px;
         height: 42px;
 
         transition: all 100ms;

@@ -19,8 +19,7 @@ export default {
 <template>
     <div class="header" :class="{'open': this.isOpen}">
         <div class="div-ob logo-title cursor-pointer" @click="this.$router.push('/')">
-            <img src="../../assets/icons/logo.svg" width="50" alt="СИР">
-            <p class="title">Строительство и Ремонт</p>
+            <img width="400" src="../../assets/icons/logoMarket.svg" alt="">
         </div>
         <div class="links">
             <button class="link-btn" @click="this.$router.push('/')">Главная</button>
@@ -82,6 +81,7 @@ export default {
     .link-btn {
         width: 160px;
         height: 50px;
+        font-size: 18px;
 
         border-radius: 12px;
 
