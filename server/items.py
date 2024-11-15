@@ -289,7 +289,7 @@ def PutTopic(id: str, name: str, link_old: str, link_new: bool) -> str:
             return return_data
 
 
-@app.route("/items/change-item", methods=["PUT"])
+@app.route("/items/change-topic", methods=["PUT"])
 @chek_for_admin
 def change_topic():
     response_object = {'status': 'success'} #БаZа
