@@ -71,6 +71,11 @@ const router = createRouter({
       path: "/basket",
       name: "MyBasket",
       component: () => import("../componets/orders/BasketPage.vue")
+    },
+    {
+      path: "/notfound",
+      name: "NotFound",
+      component: () => import("../componets/reuse/NotFound.vue")
     }
   ],
 });
