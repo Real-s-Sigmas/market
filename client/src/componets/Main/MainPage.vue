@@ -168,388 +168,190 @@ export default {
     <!-- Главное окно -->
     <div class="main-page-window">
 
-        <!-- Строка поиска -->
+        <!-- Блок поиска -->
         <div class="search">
-            <input type="text" name="" id="" class="search-inp" />
-            <button class="find-btn">Найти</button>
+            <input type="text">
+            <button class="search-find">Найти</button>
         </div>
 
-        <!-- Блок с категориями и баннером -->
-        <div class="category-and-banner">
-
-            <!-- Блок с категориями -->
-            <div class="category-container">
-
-                <!-- Список категорий -->
-                <ul class="categories">
-                <li v-for="(category, index) in categories" :key="index">
-                    <button @click="selectCategory(index)">{{ category.name }}</button>
-
-                    <!-- Список подкатегорий -->
-                    <ul class="subMenu" v-if="activeCategory === index">
-                    <li v-for="(subCategory, subIndex) in category.subItems" :key="subIndex">
-                        <button @click="selectSubCategory(subIndex)">{{ subCategory.name }}</button>
-
-                        <!-- Список под-подкатегорий -->
-                        <ul class="subsubUl" v-if="activeSubCategory === subIndex">
-                        <li class="subsubIt" v-for="(subSubItem, subSubIndex) in subCategory.subSubItems" :key="subSubIndex">
-                            <a href="#!" @click="goToSection(subSubItem)">- {{ subSubItem }}</a>
-                        </li>
-                        </ul>
-                    </li>
-                    </ul>
-                </li>
-                </ul>
-
-            </div>
-            <!-- Блок с баннером -->
-            <div class="banner">
-                <button class="left-btn" @click="minus"><</button>
-                <img :src="images[index]" alt="">
-                <button class="right-btn" @click="plus">></button>
-            </div>
+        <!-- Блок приветствия -->
+        <div class="greeting">
+            <h1>Сайт интернет-магазина <br> по <span>С</span>троительству <span>и</span> <span>Р</span>емонту</h1>
+            <h5>У нас вы найдете <span>большой</span> ассортимент товаров, который поможет <span>быстро</span><br> закончить ваш ремонт.</h5>
+            <button>Посмотреть каталог</button>
         </div>
     </div>
 </template>
 
 <style scoped>
-
-    /* TESTS */
-    .test {
-        width: 200px;
-        height: 200px;
-        background-color: #a5a5a5;
-
-        display: none;
-    }
-
     /* Главное окно */
     .main-page-window {
-        padding: 0 20px 0 20px;
+        padding: 0 100px 0 100px;
+        
         display: flex;
         flex-direction: column;
-        
-        width: 100%;
-        height: auto;
-
-    }
-
-
-    /* Строка поиска */
-    .search {
-        display: flex;
-        justify-content: center;
+        justify-content: start;
         align-items: center;
-        gap: 60px;
-
-        width: 100%;
-        height: 55px;
-
-        /* Убрать потом */
-        /* border: 2px solid #000; */
-    }
-
-    .search-inp {
-        outline: none;
-        border: 2px solid #ff812c;
-        border-radius: 12px;
-        padding: 0 20px 0 20px;
-
-        width: 800px;
-        height: 42px;
-    }
-
-    .find-btn {
-        border: 2px solid #ff812c;
-        border-radius: 12px;
-        
-        padding: 0;
-
-        font-size: 18px;
-
-        width: 150px;
-        height: 42px;
-
-        transition: all 100ms;
-    }
-
-    .find-btn:hover {
-        background-color: #ff812c;
-        color: #fff;
-    }
-
-    .find-btn:active {
-        background-color: #d95700;
-        border-color: #d95700;
-    }
-
-
-    /* Категория и баннер */
-    .category-and-banner {
-        display: flex;
-        justify-content: space-between;
         gap: 100px;
-
-    }
-
-
-    /* Блок с баннерoм */
-    .banner {
-        display: flex;
-        justify-content: center;
-        align-items: center;
         
-        margin-top: 30px;
-        width: 1000px;
-        height: 600px;
-        border: 2px solid #000;
-        /* background-color: #ff812c; */
-        border-radius: 14px;
-
-        margin-right: 280px;
-
-        position: relative;
+        width: 100%;
+        height: 100vh;
     }
 
-    .banner img {
+    .search {
+       margin-top: 40px;
+       width: 55%; 
+       
+       display: flex;
+       justify-content: center;
+       align-items: center;
 
-        border: 2px solid #000;
+       gap: 55px;
 
-        object-fit: cover;
-        width: 985px;
-        height: 585px;
+       input {
+           border: 2px solid #ff812c;
+           border-radius: 12px;
+           width: 720px;
+           height: 45px;
+       }
 
-        border-radius: 12px;
+       .search-find {
+           padding: 10.5px 42px;
+           border-radius: 50px;
+           background-color: #ff812c;
+           color: #fff;
+       }
     }
 
-    .banner button {
-        position: absolute;
-        top: 50%;
-        border-top: 2px solid #000;
-        border-bottom: 2px solid #000;
-        z-index: 100;
-        color: #000;
-
-        background-color: #fff;
-
-
-        font-size: 35px;
-        font-weight: 200;
-
-        width: 120px;
-        height: 80px;
-
-    }
-
-    .left-btn {
-        border-right: 2px solid #000;
-
-        border-radius: 0 12px 12px 0;
-        left: 6px;
-    }
-    
-    .right-btn { 
-        border-left: 2px solid #000;
-
-        border-radius: 12px 0 0 12px;
-        right: 5px;
-    }
-
-
-    /* Блок с категориями */
-
-    .category-container {
-        border-radius: 10px;
+    .greeting {
         display: flex;
         flex-direction: column;
-        padding: 20px;
-        min-width: 300px;
-        background-color: #ff812c;
-        margin-top: 30px;
-    }
+        align-items: center;
+        gap: 64px;
+        
+        h1 {
+            font-size: 64px;
+            font-weight: 400;
+            text-align: center;
+            color: #2b2b2b;
 
-    .categories {
-        list-style-type: none;
-        padding: 0;
-        display: flex;
-        flex-direction: column
-    }
-
-    .categories > li {
-    }
-
-    button {
-        background-color: #ff812c;
-        border: none;
-        padding: 10px;
-        color: white;
-        cursor: pointer;
-        border-radius: 5px;
-    }
-
-    .subMenu {
-        background-color: #e57123;
-        border-top: 2px solid #fff;
-        border-bottom: 2px solid #fff;
-    }
-
-    .subsubIt {
-        margin-bottom: 10px;   
-
-        width: 100%;
-        max-height: 30vh;
-        overflow-wrap: break-word;
-        word-break: break-all;
-        overflow-y: hidden;
-    }
-
-    
-
-    .subsubIt a {
-        color: #000;
-        padding-left: 0;
-    }
-
-    .subsubUl {
-        background-color: #fff;
-        margin: 5px 15px;
-        border-radius: 4px;
-        padding: 10px 20px;
-    }
-
-    .subsubIt:last-child {
-        margin-bottom: 0px;
-    }
-
-    .subMenu button ul {
-    }
-
-    .subMenu button {
-        background-color: #e57123;
-    }
-
-    button:hover {
-        background-color: #e96f1c;
-    }
-
-    
-
-    ul {
-        list-style-type: none;
-    }
-
-    a {
-        text-decoration: none;
-        color: #fff;
-        padding: 10px;
-        padding-left: 20px;
-        cursor: pointer;
-    }
-
-    a:hover {
-    }
-
-
-    /* АДАПТИВКА */
-
-    @media (max-width: 1550px) {
-        .banner {
-            margin-right: 100px;
-        }
-    }
-
-    @media (max-width: 1450px) {
-        .left-btn {
-            border-left: 2px solid #000;
-            left: 0;
+            span {
+                color: #ff812c;
+                font-weight: 600;
+            }
         }
 
-        .right-btn {
-            border-right: 2px solid #000;
-            right: 0;
+        h5 {
+            font-size: 32px;
+            text-align: center;
+            color: #2b2b2b;
+
+            span {
+                color: #ff812c;
+                font-weight: 600;
+            }
         }
+
+        button {
+            width: 715px;
+            height: 75px;
+            background-color: #ff812c;
+            color: #fff;
+            border-radius: 50px;
+
+            font-size: 30px;
+            font-weight: 600;
+        }
+
+        
     }
 
-    @media (max-width: 1060px) {
+    @media (max-width: 1250px) {
         .search {
-            gap: 40px;
-            /* margin-right: 80px; */
+            width: 80%;
         }
 
-        .search-inp {
-            width: 600px;
-        }
+        .greeting {
+            h1 {
+                font-size: 50px;
+            }
 
+            h5 {
+                font-size: 24px;
+            }
+
+            button {
+                width: 580px;
+                height: 60px;
+                font-size: 26px;
+            }
+        }
     }
 
     @media (max-width: 1000px) {
-        .banner img {
-            width: 600px;
-            height: 585px;
-        }
-
-        .banner button {
-            width: 100px;
-            height: 70px;
-            font-size: 30px;
-        }
-    }
-
-    @media (max-width: 900px) {
-        .banner {
-            display: none;
-        }
-
-        .category-and-banner {
-            justify-content: center;
-        }
-
-        .category-container {
-            width: 100%;
-            flex-direction: row;
-        }
-
-        .categories {
-            flex-direction: row;
-            flex-wrap: wrap;
-        }
-
-        
-
-        .submenu {
-            height: auto;
-            width: 210px;
-            left: 0;
-            top: 32px;
-        }
-
-        .category ul {
-            flex-direction: row;
-            gap: 20px;
-            flex-wrap: wrap;
-            justify-content: start;
-            height: auto;
-        }
-
-        .subsubIt {
-            width: 200px;
-        }
-    }
-
-
-    @media (max-width: 850px) {
         .search {
-            width: 95%;
+            position: absolute;
+            top: -10px;
+            gap: 15px;
+
+            input {
+                width: 70%;
+            }
         }
 
-        .search-inp {
-            width: 400px;
+        .greeting {
+            margin-top: 60px;
         }
     }
 
-    @media (max-width: 450px) {
-        .search {
-            gap: 10px;
+    @media (max-width: 775px) {
+        .search  {
+            input {
+                width: 50%;
+            }
+
+            .search-find {
+                padding: 8px 20px;
+            }
+        }
+
+        .greeting {
+            h1 {
+                font-size: 34px;
+            }
+
+            h5 {
+                font-size: 20px;
+            }
+
+            button {
+                width: 400px;
+                font-size: 20px;
+            }
+        }
+
+        .main-page-window {
+            padding: 0 40px;
+        }
+    }
+
+    
+
+    
+    @media (max-width: 500px) {
+        .greeting {
+            button {
+                width: 280px;
+                font-size: 18px;
+            }
+        }
+    }
+    
+    @media (max-width: 400px) {
+        .search  {
+            input {
+                width: 28%;
+            }
         }
     }
 

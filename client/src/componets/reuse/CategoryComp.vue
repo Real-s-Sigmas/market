@@ -140,32 +140,30 @@ export default {
 </script>
 
 <template>
- <!-- Блок с категориями -->
-<div class="category-container">
+    <div class="category-container">
 
-    <!-- Список категорий -->
-    <ul class="categories">
-    <li v-for="(category, index) in categories" :key="index">
-        <button @click="selectCategory(index)">{{ category.name }}</button>
+        <!-- Список категорий -->
+        <ul class="categories">
+        <li v-for="(category, index) in categories" :key="index">
+            <button @click="selectCategory(index)">{{ category.name }}</button>
 
-        <!-- Список подкатегорий -->
-        <ul class="subMenu" v-if="activeCategory === index">
-        <li v-for="(subCategory, subIndex) in category.subItems" :key="subIndex">
-            <button @click="selectSubCategory(subIndex)">{{ subCategory.name }}</button>
+            <!-- Список подкатегорий -->
+            <ul class="subMenu" v-if="activeCategory === index">
+            <li v-for="(subCategory, subIndex) in category.subItems" :key="subIndex">
+                <button @click="selectSubCategory(subIndex)">{{ subCategory.name }}</button>
 
-            <!-- Список под-подкатегорий -->
-            <ul class="subsubUl" v-if="activeSubCategory === subIndex">
-            <li class="subsubIt" v-for="(subSubItem, subSubIndex) in subCategory.subSubItems" :key="subSubIndex">
-                <a href="#!" @click="goToSection(subSubItem)">- {{ subSubItem }}</a>
+                <!-- Список под-подкатегорий -->
+                <ul class="subsubUl" v-if="activeSubCategory === subIndex">
+                <li class="subsubIt" v-for="(subSubItem, subSubIndex) in subCategory.subSubItems" :key="subSubIndex">
+                    <a href="#!" @click="goToSection(subSubItem)">- {{ subSubItem }}</a>
+                </li>
+                </ul>
             </li>
             </ul>
         </li>
         </ul>
-    </li>
-    </ul>
 
-</div>
- 
+    </div>
 </template>
 
 <style scoped>
@@ -178,6 +176,7 @@ export default {
         padding: 20px;
         min-width: 300px;
         background-color: #ff812c;
+        margin-top: 30px;
     }
 
     .categories {
@@ -259,9 +258,7 @@ export default {
     }
 
     a:hover {
-    }
-
-    @media (max-width: 900px) {
+    }    @media (max-width: 900px) {
         
 
         .category-container {
