@@ -13,7 +13,7 @@ logging.basicConfig(
     datefmt="%Y—%m—%d %H:%M:%S",
 )
 
-
+#TODO:
 def GetPhotos(photos: list) -> list:
     pass
 

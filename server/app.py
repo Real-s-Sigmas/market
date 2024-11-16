@@ -64,7 +64,7 @@ def add_tables():
                         username text,
                         email text,
                         admin bool,
-                        data_c timestamp
+                        date_create timestamp
                     )""")
         
         cursor.execute(f"""create table if not exists items(
@@ -74,7 +74,7 @@ def add_tables():
                         price float,
                         photos []text,
                         topic text, 
-                        data_c timestamp
+                        date_create timestamp
                     )""")
         
 
@@ -85,7 +85,7 @@ def add_tables():
                         comment VARCHAR(100),
                         contacts VARCHAR(50),
                         status text,
-                        data_c timestamp
+                        date_create timestamp
                     )""")
         
         cursor.execute(f"""create table if not exists comments(
@@ -94,9 +94,10 @@ def add_tables():
                         id_item uuid,
                         content VARCHAR(333),
                         stars TINYINT,
-                        data_c timestamp
+                        date_create timestamp
                     )""")
 
+        #TODO: orders table
         pg.commit()
     except (Exception, Error) as error:
         logging.error(f'DB: ', error)
