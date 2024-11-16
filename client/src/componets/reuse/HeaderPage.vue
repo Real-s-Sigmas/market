@@ -62,7 +62,7 @@ export default {
     <div class="two-blocks" :class="{close: this.isOpen}">
         <div class="bl block-link">
             <button class="link-btn" @click="this.$router.push('/')">Главная</button>
-            <button class="link-btn" @click="this.$router.push('/')">Каталог</button>
+            <button class="link-btn" @click="this.$router.push('/catalog')">Каталог</button>
             <button class="link-btn" @click="this.$router.push('/aboutus')">О нас</button>
         </div>
         <div class="bl block-btns">
@@ -89,6 +89,10 @@ export default {
 </template>
 
 <style scoped>
+    button {
+        border: none;
+    }
+
     .two-blocks {
         display: flex;
         flex-direction: column;
