@@ -13,12 +13,12 @@ export default {
                 fullDescription: ``,
             },
 
-            topics: [],
+            topics: [`Инструменты`, `балабардааа`],
         }
     },
 
     mounted() {
-        this.getTopics();
+        // this.getTopics();
     },
 
     methods: {
@@ -38,33 +38,38 @@ export default {
 
 
 <template>
-    <form @submit.prevent='addProduct' class="post-container xl:mx-12 flex flex-col mt-16">
-        <div class="up-info flex xl:gap-20 justify-center">
+    <form @submit.prevent='addProduct' class="post-container xl:mx-12 mx-0 flex flex-col mt-16">
+        <div class="up-info flex xl:gap-16 justify-between">
             <div class="image-container input-file border-black border-2 py-20 rounded-xl flex justify-center items-center select-none" role='button'>
                 <input type="file" name="file">
                 <span>+</span>
             </div>
-            <div class="flex flex-col gap-2 text-5xl font-semibold">
-                <label for="title">Название:</label>
-                <input type="text" id='title' v-model='form.title' class='mb-5'>
-                <label for="title">Краткое описание:</label>
-                <input type="text" id='title' v-model='form.description'>
+            <div class="main-info-block flex flex-col">
+                <div class="main-inputs-block flex flex-row xl:gap-16">
+                    <div class="flex flex-col gap-2 text-5xl font-semibold flex-1">
+                        <label for="title">Название:</label>
+                        <input type="text" id='title' v-model='form.title' class='mb-5'>
+                    </div>
+                    <select class='text-4xl font-semibold px-10' v-model='form.topic' >
+                        <option selected value="">Категория</option>
+                        <option :value="topic" v-for='topic in topics'>{{ topic }}</option>
+                    </select>
+                </div>
+                <div class="text-5xl font-semibold">
+                    <label for="desc_short">Краткое описание:</label>
+                    <textarea class='short-desc border border-black mt-3' rows='10' type="text" id='desc_short' v-model='form.description'></textarea>
+                </div>
             </div>
-            <select class='text-5xl' v-model='form.topic' >
-                <option selected value="">Категория</option>
-                <!-- v-for='topic in topics' -->
-                <!-- <option value="topic">{{ topic }}</option> -->
-            </select>
         </div>
         <div class="m-c flex flex-col">
             <label for="fullDescription" class='text-5xl font-semibold mt-16'>Подробное описание:</label>
-            <textarea id='fullDescription' rows='7' v-model='form.fullDescription' class='border-2 border-black mt-3 p-1 rounded'></textarea>
+            <textarea id='fullDescription' rows='10' v-model='form.fullDescription' class='border-2 border-black mt-3 p-1 rounded'></textarea>
         </div>
         <div class="price-block m-c flex flex-col">
             <label for="price" class='text-5xl font-semibold mt-16'>Цена товара:</label>
             <div class="flex gap-3">
                 <input id='price' v-model='form.price' class='price border-2 border-black mt-3 p-1'>
-                <span class='font-semibold relative'>₽ <div class="minus absolute">-</div></span>
+                <span class='font-semibold relative'>Р</span>
             </div>
         </div>
     </form>
@@ -110,16 +115,14 @@ export default {
 
 select {
     margin-top: 50px;
-    height: 90px;
+    height: 80px;
     background-color: #FF812C;
     color: #fff;
     border-radius: 10px;
-    padding: 15px;
 }
 
-input {
+input, textarea {
     width: 100%;
-    height: 80px;
     padding: 5px;
 
     font-size: 20px;
@@ -129,11 +132,56 @@ input {
     border-radius: 5px;
 }
 
+input {
+    height: 80px;
+}
+
+.short-desc {
+    width: 100%;
+}
+
 .image-container {
-    height: 300px;
-    width: 30%;
+    height: 433px;
+    width: 433px;
     font-size: 250px;
     font-weight: 100;
+}
+@media (min-width: 1400px) {
+    
+    .up-info {
+        margin: 0 185px;
+    }
+
+    .main-info-block {
+        flex-grow: 1;
+    }
+
+    
+    .m-c {
+        margin: 0 185px;
+    }
+}
+
+@media (max-width: 1400px) {
+    .m-c, .up-info {
+        margin: 0 30px;
+    }
+}
+
+@media (max-width: 1284px) {
+    .image-container {
+        width: 100%;
+    }
+
+    .up-info, .main-inputs-block {
+        flex-direction: column !important;
+    }
+    
+    select {
+        margin-top: 0;
+        margin-bottom: 15px;
+        width: 100%;
+    }
 }
 
 .price {
@@ -141,17 +189,7 @@ input {
     height: 50px;
 }
 
-.m-c {
-    margin: 0 185px;
-}
-
 .price-block div span {
     font-size: 45px;
-}
-
-.minus {
-    bottom: -25px;
-    left: 0;
-    width: 100000px;
 }
 </style>
