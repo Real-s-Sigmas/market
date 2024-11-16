@@ -32,7 +32,7 @@ export default {
 
     methods: {
         async loadProducts() {
-            let res = await axios.get('/my-orders/arkhiv');
+            let res = await axios.get('/basket/history');
             this.products = res.data;
         },
 

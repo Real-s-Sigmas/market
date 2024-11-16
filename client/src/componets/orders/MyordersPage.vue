@@ -32,7 +32,7 @@ export default {
 
     methods: {
         async loadProducts() {
-            let res = await axios.get('/my-orders');
+            let res = await axios.get('/basket/get-orders');
             this.products = res.data;
         },
 

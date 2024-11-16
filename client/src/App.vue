@@ -28,9 +28,15 @@ export default {
   <!-- <card-product></card-product> -->
   <!-- <star-raiting></star-raiting> -->
   <!-- <category-comp></category-comp>  -->
-  <router-view/>
+   <div class="mh">
+     <router-view/>
+   </div>
    
   <footer-page></footer-page>
 </template>
 
-<style></style>
+<style>
+.mh {
+  min-height: 67.65vh !important;
+}
+</style>
