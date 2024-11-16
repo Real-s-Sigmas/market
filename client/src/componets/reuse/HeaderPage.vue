@@ -2,7 +2,7 @@
 export default {
     data() {
         return {
-            isOpen: false,
+            isOpen: true,
             isLogged: false,
             burg: true,
         }
@@ -25,7 +25,7 @@ export default {
         <div class="navigate">
             <div class="links">
                 <button class="link-btn" @click="this.$router.push('/')">Главная</button>
-                <button class="link-btn" @click="this.$router.push('/')">Каталог</button>
+                <button class="link-btn" @click="this.$router.push('/catalog')">Каталог</button>
                 <button class="link-btn" @click="this.$router.push('/aboutus')">О нас</button>
             </div>
             <div class="div-ob fav-acc">
