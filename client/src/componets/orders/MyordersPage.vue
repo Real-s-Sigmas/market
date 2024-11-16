@@ -32,7 +32,7 @@ export default {
 
     methods: {
         async loadProducts() {
-            let res = await axios.get('/my-orders');
+            let res = await axios.get('/basket/get-orders');
             this.products = res.data;
         },
 
@@ -51,8 +51,11 @@ export default {
 
 <template>
     <div class="orders-container mx-10">
-        <h2 class='mt-10 text-3xl font-bold'>Ваши заказы</h2>
-        <form @submit.prevent='findProducts()' class='flex gap-8 xl:mx-10 my-6'>
+        <div class="flex gap-8">
+            <h2 class='mt-10 text-3xl font-bold border-b-2 border-black w-fit cursor-pointer'>Все заказы</h2>
+            <h2 @click="this.$router.push('/myorders/arkhiv')" class='mt-10 text-3xl font-bold  w-fit cursor-pointer'>Архив</h2>
+        </div>
+        <form @submit.prevent='findProducts()' class='flex gap-8 my-6'>
             <input class='w-full' v-model='title'>
             <button class="btn" type="submit">Найти</button>
         </form>

@@ -76,6 +76,11 @@ const router = createRouter({
       path: "/notfound",
       name: "NotFound",
       component: () => import("../componets/reuse/NotFound.vue")
+    },
+    {
+      path: "/catalog",
+      name: "Catalog",
+      component: () => import("../componets/Product/CatalogPage.vue")
     }
   ],
 });
