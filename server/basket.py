@@ -18,17 +18,7 @@ logging.basicConfig(
 
 
 def AddItemToBasket(id_item: str, id_u: str) -> str:
-    try:
-        r = redis.StrictRedis(host='localhost', port=6379, db=0)
-
-        r.set(id_u, id_item)
-        # print(value.decode('utf-8'))
-        return_data = "Ok"
-
-    except (redis.RedisError, Exception) as e:
-        print(f"Ошибка: {e}")
-        return_data
-
+    pass
 
 @app.route("/basket/add-item", methods=['POST'])
 @chek_for_user
