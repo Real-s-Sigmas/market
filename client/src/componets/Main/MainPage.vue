@@ -6,110 +6,7 @@ import CategoryComp from '../reuse/CategoryComp.vue'
 export default {
     data() {
         return {
-            images: [
-                'src/assets/1111.jpeg',
-                'src/assets/112.jpg',
-                'src/assets/123.webp',
-                'src/assets/124.webp',
-                'src/assets/125.webp',
-            ],
-            index: 0,
-            
-            categories: [
-                {
-                    name: 'Электроинструменты',
-                    subItems: [
-                        {
-                            name: 'Дрели',
-                            subSubItems: ['Аккумуляторные дрели', 'Сетевые дрели'],
-                        },
-                        {
-                            name: 'Перфораторы',
-                            subSubItems: ['SDS+', 'SDS Max'],
-                        },
-                    ],
-                },
-                {
-                    name: 'Ручные инструменты',
-                    subItems: [
-                        {
-                            name: 'Молотки',
-                            subSubItems: ['Кувалды', 'Столярные молотки'],
-                        },
-                        {
-                            name: 'Отвертки',
-                            subSubItems: ['Крестовые', 'Плоские'],
-                        },
-                    ],
-                },
-                {
-                    name: 'fffffffffffffffffffff',
-                    subItems: [
-                        {
-                            name: 'fff',
-                            subSubItems: ['fff', 'ffff'],
-                        },
-                        {
-                            name: 'ffffff',
-                            subSubItems: ['fff', 'ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff'],
-                        },
-                    ]
-                },
-                {
-                    name: 'fffffffffffffffffffff',
-                    subItems: [
-                        {
-                            name: 'fff',
-                            subSubItems: ['fff', 'ffff'],
-                        },
-                        {
-                            name: 'ffffff',
-                            subSubItems: ['fff', 'ffffffff'],
-                        },
-                    ]
-                },
-                {
-                    name: 'fffffffffffffffffffff',
-                    subItems: [
-                        {
-                            name: 'fff',
-                            subSubItems: ['fff', 'ffff'],
-                        },
-                        {
-                            name: 'ffffff',
-                            subSubItems: ['fff', 'ffffffff'],
-                        },
-                    ]
-                },
-                {
-                    name: 'fffffffffffffffffffff',
-                    subItems: [
-                        {
-                            name: 'fff',
-                            subSubItems: ['fff', 'ffff'],
-                        },
-                        {
-                            name: 'ffffff',
-                            subSubItems: ['fff', 'ffffffff'],
-                        },
-                    ]
-                },
-                {
-                    name: 'fffffffffffffffffffff',
-                    subItems: [
-                        {
-                            name: 'fff',
-                            subSubItems: ['fff', 'ffff'],
-                        },
-                        {
-                            name: 'ffffff',
-                            subSubItems: ['fff', 'ffffffff'],
-                        },
-                    ]
-                },
-            ],
-            activeCategory: null, // Активная категория
-            activeSubCategory: null, // Активная подкатегория
+           
 
         }
     },
@@ -121,38 +18,7 @@ export default {
     },
 
     methods: {
-        plus() {
-            if (this.index < this.images.length-1) {
-                this.index++;
-            } else {
-                this.index = 0;
-            }
-
-        },
-
-        minus() {
-            if (this.index > 0) {
-                this.index--;
-            } else {
-                this.index = this.images.length-1;
-            } 
-        },
-
-        selectCategory(index) {
-            this.activeCategory = index;
-            this.activeSubCategory = null; // Сбрасываем подкатегорию при выборе другой категории
-        },
-
-            // Выбор подкатегории
-        selectSubCategory(subIndex) {
-            this.activeSubCategory = subIndex;
-        },
-
-            // Переход к секции
-        goToSection(subSubItem) {
-            console.log('Переход к секции:', subSubItem);
-            // Здесь можно использовать логику для якорного перехода или другой навигации
-        }, 
+        
     },
    
     computed: {
@@ -185,6 +51,11 @@ export default {
 
 <style scoped>
     /* Главное окно */
+
+    button {
+        border: none;
+    }
+    
     .main-page-window {
         padding: 0 100px 0 100px;
         

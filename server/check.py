@@ -83,5 +83,5 @@ def chek_for_user(func):
     def wrapper(*args, **kwargs):
         if "id" in session:
             func(*args, **kwargs)
-        else: return jsonify({"status": "success", "res": "Not Admin"}), 400
+        else: return jsonify({"status": "success", "res": "Not in session"}), 400
     return wrapper
