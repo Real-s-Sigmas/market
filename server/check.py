@@ -52,15 +52,19 @@ def IsInSession() -> bool:
 def GetId() -> str:
     return session.get('id')
 
+#TODO: сделать
 def AddPhoto(base: str, type: str, id: str) -> str:
     return
 
+#TODO: сделать
 def DeletePhoto(link: str) -> str:
     return
 
+#TODO: сделать
 def PutPhoto(link_old: str, link_new: str) -> str:
     return
 
+#TODO: сделать
 def NewLink(id: str, type: str) -> str:
     return
 
@@ -85,3 +89,30 @@ def chek_for_user(func):
             func(*args, **kwargs)
         else: return jsonify({"status": "success", "res": "Not Admin"}), 400
     return wrapper
+
+
+def doQuery(query: str):
+    try:
+        pg = psycopg2.connect(f"""
+            host={HOST_PG}
+            dbname=postgres
+            user={USER_PG}
+            password={PASSWORD_PG}
+            port={PORT_PG}
+        """)
+        cursor = pg.cursor(cursor_factory=psycopg2.extras.DictCursor)
+
+        cursor.execute(query)
+
+        return_data = cursor.fetchall()
+
+    except (Exception, Error) as error:
+        logging.error(f'DB: ', error)
+        return_data = f"Ошибка обращения к базе данных: {error}"
+
+    finally:
+        if pg:
+            cursor.close
+            pg.close
+            logging.info("Соединение с PostgreSQL закрыто")
+            return return_data

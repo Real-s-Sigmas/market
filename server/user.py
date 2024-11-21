@@ -1,17 +1,12 @@
-from app import *
-# from app import HOST_PG, USER_PG, PASSWORD_PG, PORT_PG
-import uuid
-import psycopg2
-from psycopg2 import extras, Error
-from flask import Flask, jsonify, request, session, make_response, send_from_directory
+import random, uuid, psycopg2, smtplib, logging
 
-import smtplib
+from app import HOST_PG, USER_PG, PASSWORD_PG, PORT_PG, app
+from psycopg2 import Error
+from flask import jsonify, request, session
 from email.mime.text import MIMEText
-import random
 from datetime import datetime
 from dotenv import load_dotenv
 
-import logging
 
 
 load_dotenv()
@@ -24,8 +19,8 @@ logging.basicConfig(
 
 logging.info("user.py have connected")
 
-
-def login_user(email, pas):
+#TODO: сделать все!
+def loginUser(email, pas):
     try:
         pg = psycopg2.connect(f"""
             host={HOST_PG}
@@ -134,7 +129,7 @@ def send_code(email):
 
 
 # показ всего о юзере
-def show_user_info(id):
+def showUserInfo(id):
     try:
         pg = psycopg2.connect(f"""
             host={HOST_PG}
@@ -167,22 +162,35 @@ def show_user_info(id):
 def user_info():
     response_object = {'status': 'success'} #БаZа
 
-    response_object["res"] = show_user_info(request.args.get('id'))
+    response_object["res"] = showUserInfo(request.args.get('id'))
 
     return jsonify(response_object)
 
-@app.route('user/sign-in', methods=['POST'])
-def login():
+@app.route('/user/sign-in', methods=['POST'])
+def sign_in():
     response_object = {'status': 'success'} #БаZа
 
     post_data = request.get_json()
 
-    response_object["res"] = login_user(post_data.get('email'), post_data.get('pass'))
+    response_object["res"] = loginUser(post_data.get('email'), post_data.get('pass'))
 
     return jsonify(response_object)
 
-@app.route('user/sign-up', methods=['GET', 'POST'])
-def login():
+
+@app.route('/user/sign-up', methods=['GET', 'POST'])
+def sign_up():
     response_object = {'status': 'success'} #БаZа
 
+    return jsonify(response_object)
 
+
+
+@app.route('/user/sign-out', methods=['GET'])
+def sign_out():
+    response_object = {'status': 'success'} #БаZа
+
+    session.pop("id", None)
+    session.modified = True
+    session.permanent = True
+
+    return jsonify(response_object)

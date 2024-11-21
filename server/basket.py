@@ -1,4 +1,4 @@
-import psycopg2, logging
+import psycopg2, logging, check
 
 from psycopg2 import Error
 from flask import jsonify, request
@@ -6,8 +6,6 @@ from typing import Union
 from app import *
 from app import app, PASSWORD_PG, PORT_PG, USER_PG, HOST_PG
 
-
-#TODO: редис
 logging.basicConfig(
     level=logging.DEBUG,
     format="%(asctime)s %(levelname)s %(message)s",
