@@ -11,7 +11,7 @@ logging.basicConfig(
     datefmt="%Y—%m—%d %H:%M:%S",
 )
 
-logging.info("admin.py have connected")
+logging.info("other.py have connected")
 
 @app.route('/other/session', methods=['GET'])
 def all_orders():
