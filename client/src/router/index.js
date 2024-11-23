@@ -77,11 +77,16 @@ const router = createRouter({
       name: "NotFound",
       component: () => import("../componets/reuse/NotFound.vue")
     },
+    // {
+    //   path: "/catalog",
+    //   name: "Catalog",
+    //   component: () => import("../componets/Product/CatalogPage.vue")
+    // },
     {
-      path: "/catalog",
-      name: "Catalog",
-      component: () => import("../componets/Product/CatalogPage.vue")
-    }
+      path: "/Catalog",
+      name: "catalog",
+      component: () => import("../componets/Catalog/Catalog.vue")
+    },
   ],
 });
 
