@@ -326,7 +326,7 @@ button {
 }
 
 .acc:hover {
-  padding: 14px 50px;
+  padding: 14px 50px !important;
 }
 
 .acc:active {

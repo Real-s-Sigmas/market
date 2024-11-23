@@ -34,7 +34,7 @@ export default {
     <!-- Главное окно -->
     <div class="main-page-window">
 
-        <!-- Блок поиска -->
+  <!-- Блок поиска -->
         <div class="search">
             <input type="text">
             <button class="search-find">Найти</button>
@@ -84,6 +84,7 @@ export default {
            border-radius: 12px;
            width: 720px;
            height: 45px;
+           padding: 0 10px;
        }
 
        .search-find {
@@ -91,6 +92,12 @@ export default {
            border-radius: 50px;
            background-color: #ff812c;
            color: #fff;
+
+           transition: all 100ms;
+       }
+
+       .search-find:hover {
+            background-color: #d95700;
        }
     }
 
@@ -132,6 +139,11 @@ export default {
 
             font-size: 30px;
             font-weight: 600;
+            transition: all 100ms;
+        }
+
+        button:hover {
+              background-color: #d95700;
         }
 
         

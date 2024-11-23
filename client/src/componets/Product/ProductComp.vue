@@ -28,7 +28,13 @@ export default {
   cursor: pointer;
   display: flex;
   flex-direction: column;
+  padding: 5px;
+  
+  transition: all 100ms;
+  
 }
+
+
 
 .prod-card img {
   width: 300px;
@@ -49,6 +55,12 @@ export default {
   font-size: 24px;
   border-radius: 12px;
 }
+
+.btn-price:hover {
+  background-color: #d95700;
+}
+
+
 @media (max-width: 800px) {
   .prod-card {
     width: 250px;
