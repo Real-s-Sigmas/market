@@ -13,7 +13,7 @@ logging.basicConfig(
     datefmt="%Y—%m—%d %H:%M:%S",
 )
 
-#TODO:
+#TODO: сделать
 def GetPhotos(photos: list) -> list:
     pass
 
@@ -320,6 +320,7 @@ def GetItems() -> Union[list, str]:
         cursor.execute(f"SELECT title FROM topic")
 
         return_data = cursor.fetchall()
+        
 
     except (Exception, Error) as error:
         logging.error(f'DB: ', error)
@@ -347,3 +348,81 @@ def get_topics():
     
     response_object["res"] = res
     return jsonify(response_object), 200
+
+
+#TODO: сделать
+def getItemsFil(fil: dict, start: int, end: int) -> Tuple[Union[list, str], str]:
+    pass
+
+
+
+@app.route("/items/filter-items", methods=["GET"])
+def fil_item():
+    response_object = {'status': 'success'} #БаZа
+
+    start, end = int(request.args.get("start"))-1, int(request.args.get('end'))-1
+
+    filtrs = {
+        'title': request.args.get('title'),
+    }
+
+    response_object["res"], count_query = getItemsFil(filtrs, start, end)
+    response_object["count"] = check.doQuery(count_query)
+
+    return jsonify(response_object)
+
+
+def getItemsTopic(fil: dict, start: int, end: int) -> Tuple[Union[list, str], str]:
+    try:
+        pg = psycopg2.connect(f"""
+            host={HOST_PG}
+            dbname=postgres
+            user={USER_PG}
+            password={PASSWORD_PG}
+            port={PORT_PG}
+        """)
+
+        cursor = pg.cursor(cursor_factory=psycopg2.extras.DictCursor)
+
+        cursor.execute(f"SELECT * FROM items WHERE topic=$${fil["topic"]}$$ ORDER BY date_create DESC LIMIT {end-start+1} OFFSET {start}")
+
+        return_data = cursor.fetchall()
+
+        q = cursor.fetchall()
+        return_data = []
+
+        for row in q:
+            return_data.append(dict(row))
+
+
+        cursor.execute(f"SELECT COUNT(*) FROM items WHERE topic=$${fil["topic"]}$$")
+
+        count = cursor.fetchall()
+
+    except (Exception, Error) as error:
+        logging.error(f'DB: ', error)
+        return_data = f"Error"
+
+    finally:
+        if pg:
+            cursor.close()
+            pg.close()
+            logging.info("Соединение с PostgreSQL закрыто")
+            return return_data, count
+
+
+
+@app.route("/items/show-items", methods=["GET"])
+def get_items_topic():
+    response_object = {'status': 'success'} #БаZа
+
+    start, end = int(request.args.get("start"))-1, int(request.args.get('end'))-1
+
+    filtrs = {
+        'topic': request.args.get('topic'),
+    }
+
+    response_object["res"], response_object["count"] = getItemsTopic(filtrs, start, end)
+
+    return jsonify(response_object)
+
