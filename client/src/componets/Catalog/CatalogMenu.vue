@@ -1,18 +1,26 @@
 <script>
 export default {
   data() {
-    return {};
+    return {
+      isOpen: false,
+    };
+    
   },
 
   methods: {
     goCategory(name) {
       this.$emit("data-from-child", name);
     },
+
+    catMenu() {
+      this.isOpen = !this.isOpen;
+    }
   },
 };
 </script>
 <template>
-  <div class="main-container ml-5 mt-7">
+  <div class="main-container ml-5 mt-7" :class="{ mainOpen: isOpen}">
+    <button @click="catMenu" class="menu-btn" >|||</button>
     <div class="catalog-items grid gap-4">
       <ul>
         <li @click="goCategory(`Электроинструменты`)">Электроинструменты</li>
@@ -39,7 +47,19 @@ export default {
 .main-container {
   display: flex;
   justify-content: start;
+  position: relative;
+  background-color: #fff;
 }
+
+.menu-btn {
+  color: #000;
+  position: absolute;
+  top: 10px;
+  width: 30px;
+  height: 30px;
+  right: 10px;
+}
+
 .catalog-items ul {
   gap: 100px;
   justify-content: row;
@@ -72,6 +92,25 @@ export default {
   li:hover {
     background-color: rgb(250, 246, 246);
     color: rgb(255, 115, 0);
+  }
+}
+
+  @media (min-width: 850px) {
+    .menu-btn {
+      display: none;
+    }   
+  }
+
+@media (max-width: 850px) {
+  .main-container {
+  /*  margin-left: -320px; */
+    position: absolute;
+    left: -330px;   
+  }
+
+  .mainOpen {
+    position: absolute;
+    left: 0;
   }
 }
 </style>

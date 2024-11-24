@@ -119,4 +119,50 @@ h1 {
     text-decoration: underline
   }
 }
+
+      @media (max-width: 1200px) {
+        h1 {
+          font-size: 35px;
+        }
+        .content-links {
+          ul {
+            grid-template-columns: repeat(2, 1fr);
+          }
+        }
+      }
+
+      @media (max-width: 990px) {
+        .content-links {
+          ul {
+            grid-template-columns: repeat(1, 1fr);
+          }
+
+          overflow-y: hidden;
+        }
+
+        
+      }
+
+      @media (max-width: 850px) {
+        .content-links {
+          margin-left: 60px;
+        }
+      }
+
+      @media (max-width: 520px) {
+        h1 {
+          font-size: 24px;
+        }
+
+        .content-links {
+          ul {
+            li {
+              a {
+                font-size: 16px;
+              }
+            }
+          }  
+        }
+        
+      }
 </style>
