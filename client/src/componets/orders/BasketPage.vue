@@ -21,6 +21,12 @@ export default {
                 },
             ],
             title: ``,
+            error: ``,
+            errorProduct: ``,
+
+            orderRead: false,
+
+            errorOrder: ``,
         }
     },
 
@@ -29,19 +35,98 @@ export default {
     },
 
     methods: {
-        
+        async loadProducts() {
+            try {
+                let res = await axios.get('/basket/show-basket');
+                this.products = res.data.res;
+            } catch (error) {
+                this.error = 'Ошибка! Невозможно найти товары';
+            }
+        },
+
+        async deleteProduct(id) {
+            try {
+                await axios.delete('/basket/delete-item', {
+                    params: {
+                        id: id
+                    }
+                });
+                this.loadProducts();
+            } catch (error) {
+                this.error = 'Действие невозможно. Повторите попытку позже';
+            }
+        },
+
+        async findProducts() {
+            try {
+                let res = await axios.get('/basket/find-by-title', {
+                    params: {
+                        title: this.title,
+                    }
+                });
+                if(res.data.res) {
+                    this.products = res.data.res;
+                } else {
+                    this.errorProduct = 'Товаров не найдено';
+                }
+            } catch (error) {
+                this.errorProduct = 'Невозможно найти товар. Повторите попытку позже';
+            }
+        },
+
+        async loadOrder() {
+            try {
+                let ids = [];
+
+                for(let i = 0; i < this.product.length; i++) {
+                    ids.push(this.product[i].id);
+                }
+
+                let res = await axios.post('/order/add-oder', {
+                    params: {
+                        ids: ids
+                    }
+                });
+
+                if(res.data.res == 'Error') {
+                    this.errorOrder = 'Ошибка! Невозможно создать заказ';
+                } else {
+                    this.errorOrder = '';
+                }
+            } catch (error) {
+                this.errorOrder = 'Ошибка! Невозможно создать заказ';
+            }
+
+            this.orderRead = !this.orderRead;
+        },
     }
 }
 </script>
 
 
 <template>
+
+    <div v-if='this.orderRead'>
+        <div class="modal-page">
+            <h2 v-if='!this.errorOrder'>
+                Заказ сформирован, статус заказа вы можете посмотреть на почте,
+                на которую регистрировали данный аккаунт. По готовности, заказ будет ждать вас в пункте выдачи. Адрес вы
+                можете посмотреть, перейдя <a href="/aboutus" class='text-blue-500 hover:underline transition-all duration-500'>по этой ссылке</a>
+            </h2>
+            <h2 v-else>{{ errorOrder }}</h2>
+            <div class='close-img' @click='this.orderRead = !this.orderRead'>x</div>
+        </div>
+        <div class="bg-black"></div>
+    </div>
+
     <div class="orders-container mx-10">
         <h2 class='mt-10 text-3xl font-bold'>Корзина</h2>
-        <form @submit.prevent='findProducts()' class='flex gap-8 xl:mx-10 my-6'>
-            <input class='w-full' v-model='title'>
-            <button class="btn" type="submit">Найти</button>
+        <form class="search" @submit.prevent='findProducts()'>
+            <input type="text" v-model='title'>
+            <button class="search-find" type="submit">Найти</button>
         </form>
+        <h2 class='text-red-500 text-xl text-semibold flex justify-center mt-10 mb-4' v-if='this.errorProduct'>{{
+            errorProduct }}</h2>
 
         <div class="products-container">
             <div class="card border-b-2 border-black py-4 mt-1" v-for='(product) in products'>
@@ -50,8 +135,12 @@ export default {
                         <img class='rounded-xl border-2 border-black' :src="product.image">
                         <div class="info-block flex flex-col gap-0 relative text-base">
                             <h3 class='text-4xl font-bold'>{{ product.title }}</h3>
-                            <p>Описание: {{ product.description.substring(0, 40) }}<span v-if='product.description.length >= 40'>...</span> </p>
-                            <span class='absolute bottom-0 left-0'>Цена: {{ product.price }}</span>
+                            <p>Описание: {{ product.description.substring(0, 40) }}<span
+                                    v-if='product.description.length >= 40'>...</span> </p>
+                            <!-- <span class='absolute bottom-0 left-0 text-2xl font-bold'>Цена: {{ product.price }}</span> -->
+                            <div class="price absolute bottom-0 left-0 ">
+                                <p>Цена: <span>{{ product.price }}</span> р</p>
+                            </div>
                         </div>
                     </div>
                     <div class="actions flex gap-3">
@@ -60,15 +149,101 @@ export default {
                     </div>
                 </div>
             </div>
+            <h2 class='text-red-500 text-xl text-semibold flex justify-center mt-10' v-if='this.error'>{{ error }}</h2>
         </div>
         <div class="ord">
-          <button class="ord-button">Заказать</button>
+            <button class="ord-button" @click='loadOrder'>Заказать</button>
         </div>
     </div>
 </template>
 
 
 <style scoped>
+.price {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    font-size: 24px;
+
+    width: 200px;
+    height: 55px;
+
+    border: 2px solid #000;
+    border-radius: 12px;
+}
+
+.search {
+       margin: 20px 0;
+       /* width: 100%;  */
+       
+       display: flex;
+       justify-content: center;
+       align-items: center;
+
+       gap: 55px;
+
+       input {
+           border: 2px solid #ff812c;
+           border-radius: 12px;
+           width: 720px;
+           height: 45px;
+           padding: 0 10px;
+       }
+
+       .search-find {
+           padding: 10.5px 42px;
+           border-radius: 50px;
+           background-color: #ff812c;
+           color: #fff;
+
+           transition: all 100ms;
+       }
+
+       .search-find:hover {
+            background-color: #d95700;
+       }
+    }
+
+.close-img {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    font-size: 30px;
+    font-weight: 500;
+    cursor: pointer;
+}
+
+.bg-black {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    background: #000;
+    z-index: 50;
+    opacity: 0.6;
+}
+
+.modal-page {
+    position: fixed;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 20px;
+    padding: 30px;
+    border: 2px solid black;
+    border-radius: 20px;
+    width: 40%;
+    height: 40%;
+    top: 30%;
+    left: 30%;
+    background: #fff;
+    z-index: 52;
+    opacity: 1;
+}
+
 .ord {
   width: 100%;
   display: flex;
@@ -103,13 +278,30 @@ export default {
     .actions {
         justify-content: space-between
     }
-}
 
-@media (max-width: 528px) {
-    .del-btn {
+    .search {
+        gap: 20px;
+    }
+
+    .price {
+        position: relative;
+        margin-top: 10px;
+        font-size: 18px;
+        width: fit-content;
+        padding: 10px 40px;
     }
 }
-
+    
+@media (max-width: 500px) {
+    .search  {
+        input {
+            width: 100%;
+        }
+        .search-find {
+            padding: 10.5px 20px;
+        }
+    }
+}
 .del-btn {
     display: flex;
     justify-content: center;
@@ -162,8 +354,8 @@ export default {
     background-color: #FC6600;
 }
 
-.order-btn:hover {
-    background-color: #fff;
+.ord-button:hover, .order-btn:hover {
+    background-color: #fff !important;
     color: #FC6600;
 }
 

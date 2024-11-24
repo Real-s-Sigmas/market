@@ -21,6 +21,8 @@ export default {
                 },
             ],
             title: ``,
+            error: ``,
+            errorProduct: ``,
         }
     },
 
@@ -30,26 +32,51 @@ export default {
 
     methods: {
         async loadProducts() {
-            let res = await axios.get('/favorites');
-            this.products = res.data;
+            try {
+                let res = await axios.get('/favorites');
+                this.products = res.data.res;
+            } catch (error) {
+                this.error = 'Ошибка! Невозможно найти товары';
+            }
         },
 
-        async deleteProduct(id) {
-            await axios.delete('/delete-favorites', {
-                params: {
-                    id: id
+        async deleteProduct(id, index) {
+            try {
+                if(!this.products[index].isFavorite) {
+                    await axios.delete('/favorites', {
+                        params: {
+                            id: id
+                        }
+                    });
+                    this.products[index].isFavorite = true;
+                } else {
+                    await axios.post('/favorites', {
+                        params: {
+                            id: id
+                        }
+                    });
+                    this.products[index].isFavorite = false;
                 }
-            });
-            this.loadProducts();
+            } catch (error) {
+                this.error = 'Действие невозможно. Повторите попытку позже';
+            }
         },
 
         async findProducts() {
-            let res = await axios.get('/favorites/find-by-title', {
-                params: {
-                    title: this.title,
+            try {
+                let res = await axios.get('/favorites/find-by-title', {
+                    params: {
+                        title: this.title,
+                    }
+                });
+                if(res.data.res) {
+                    this.products = res.data.res;
+                } else {
+                    this.errorProduct = 'Товаров не найдено';
                 }
-            });
-            this.products = res.data;
+            } catch (error) {
+                this.errorProduct = 'Невозможно найти товар. Повторите попытку позже';
+            }
         }
     }
 }
@@ -59,13 +86,16 @@ export default {
 <template>
     <div class="orders-container mx-10">
         <h2 class='mt-10 text-3xl font-bold'>Избранные товары</h2>
-        <form @submit.prevent='findProducts()' class='flex gap-8 xl:mx-10 my-6'>
-            <input class='w-full' v-model='title'>
-            <button class="btn" type="submit">Найти</button>
+        <form class="search" @submit.prevent='findProducts()'>
+            <input type="text" v-model='title'>
+            <button class="search-find" type="submit">Найти</button>
         </form>
 
+
+        <h2 class='text-red-500 text-xl text-semibold flex justify-center mt-10 mb-4' v-if='this.errorProduct'>{{ errorProduct }}</h2>
+
         <div class="products-container">
-            <div class="card border-b-2 border-black py-4 mt-1" v-for='(product) in products'>
+            <div class="card border-b-2 border-black py-4 mt-1" v-for='(product, index) in products'>
                 <div class="info-card flex gap-6 justify-between">
                     <div class="info-container flex gap-6">
                         <img class='rounded-xl border-2 border-black' :src="product.image">
@@ -76,17 +106,53 @@ export default {
                         </div>
                     </div>
                     <div class="actions flex gap-3">
-                        <button class="like-btn mt-4" @click='deleteProduct(product.id)'><img src="../../assets/icons/favorite.svg" alt="favorite"></button>
+                        <button class="like-btn mt-4" @click='deleteProduct(product.id, index)'>
+                            <img v-if='product.isFavorite' src="../../assets/icons/favoriteDelete.svg" alt="favorite">
+                            <img v-else src="../../assets/icons/favorite.svg" alt="favorite">
+                        </button>
                         <button class="order-btn mt-4" @click='this.$router.push(`/Product/${product.id}`)'>К товару</button>
                     </div>
                 </div>
             </div>
+            <h2 class='text-red-500 text-xl text-semibold flex justify-center mt-10' v-if='this.error'>{{ error }}</h2>
         </div>
     </div>
 </template>
 
 
 <style scoped>
+.search {
+       margin: 20px 0;
+       /* width: 100%;  */
+       
+       display: flex;
+       justify-content: center;
+       align-items: center;
+
+       gap: 55px;
+
+       input {
+           border: 2px solid #ff812c;
+           border-radius: 12px;
+           width: 720px;
+           height: 45px;
+           padding: 0 10px;
+       }
+
+       .search-find {
+           padding: 10.5px 42px;
+           border-radius: 50px;
+           background-color: #ff812c;
+           color: #fff;
+
+           transition: all 100ms;
+       }
+
+       .search-find:hover {
+            background-color: #d95700;
+       }
+    }
+
 @media (max-width: 800px) {
     .info-card {
         flex-direction: column;
@@ -109,6 +175,21 @@ export default {
 
     .actions {
         justify-content: space-between
+    }
+
+    .search {
+        gap: 20px;
+    }
+}
+    
+@media (max-width: 500px) {
+    .search  {
+        input {
+            width: 100%;
+        }
+        .search-find {
+            padding: 10.5px 20px;
+        }
     }
 }
 
@@ -137,7 +218,7 @@ export default {
 .like-btn:hover {
     background-color: #FC6600;
     border: 2px solid #FF812C;
-    color: #000000;
+    color: #fff !important;
 }
 
 .order-btn {

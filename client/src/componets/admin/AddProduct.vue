@@ -14,6 +14,7 @@ export default {
             },
 
             topics: [],
+            error: ``,
         }
     },
 
@@ -23,14 +24,27 @@ export default {
 
     methods: {
         async addProduct() {
-            await axios.post('/items/new-item', {
-                form: this.form,
-            });
+            try {
+                let res = await axios.post('/items/new-item', {
+                    form: this.form,
+                });
+                if(res.data.res == 'Error') {
+                    this.error = 'Ошибка добавления товара';
+                } else {
+                    this.$router.push('/');
+                }
+            } catch (error) {
+                this.error = 'Ошибка добавления товара';
+            }
         },
 
         async getTopics() {
-            let res = await axios.get('/items/topics');
-            this.topics = res.data.all;
+            try {
+                let res = await axios.get('/items/topics');
+                this.topics = res.data.all;
+            } catch (error) {
+                this.error = 'Ошибка загрузки категорий';
+            }
         },
 
 
@@ -102,17 +116,36 @@ export default {
             <textarea id='fullDescription' rows='10' v-model='form.fullDescription'
                 class='border-2 border-black mt-3 p-1 rounded'></textarea>
         </div>
-        <div class="price-block m-c flex flex-row gap-10">
-            <label for="price" class='text-2xl  mt-8'>Цена товара:</label>
+        <div class="price-block m-c flex xl:justify-between xl:flex-row flex-col gap-10">
+            <label for="price" class='text-2xl mt-8'>Цена товара:</label>
             <div class="flex gap-3">
                 <input id='price' v-model='form.price' class='price border-2 border-black mt-3 p-1'>
             </div>
+            <button type='submit' class='acc mt-8'>Добавить</button>
         </div>
+        <h2 class='text-red-500 text-xl text-semibold mt-10' v-if='this.error'>{{ error }}525252</h2>
     </form>
 </template>
 
 
 <style scoped>
+.acc {
+  padding: 8px 34px;
+  border-radius: 50px;
+
+  background-color: #ff812c;
+  color: #fff;
+
+  font-size: 20px;
+  font-weight: 600;
+
+  transition: all 100ms;
+}
+
+.acc:hover {
+  padding: 14px 50px !important;
+}
+
 .select-block {
     position: relative;
 }
@@ -228,7 +261,7 @@ textarea {
     }
 
 
-    .up-info {
+    .up-info, .text-red-500 {
         margin: 0 185px;
     }
 
@@ -249,7 +282,8 @@ textarea {
 @media (max-width: 1400px) {
 
     .m-c,
-    .up-info {
+    .up-info,
+    .text-red-500  {
         margin: 0 30px;
     }
 }
