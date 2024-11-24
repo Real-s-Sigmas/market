@@ -118,6 +118,10 @@ h1 {
     color: rgb(255, 174, 0);
     text-decoration: underline
   }
+
+  li:hover {
+    color: #d95700;
+  }
 }
 
       @media (max-width: 1200px) {
@@ -159,10 +163,14 @@ h1 {
             li {
               a {
                 font-size: 16px;
+                
               }
+              
             }
           }  
         }
+
+        
         
       }
 </style>

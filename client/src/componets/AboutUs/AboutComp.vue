@@ -27,7 +27,7 @@ export default {
   display: flex;
   flex-direction: column;
   gap: 40px;
-  padding: 0 40px 0 40px;
+  padding: 0 100px 0 100px;
 }
 
 .about-title {
@@ -56,7 +56,13 @@ h3 {
   font-size: 26px;
   font-weight: 600;
   border-bottom: 2px solid #000;
-  width: 200px;
+  width: 300px;
+}
+
+@media (max-width: 1300px) {
+  .wind {
+    padding: 0 40px;
+  }
 }
 
 @media (max-width: 1000px) {
@@ -71,6 +77,10 @@ h3 {
 }
 
 @media (max-width: 500px) {
+  .wind {
+    padding: 0 5px;
+  }
+  
   .about-title{
     font-size: 24px;
   }

@@ -52,6 +52,10 @@ export default {
 <style scoped>
     /* Главное окно */
 
+    h1, h5 {
+        user-select: none;
+    }
+
     button {
         border: none;
     }

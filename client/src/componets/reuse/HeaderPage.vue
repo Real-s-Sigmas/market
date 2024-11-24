@@ -99,13 +99,14 @@ export default {
       <p>
         Для связи: <br />
         8 495 255 87 65
+        <a class="shortTg" href="#!"><img src="../../assets/icons/tgicon.svg"  alt="" /></a>
       </p>
-      <a href="#!"><img src="../../assets/icons/tgicon.svg" alt="" /></a>
+      <a class="tg" href="#!"><img src="../../assets/icons/tgicon.svg" alt="" /></a>
     </div>
   </div>
   <div class="btn-top">
-    <button @click="this.isOpen = !this.isOpen">
-      <img src="../../assets/menu.svg" alt="" />
+    <button >
+      <img @click="this.isOpen = !this.isOpen" src="../../assets/menu.svg" alt="" />
     </button>
   </div>
   <div class="two-blocks" :class="{ close: this.isOpen }">
@@ -194,6 +195,14 @@ button {
 
   transition: all 100ms;
 }
+
+.shortTg {
+  display: block;
+  width: 20px;
+  height: 20px;
+}
+
+.contact p {}
 
 .bl {
   width: 180px;
@@ -397,7 +406,7 @@ button {
 
 @media (min-width: 1175px) {
   .contact {
-    a {
+    .tg {
       display: none;
     }
   }
