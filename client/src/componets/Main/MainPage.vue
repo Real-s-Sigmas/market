@@ -44,7 +44,7 @@ export default {
         <div class="greeting">
             <h1>Сайт интернет-магазина <br> по <span>С</span>троительству <span>и</span> <span>Р</span>емонту</h1>
             <h5>У нас вы найдете <span>большой</span> ассортимент товаров, который поможет <span>быстро</span><br> закончить ваш ремонт.</h5>
-            <button>Посмотреть каталог</button>
+            <a href="/Catalog"><button>Посмотреть каталог</button></a>
         </div>
     </div>
 </template>
