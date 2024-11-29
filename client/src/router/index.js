@@ -87,6 +87,11 @@ const router = createRouter({
       name: "catalog",
       component: () => import("../componets/Catalog/Catalog.vue")
     },
+    {
+      path: "/SignUp",
+      name: "signup",
+      component: () => import("../componets/Forms/RegisterPage.vue")
+    },
   ],
 });
 

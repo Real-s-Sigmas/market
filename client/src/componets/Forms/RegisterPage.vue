@@ -37,10 +37,19 @@ export default {
             v-model="email"
             @input="input($event)"
           />
-          <span сlass="nick">Почта</span>
+          <span class="nick-span">Почта</span>
+
+          <input
+            type="text"
+            class="input"
+            required
+            v-model="email"
+            @input="input($event)"
+          />
+          <span class="nickName">Имя</span>
           <button class="btn" :disabled="disabled">Войти</button>
         </form>
-        <a href="/SignUp" class="haveAcc">Уже есть аккаунт?</a>
+        <a href="#!" class="haveAcc">Уже есть аккаунт?</a>
         <p class="error">{{ error }}</p>
       </div>
     </div>
@@ -120,25 +129,13 @@ export default {
   align-items: center;
   min-height: 600px;
 }
-.input {
-  margin-bottom: 20px;
-  border-radius: 15px;
-  width: 430px;
-  height: 60px;
-  background: #eae9e9;
-  border: none;
-  padding: 20px;
-  font-family: var(--font-family);
-  font-weight: 500;
-  font-size: 20px;
-  color: #000000;
-}
+
 .div-nickname {
   position: relative;
   width: 420px;
 }
-.div-nickname span {
-  position: absolute;
+.nick-span {
+  position: absolute !important;
   font-family: var(--font-family);
   font-weight: 700;
   font-size: 25px;
@@ -150,6 +147,23 @@ export default {
   border-radius: 15px;
   width: 115px;
 }
+
+.nickName {
+  position: absolute !important;
+  font-family: var(--font-family);
+  font-weight: 700;
+  font-size: 25px;
+  color: #5b5a5a;
+  top: 94px;
+  left: 18px;
+  pointer-events: none;
+  transition: 0.3s ease;
+  border-radius: 15px;
+  width: 115px; 
+}
+
+
+
 .input {
   margin-bottom: 20px;
   border-radius: 15px;
@@ -170,8 +184,21 @@ export default {
   border: 4px solid #ff812c;
   transition: all 0.1s;
 }
-.input:focus ~ span,
-.input:valid ~ span {
+.input:focus ~ .nick-span,
+.input:valid ~ .nick-span {
+  transform: translateY(-115%);
+  font-size: 20px;
+  left: 15px;
+  border: solid #ff812c;
+  background: #ff812c;
+  color: #fff;
+  width: 110px;
+  text-align: center;
+  border-radius: 15px;
+}
+
+.input:focus ~ .nickName,
+.input:valid ~ .nickName{
   transform: translateY(-115%);
   font-size: 20px;
   left: 15px;
