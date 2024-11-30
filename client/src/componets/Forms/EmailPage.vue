@@ -40,7 +40,7 @@ export default {
           <span сlass="nick">Почта</span>
           <button class="btn" :disabled="disabled">Войти</button>
         </form>
-        <a href="/SignUp" class="haveAcc">Уже есть аккаунт?</a>
+        <a href="/SignUp" class="haveAcc">Еще нет аккаунта?</a>
         <p class="error">{{ error }}</p>
       </div>
     </div>
@@ -56,10 +56,7 @@ export default {
   font-weight: 700;
   font-size: 17px;
   color: red;
-  position: absolute;
-  top: 155px;
   z-index: 10000;
-  left: 5px;
 }
 
 .haveAcc {
@@ -67,6 +64,10 @@ export default {
   font-size: 18px;
   font-weight: 500;
   line-height: 50px;
+}
+
+.haveAcc:hover {
+  color: #d95700;
 }
 
 .btn {
@@ -82,9 +83,15 @@ export default {
   width: 430px;
   height: 60px;
   border: none;
-  cursor: pointer;
   z-index: 7000;
+  transition: all 0.1s;
+
 }
+
+.btn:hover {
+  background-color: #d95700;
+}
+
 .btn:disabled {
   top: 77px;
   font-family: var(--font-family);
@@ -105,10 +112,7 @@ export default {
   background: #e1e1e1;
   transition: all 0.3s;
 }
-.btn:hover {
-  background: #ef7c30;
-  transition: all 0.3s;
-}
+
 .container {
   display: flex;
   justify-content: center;
