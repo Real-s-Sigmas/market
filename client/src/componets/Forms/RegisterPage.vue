@@ -4,21 +4,32 @@ export default {
     return {
       disabled: false,
       email: "",
+      nickName: "",
       error: "",
     };
   },
   methods: {
     input($event) {
       this.disabled = true;
-      if ($event) {
+      this.error = "";
+      
+      if (this.email) {
         if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(this.email)) {
           this.disabled = false;
-          this.error = "";
-        } else {
-          if (this.email.length > 7) {
+        } else if (this.email.length > 7 ) {
             this.error = "Почта невалидна!";
-          }
         }
+      }
+
+      if (!this.nickName) {
+        this.error = "Поле имени должно быть заполнено!";   
+        this.disabled = true;
+      } else if (this.nickName.length < 2) {
+        this.error = "В имени должно быть не менее 2 букв!";
+        this.disabled = true;
+      } else if (!/^[a-zA-Zа-яА-ЯёЁ]+$/.test(this.nickName)) {
+        this.error = "Имя должно содержать только буквы!";
+        this.disabled = true;
       }
     },
   },
@@ -31,7 +42,7 @@ export default {
         <form>
           <input
             type="text"
-            class="input"
+            class="input input-nick-span"
             autofocus
             required
             v-model="email"
@@ -41,9 +52,9 @@ export default {
 
           <input
             type="text"
-            class="input"
+            class="input input-nickName"
             required
-            v-model="email"
+            v-model="nickName"
             @input="input($event)"
           />
           <span class="nickName">Имя</span>
@@ -65,10 +76,7 @@ export default {
   font-weight: 700;
   font-size: 17px;
   color: red;
-  position: absolute;
-  top: 155px;
   z-index: 10000;
-  left: 5px;
 }
 
 .haveAcc {
@@ -184,8 +192,8 @@ export default {
   border: 4px solid #ff812c;
   transition: all 0.1s;
 }
-.input:focus ~ .nick-span,
-.input:valid ~ .nick-span {
+.input-nick-span:focus ~ .nick-span,
+.input-nick-span:valid ~ .nick-span {
   transform: translateY(-115%);
   font-size: 20px;
   left: 15px;
@@ -197,8 +205,8 @@ export default {
   border-radius: 15px;
 }
 
-.input:focus ~ .nickName,
-.input:valid ~ .nickName{
+.input-nickName:focus ~ .nickName,
+.input-nickName:valid ~ .nickName {
   transform: translateY(-115%);
   font-size: 20px;
   left: 15px;
