@@ -4,21 +4,32 @@ export default {
     return {
       disabled: false,
       email: "",
+      nickName: "",
       error: "",
     };
   },
   methods: {
     input($event) {
       this.disabled = true;
-      if ($event) {
+      this.error = "";
+      
+      if (this.email) {
         if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(this.email)) {
           this.disabled = false;
-          this.error = "";
-        } else {
-          if (this.email.length > 7) {
+        } else if (this.email.length > 7 ) {
             this.error = "Почта невалидна!";
-          }
         }
+      }
+
+      if (!this.nickName) {
+        this.error = "Поле имени должно быть заполнено!";   
+        this.disabled = true;
+      } else if (this.nickName.length < 2) {
+        this.error = "В имени должно быть не менее 2 букв!";
+        this.disabled = true;
+      } else if (!/^[a-zA-Zа-яА-ЯёЁ]+$/.test(this.nickName)) {
+        this.error = "Имя должно содержать только буквы!";
+        this.disabled = true;
       }
     },
   },
@@ -31,16 +42,25 @@ export default {
         <form>
           <input
             type="text"
-            class="input"
+            class="input input-nick-span"
             autofocus
             required
             v-model="email"
             @input="input($event)"
           />
-          <span сlass="nick">Почта</span>
-          <button class="btn" :disabled="disabled">Войти</button>
+          <span class="nick-span">Почта</span>
+
+          <input
+            type="text"
+            class="input input-nickName"
+            required
+            v-model="nickName"
+            @input="input($event)"
+          />
+          <span class="nickName">Имя</span>
+          <button class="btn" :disabled="disabled">Зарегистрироваться</button>
         </form>
-        <a href="/SignUp" class="haveAcc">Еще нет аккаунта?</a>
+        <a href="/Login" class="haveAcc">Уже есть аккаунт?</a>
         <p class="error">{{ error }}</p>
       </div>
     </div>
@@ -64,6 +84,7 @@ export default {
   font-size: 18px;
   font-weight: 500;
   line-height: 50px;
+  transition: all 0.1s;
 }
 
 .haveAcc:hover {
@@ -71,13 +92,11 @@ export default {
 }
 
 .btn {
-  top: 77px;
   font-family: var(--font-family);
   font-weight: 700;
   font-size: 25px;
-  text-align: center;
   color: #ffffff;
-  background: #ff812c;
+  background-color: #ff812c;
   cursor: pointer;
   border-radius: 15px;
   width: 430px;
@@ -85,7 +104,6 @@ export default {
   border: none;
   z-index: 7000;
   transition: all 0.1s;
-
 }
 
 .btn:hover {
@@ -124,25 +142,13 @@ export default {
   align-items: center;
   min-height: 600px;
 }
-.input {
-  margin-bottom: 20px;
-  border-radius: 15px;
-  width: 430px;
-  height: 60px;
-  background: #eae9e9;
-  border: none;
-  padding: 20px;
-  font-family: var(--font-family);
-  font-weight: 500;
-  font-size: 20px;
-  color: #000000;
-}
+
 .div-nickname {
   position: relative;
   width: 420px;
 }
-.div-nickname span {
-  position: absolute;
+.nick-span {
+  position: absolute !important;
   font-family: var(--font-family);
   font-weight: 700;
   font-size: 25px;
@@ -154,6 +160,23 @@ export default {
   border-radius: 15px;
   width: 115px;
 }
+
+.nickName {
+  position: absolute !important;
+  font-family: var(--font-family);
+  font-weight: 700;
+  font-size: 25px;
+  color: #5b5a5a;
+  top: 94px;
+  left: 18px;
+  pointer-events: none;
+  transition: 0.3s ease;
+  border-radius: 15px;
+  width: 115px; 
+}
+
+
+
 .input {
   margin-bottom: 20px;
   border-radius: 15px;
@@ -174,8 +197,21 @@ export default {
   border: 4px solid #ff812c;
   transition: all 0.1s;
 }
-.input:focus ~ span,
-.input:valid ~ span {
+.input-nick-span:focus ~ .nick-span,
+.input-nick-span:valid ~ .nick-span {
+  transform: translateY(-115%);
+  font-size: 20px;
+  left: 15px;
+  border: solid #ff812c;
+  background: #ff812c;
+  color: #fff;
+  width: 110px;
+  text-align: center;
+  border-radius: 15px;
+}
+
+.input-nickName:focus ~ .nickName,
+.input-nickName:valid ~ .nickName {
   transform: translateY(-115%);
   font-size: 20px;
   left: 15px;
