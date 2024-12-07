@@ -62,6 +62,9 @@ def add_tables():
         cursor.execute(f"""create table if not exists users(
                         id uuid ,
                         username text,
+                        surname text,
+                        phonenumber text,
+                        password text,
                         email text,
                         admin bool,
                         date_create timestamp
