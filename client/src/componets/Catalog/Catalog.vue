@@ -11,7 +11,7 @@ export default {
     };
   },
   methods: {
-    async handleDataFromChild(data) {
+    async handleDataFromChild() {
       this.data = await axios.get("/catalog");
       this.getData();
     },
@@ -37,7 +37,7 @@ export default {
     CatalogMenu,
   },
   mounted() {
-    this.getData();
+    this.handleDataFromChild();
   },
 };
 </script>
