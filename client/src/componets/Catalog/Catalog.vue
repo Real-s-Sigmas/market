@@ -11,20 +11,27 @@ export default {
     };
   },
   methods: {
-    handleDataFromChild(data) {
-      this.data = data;
+    async handleDataFromChild(data) {
+      this.data = await axios.get("/catalog");
       this.getData();
     },
     getData() {
-  const normalizedData = this.data.toLowerCase().replace(/\s+/g, ''); 
-  const foundCategory = this.catalog.find(category => {
-    const keys = Object.keys(category);
-    return keys.some(key => key.toLowerCase().replace(/\s+/g, '') === normalizedData);  
-  });
-  this.tmps = foundCategory ? foundCategory[Object.keys(foundCategory).find(key => key.toLowerCase().replace(/\s+/g, '') === normalizedData)] : [];
-  console.log(this.tmps);
-}
-
+      const normalizedData = this.data.toLowerCase().replace(/\s+/g, "");
+      const foundCategory = this.catalog.find((category) => {
+        const keys = Object.keys(category);
+        return keys.some(
+          (key) => key.toLowerCase().replace(/\s+/g, "") === normalizedData
+        );
+      });
+      this.tmps = foundCategory
+        ? foundCategory[
+            Object.keys(foundCategory).find(
+              (key) => key.toLowerCase().replace(/\s+/g, "") === normalizedData
+            )
+          ]
+        : [];
+      console.log(this.tmps);
+    },
   },
   components: {
     CatalogMenu,
