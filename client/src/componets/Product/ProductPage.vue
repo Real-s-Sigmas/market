@@ -901,6 +901,7 @@
 
 .comment-cont {
     display: flex;
+    align-items: start;
     flex-direction: column;
     gap: 20px;
 
@@ -914,13 +915,13 @@
 .user-name {
     font-size: 24px;
     text-align: center;
-    padding: 5px 0;
-    width: 260px;
+    padding: 5px 12px;
     border: 2px solid #000;
     border-radius: 12px;
 }
 
 .user-text {
+    width: 100%;
     padding: 5px;
     height: 320px;
     border: 2px solid #000;
@@ -1052,12 +1053,16 @@
     }
 
     .main-info h3 {
-        font-size: 36px;
+        font-size: 26px;
     }
 
     .short-description {
-        font-size: 24px;
+        font-size: 16px;
         width: 100%;
+    }
+
+    .anc-link {
+        font-size: 18px;
     }
 
     
@@ -1072,12 +1077,20 @@
     }
 
     .full-description p {
-        font-size: 18px;
+        font-size: 16px;
     }
 
     .sort select {
         font-size: 18px;
         height: 40px;
+    }
+
+    .your-comment h2 {
+        font-size: 22px;
+    }
+
+    .text-comm {
+        font-size: 16px;
     }
 
     .feedback-cont {
@@ -1103,6 +1116,20 @@
     .fav {
         width: 57px;
         height: 57px;
+    }
+
+    .send-comm {
+        font-size: 16px;
+        width: 160px;
+        padding: 12px 0;
+    }
+
+    .title-sort h2 {
+        font-size: 22px;
+    }
+
+    .user-name {
+        font-size: 16px;
     }
 
     .fav button {
