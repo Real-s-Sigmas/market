@@ -16,11 +16,25 @@
 
                 product: {
                     title: "Название товара",
-                    short_description: "Очень хороший аппарат, всем советую прям вообще во такой.ааааааааа аааааааа аааааааа аааааааа аааааааарааааа ааааааааааааа аааааабааааа",
+                    short_description: "Очень хороший аппарат, всем советую прям вообще во такой.ааааааааа аааааааа аааааааа fffffffff  fffffffff",
                     price: "8 800",
                     full_desctiption: "Аппарат Шуруповерт сверлило 3000 ультра мега про макс, это не только ваша уверенность в том, что вы самодостаточный, гордый мужчина, это еще и проход (как метро люблино) в трусики любой уважающей себя даме. Как говориться мужчина рожден с дрелью в руках. Покажи всем свое величие. Жена ругается, что руки у тебя кривее чем волосы на жопе, а поправить ты можешь только свой вес и то в большую сторону? У нас есть для тебя решение: Шуруповерт сверлило 3000 ультра мега про макс. Купи этот крутейший аппарат и отдолби ее до потери сознания, докажи кто в доме маТчо!",
                     rating_product: 4,
-                }
+                },
+
+                currentImageIndex: 0,
+                images: [
+                    'src/assets/112.jpg',
+                    'src/assets/123.webp',
+                    'src/assets/124.webp',
+                    'src/assets/shup.png',
+                    'src/assets/1111.jpeg',
+                    'src/assets/4111.jpeg',
+                    'src/assets/5111.jpeg',
+                    'src/assets/6111.jpeg',
+                    
+                ],
+                visibleImages: 5,
             }
         },
 
@@ -73,6 +87,22 @@
                 } else {
                     this.red_text = false;
                 }
+            },
+
+            nextImage() {
+                if (this.currentImageIndex < this.images.length - 1) {
+                    this.currentImageIndex++;
+                }
+            },
+
+            prevImage() {
+                if (this.currentImageIndex > 0) {
+                    this.currentImageIndex--;
+                }
+            },
+
+            selectImage(index) {
+                this.currentImageIndex = index;
             }
         },
         
@@ -90,7 +120,24 @@
                 }
 
                 return starsArray;
-            }
+            },
+
+            visibleThumbnails() {
+                const halfVisible = Math.floor(this.visibleImages / 2);
+                let start = this.currentImageIndex - halfVisible;
+                let end = this.currentImageIndex + halfVisible + 1;
+
+                if (start < 0) {
+                    start = 0;
+                    end = this.visibleImages;
+                }
+                if (end > this.images.length) {
+                    end = this.images.length;
+                    start = this.images.length - this.visibleImages;
+                }
+                
+                return this.images.slice(start, end);
+            },
         }
     }
 </script>
@@ -101,13 +148,18 @@
         <!-- Блок с информацией о товара (с картинкой) -->
         <div class="product-info">
             <div class="images">
-                <img class="prod-img"src="../../assets/shup.png" alt="">
+                <img class="prod-img" :src="images[currentImageIndex]" alt="">
                 <div class="mini-img">
-                    <div class="img-mini"></div>
-                    <div class="img-mini"></div>
-                    <div class="img-mini"></div>
-                    <div class="img-mini"></div>
-                    <div class="img-mini"></div>
+                    <button @click="prevImage" :disabled="currentImageIndex === 0"><img class="arrow-btn" src="../../assets/arrow-prev.svg" alt=""></button>
+                    <div
+                        class="img-mini"
+                        v-for="(image, index) in visibleThumbnails"
+                        :key="image"
+                        :class="{'active-thumbnail': images.indexOf(image) == currentImageIndex}"
+                        @click="selectImage(images.indexOf(image))">
+                        <img :src="image" alt="">
+                    </div>
+                    <button @click="nextImage" :disabled="currentImageIndex == images.length - 1"><img class="arrow-btn" src="../../assets/arrow-next.svg" alt=""></button>
                 </div>
             </div>
 
@@ -302,22 +354,50 @@
 
 /* Блок с информацией о товаре */
 
+.arrow-btn {
+    width: 40px;
+}
+
 .images {
     min-width: 400px;
+}
+
+.images {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 .mini-img {
     margin-top: 10px;
     display: flex;
+    align-items: center;
     gap: 12px;
 }
 
 .img-mini {
+    cursor: pointer;
     width: 70px;
     height: 70px;
     border: 2px solid #000;
     border-radius: 8px;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: border 0.2s;
 }
+
+.img-mini img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.active-thumbnail {
+    outline: 2px solid #ff802c;
+}
+
 
 .main-page-window {
     width: 100%;
@@ -935,6 +1015,11 @@
     .short-description {
         width: 90%;
     }
+
+    .img-mini {
+        width: 50px;
+        height: 50px;
+    }
 }
 
 @media (max-width: 1000px) {
@@ -943,12 +1028,10 @@
     }
 }
 
-@media (max-width: 900px) {
-    
-}
-
-@media (max-width: 850px) {
-    
+@media (max-width: 760px) {
+    .order button {
+        font-size: 20px;
+    }
 }
 
 
@@ -1057,6 +1140,10 @@
             height: 30px;
         }
     }
+
+    .mini-img {
+        gap: 8px;
+    }
 }
 
 @media (max-width: 640px) {
@@ -1085,7 +1172,7 @@
     }
 
     .main-info {
-        height: 500px;
+        margin-bottom: 150px;
     }
 
     .order-fav {

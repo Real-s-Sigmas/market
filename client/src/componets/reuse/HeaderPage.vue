@@ -194,6 +194,8 @@ button {
   right: 20px;
 
   transition: all 100ms;
+
+  z-index: 1000;
 }
 
 .shortTg {
