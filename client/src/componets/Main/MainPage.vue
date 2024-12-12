@@ -6,8 +6,7 @@ import CategoryComp from '../reuse/CategoryComp.vue'
 export default {
     data() {
         return {
-           
-
+           search: ``,
         }
     },
 
@@ -18,7 +17,11 @@ export default {
     },
 
     methods: {
-        
+        findProduct() {
+            if(this.search) {
+                this.$router.push(`/FindProducts?search=${this.search}`);
+            }
+        }
     },
    
     computed: {
@@ -36,8 +39,8 @@ export default {
 
   <!-- Блок поиска -->
         <div class="search">
-            <input type="text">
-            <button class="search-find">Найти</button>
+            <input type="text" v-model='search' placeholder='Поиск товаров'>
+            <button class="search-find" @click='findProduct'>Найти</button>
         </div>
 
         <!-- Блок приветствия -->
