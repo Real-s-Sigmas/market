@@ -8,7 +8,7 @@ const router = createRouter({
       component: () => import("../componets/Main/MainPage.vue"),
     },
     {
-      path: "/Product",
+      path: "/Product/:id",
       name: "product",
       component: () => import("../componets/Product/ProductPage.vue"),
     },
@@ -91,6 +91,11 @@ const router = createRouter({
       path: "/SignUp",
       name: "signup",
       component: () => import("../componets/Forms/RegisterPage.vue")
+    },
+    {
+      path: "/FindProducts",
+      name: "findproduct",
+      component: () => import("../componets/FindProducts/FindProducts.vue")
     },
   ],
 });

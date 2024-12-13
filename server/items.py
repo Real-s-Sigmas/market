@@ -2,7 +2,7 @@ import uuid, psycopg2, logging
 
 from psycopg2 import Error
 from flask import jsonify, request
-from typing import Union
+from typing import Union, Tuple
 from app import *
 from app import app, PASSWORD_PG, PORT_PG, USER_PG, HOST_PG, MEDIA, AVATAR
 from check import chek_for_admin
@@ -163,7 +163,7 @@ def delete_item():
 
 #TODO: /items/show-items?category=
 
-def NewTopic(name: str, base: str) -> str:
+def NewTopic(name: str, base: str, big: str) -> str:
     try:
         pg = psycopg2.connect(f"""
             host={HOST_PG}
@@ -176,7 +176,7 @@ def NewTopic(name: str, base: str) -> str:
         cursor = pg.cursor(cursor_factory=psycopg2.extras.DictCursor)
         id = uuid.uuid4().hex
         link = check.AddPhoto(base, "topic-phoyos", id)
-        cursor.execute(f"INSERT INTO topics(id, name, photo) VALUES('{id}','{name}','{link}')")
+        cursor.execute(f"INSERT INTO topics(id, name, photo, big) VALUES('{id}','{name}','{link}', '{big}')")
 
         pg.commit()
         return_data = "Ok"
@@ -200,7 +200,7 @@ def new_topic():
 
     post_data = request.get_json()
 
-    res = NewTopic(post_data.get("name"), post_data.get("photo")) # type: ignore
+    res = NewTopic(post_data.get("name"), post_data.get("photo"), post_data.get("big")) # type: ignore
 
     if res == "Error":
         response_object["res"] = "Server Err"
@@ -258,7 +258,7 @@ def delete_topic():
     return jsonify(response_object), 200
 
 
-def PutTopic(id: str, name: str, link_old: str, link_new: bool) -> str:
+def PutTopic(id: str, name: str, link_old: str, link_new: bool, big: str) -> str:
     try:
         pg = psycopg2.connect(f"""
             host={HOST_PG}
@@ -271,7 +271,7 @@ def PutTopic(id: str, name: str, link_old: str, link_new: bool) -> str:
         cursor = pg.cursor(cursor_factory=psycopg2.extras.DictCursor)
         link = link_old if link_new else check.PutPhoto(check.NewLink(id, "topic-phoyos"), link_old)
 
-        cursor.execute(f"UPDATE itemes(id, title, description, price, photos, topic) SET('{id}', '{name}', '{link}')")
+        cursor.execute(f"UPDATE topics(id, name, photo, big) SET('{id}', '{name}', '{link}', '{big}')")
 
         pg.commit()
         return_data = "Ok"
@@ -296,7 +296,7 @@ def change_topic():
 
     post_data = request.get_json()
 
-    res = PutTopic(post_data.get("id"), post_data.get("name"), post_data.get("link_old"), post_data.get("link_new"))
+    res = PutTopic(post_data.get("id"), post_data.get("name"), post_data.get("link_old"), post_data.get("link_new"), post_data.get("big"))
 
     if res == "Error":
         response_object["res"] = "Server Err"
@@ -426,3 +426,41 @@ def get_items_topic():
 
     return jsonify(response_object)
 
+def getCategory() -> dict:
+    try:
+        pg = psycopg2.connect(f"""
+            host={HOST_PG}
+            dbname=postgres
+            user={USER_PG}
+            password={PASSWORD_PG}
+            port={PORT_PG}
+        """)
+
+        cursor = pg.cursor(cursor_factory=psycopg2.extras.DictCursor)
+
+        cursor.execute(f"SELECT big, GROUP_CONCAT(name) as names
+                            FROM topics
+                            GROUP BY big;")
+
+
+    except (Exception, Error) as error:
+        logging.error(f'DB: ', error)
+        return_data = f"Error"
+
+    finally:
+        if pg:
+            cursor.close()
+            pg.close()
+            logging.info("Соединение с PostgreSQL закрыто")
+            return return_data
+
+
+
+@app.route("/items/category", methods=["GET"])
+def get_items_topic():
+    response_object = {'status': 'success'} #БаZа
+
+
+    response_object["res"] = getCategory()
+
+    return jsonify(response_object)

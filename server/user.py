@@ -1,4 +1,4 @@
-import random, uuid, psycopg2, smtplib, logging
+import random, uuid, psycopg2, smtplib, logging, hashlib
 
 from app import HOST_PG, USER_PG, PASSWORD_PG, PORT_PG, app
 from psycopg2 import Error
@@ -6,7 +6,7 @@ from flask import jsonify, request, session
 from email.mime.text import MIMEText
 from datetime import datetime
 from dotenv import load_dotenv
-
+from typing import Union, Optional, Tuple
 
 
 load_dotenv()
@@ -19,8 +19,18 @@ logging.basicConfig(
 
 logging.info("user.py have connected")
 
-#TODO: сделать все!
-def loginUser(email, pas):
+
+def hash_password(password):
+    return hashlib.sha256(password.encode()).hexdigest()
+
+def verify_password(stored_hash, password):
+    return stored_hash == hash_password(password)
+
+def check_password_hash(stored_hash, input_password):
+    return verify_password(stored_hash, input_password)
+
+
+def SignUp(name: str, surname: str, phonenumber, password: str, email: str) -> str:
     try:
         pg = psycopg2.connect(f"""
             host={HOST_PG}
@@ -29,55 +39,36 @@ def loginUser(email, pas):
             password={PASSWORD_PG}
             port={PORT_PG}
         """)
-
-        cursor = pg.cursor(cursor_factory=psycopg2.extras.DictCursor)
-        cursor.execute(f"SELECT COUNT(*) FROM users WHERE email=$${email}$$")
-
-        # Проверка есть ли такой пользователь
-        if cursor.fetchall()[0][0] == 1 and check_pass(email, pas):
-            pass
-        else:
-            logging.warning("Аккаунта с такой почтой не существует!")
-            return_data = "Аккаунта с такой почтой не существует!"
-
-    except (Exception, Error) as error:
-        logging.error(f'DB: ', error)
-        return_data = f"Error"
-
-    finally:
-        if pg:
-            cursor.close
-            pg.close
-            logging.info("Соединение с PostgreSQL закрыто")
-            return return_data
-
-def add_user_todb(email, pas):
-    try:
-        pg = psycopg2.connect(f"""
-            host={HOST_PG}
-            dbname=postgres
-            user={USER_PG}
-            password={PASSWORD_PG}
-            port={PORT_PG}
-        """)
-
         cursor = pg.cursor(cursor_factory=psycopg2.extras.DictCursor)
 
         send_user = []
+        cursor.execute(f"SELECT COUNT(*) FROM users WHERE username=$${name}$$")
+        send_user.append(cursor.fetchone())
 
         cursor.execute(f"SELECT COUNT(*) FROM users WHERE email=$${email}$$")
         send_user.append(cursor.fetchone())
+
+        cursor.execute(f"SELECT COUNT(*) FROM users WHERE phonenumber=$${phonenumber}$$")
+        send_user.append(cursor.fetchone())
         # Проверка существует ли такой пользователь
-        if send_user[0][0] == 0 and check_pass(email, pas):
-            cursor.execute(f"""INSERT INTO users(id, email, data_c) VALUES ({uuid.uuid4().hex}, '{email}', {datetime.now().isoformat()})""")
-
+        if send_user[0][0] == 0 and send_user[1][0] == 0 and send_user[2][0]:
+            cursor.execute(f'''INSERT INTO comments(id, username, surname, phonenumber, password, email, admin, date_create) 
+                            VALUES (
+                            '{uuid.uuid4().hex}', 
+                            '{name}',
+                            '{surname}'
+                            '{phonenumber}',
+                            '{hash_password(password)}',
+                            '{email}',
+                            false,
+                            '{datetime.now().isoformat()}'
+                            )''')
+            
             pg.commit()
-
             logging.info("Пользователь зарегестрирован!")
-            return_data = 'Ok'
-
+            return_data = "ok"
         else:
-            return_data = "Пользователь с такой почтой уже существует!"
+            return_data = "Пользователь с таким именем или почтой уже существует!"
             logging.warning(return_data)
 
     except (Exception, Error) as error:
@@ -90,46 +81,98 @@ def add_user_todb(email, pas):
             pg.close
             logging.info("Соединение с PostgreSQL закрыто")
             return return_data
-
-
-def check_pass(email, pas):
-    pass
-
-def send_code(email):
-    sender = "upfollow835@gmail.com"
-    send_password = "zwrx qgne arwj jblp"
-
-    code_pas = ""
-
-    # ------------------------Улучшить бы----------------------------------------------------
-    for _ in range(4):
-        a = random.randint(0, 9) # А че тут улучшать? (Без негатива, от febolo)
-        code_pas += str(a)
-    #-----------------------------------------------------------------------------------------
-
-    msg = MIMEText(f"Ваш код для изменения пароля: {code_pas}. Не сообщайте его никому!")
-    msg["Subject"] = "Ваш код"
-
-    server = smtplib.SMTP('smtp.gmail.com', 587)
-    server.starttls()
-
-    server.login(sender, send_password)
-
-    server.sendmail(sender, email, msg.as_string())
-
-    # держим пароль в сессии
-    session['code'] = str(code_pas)
-    session.modified = True
-    session['email'] = str(email)
-    session.modified = True
-
-    logging.info(f'Пароль {code_pas} отправлен на почту {email}')
-
     return 0
 
+@app.route('/user/sign-up', methods=['POST'])
+def sign_up():
+    responce_object = {'status': 'success'}
 
-# показ всего о юзере
-def showUserInfo(id):
+    data = request.get_json()
+
+    if len(data.get('password')) >= 8:
+        responce_object['res'] = SignUp(
+                                    data.get('name'),
+                                    data.get('surname'),
+                                    data.get('phonenumber'),
+                                    data.get('password'),
+                                    data.get('email')
+                                )
+    else:
+        responce_object["res"] = "Password length too small"
+
+
+def SignIn(phonenumber: str, password: str):
+    try:
+        pg = psycopg2.connect(f"""
+            host={HOST_PG}
+            dbname=postgres
+            user={USER_PG}
+            password={PASSWORD_PG}
+            port={PORT_PG}
+        """)
+
+        cursor = pg.cursor(cursor_factory=psycopg2.extras.DictCursor)
+        cursor.execute(f"SELECT COUNT(*) FROM users WHERE phonenumber=$${phonenumber}$$")
+
+        # Проверка есть ли такой пользователь
+        if cursor.fetchall()[0][0]==1:
+
+            cursor.execute(f"SELECT * FROM users WHERE phonenumber=$${phonenumber}$$")
+            user = cursor.fetchone()
+
+            # Проверка пароля
+            if user[4] == password:
+                return_data = user[2]
+
+                logging.info(f"Login to: {user[2]}")
+                return_data = ['ok', user[0]]
+
+            else:
+                logging.warning("Incorrect Password")
+                return_data = 'Incorrect Password'
+        else:
+            logging.warning("Account Doesn`t Exist")
+            return_data = "Account Doesn`t Exist"
+
+    except (Exception, Error) as error:
+        logging.error(f'DB: ', error)
+        return_data = f"Error"
+
+    finally:
+        if pg:
+            cursor.close
+            pg.close
+            logging.info("Соединение с PostgreSQL закрыто")
+            return return_data
+
+@app.route('/user/sign-in', methods=['POST'])
+def sign_in():
+    responce_object = {'status': 'success'}
+
+    data = request.get_json()
+    
+    smth = SignIn(data.get('phonenumber'), data.get('password'))
+
+    if smth[0] == 'ok':
+        session['id'] = smth[1]
+        session.permanent = True
+        session.modified = True
+        responce_object['res'] = 'ok'
+
+    else: responce_object['res'] = smth
+
+    return jsonify(responce_object)
+
+
+@app.route('/user/sign-out', methods=['GET'])
+def sign_out():
+    responce_object = {'status': 'success'}
+    responce_object['res'] = session.get('id')
+    session.pop('id', None)
+    return jsonify(responce_object)
+
+
+def Profile(id: str) -> Union[list, str]:
     try:
         pg = psycopg2.connect(f"""
             host={HOST_PG}
@@ -143,9 +186,17 @@ def showUserInfo(id):
 
         cursor.execute(f"SELECT * from users WHERE id=$${id}$$")
 
-        return_data = dict(cursor.fetchall()[0])
+        all_states = dict(cursor.fetchall()[0])
+        logging.info('Инфа есть')
+        return_data={}
 
-        logging.info(f'Инофрмация профиля {id} отображена')
+        for key in all_states:
+            if key != "password":
+                return_data[key] = all_states[key]
+
+        return_data['date_create'] = datetime.strftime(return_data['date_create'], '%d %B %Y')
+        logging.info(f'User info {id} displayed')
+    
     except (Exception, Error) as error:
         logging.error(f'DB: ', error)
         return_data = f"Error"
@@ -156,41 +207,12 @@ def showUserInfo(id):
             pg.close
             logging.info("Соединение с PostgreSQL закрыто")
             return return_data
-
+    return 0
 
 @app.route('/user/profile', methods=['GET'])
-def user_info():
-    response_object = {'status': 'success'} #БаZа
+def profile():
+    responce_object = {'status': 'success'}
 
-    response_object["res"] = showUserInfo(request.args.get('id'))
+    responce_object['res'] = Profile(session.get('id'))
 
-    return jsonify(response_object)
-
-@app.route('/user/sign-in', methods=['POST'])
-def sign_in():
-    response_object = {'status': 'success'} #БаZа
-
-    post_data = request.get_json()
-
-    response_object["res"] = loginUser(post_data.get('email'), post_data.get('pass'))
-
-    return jsonify(response_object)
-
-
-@app.route('/user/sign-up', methods=['GET', 'POST'])
-def sign_up():
-    response_object = {'status': 'success'} #БаZа
-
-    return jsonify(response_object)
-
-
-
-@app.route('/user/sign-out', methods=['GET'])
-def sign_out():
-    response_object = {'status': 'success'} #БаZа
-
-    session.pop("id", None)
-    session.modified = True
-    session.permanent = True
-
-    return jsonify(response_object)
+    return jsonify(responce_object)
