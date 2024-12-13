@@ -1,22 +1,23 @@
 <script>
 import CatalogMenu from "./CatalogMenu.vue";
 import { Catalog } from "./catalog.js";
-
 export default {
   data() {
     return {
       catalog: Catalog,
-      data: "Электроинструменты", // Категория по умолчанию
+      title: "Электроинструменты", // Категория по умолчанию
       tmps: null,
     };
   },
   methods: {
-    async handleDataFromChild() {
-      this.data = await axios.get("/catalog");
+    async handleDataFromChild(data) {
+      this.title = data
+
+
       this.getData();
     },
     getData() {
-      const normalizedData = this.data.toLowerCase().replace(/\s+/g, "");
+      const normalizedData = this.title.toLowerCase().replace(/\s+/g, "");
       const foundCategory = this.catalog.find((category) => {
         const keys = Object.keys(category);
         return keys.some(
@@ -34,10 +35,10 @@ export default {
     },
   },
   components: {
-    CatalogMenu,
+    CatalogMenu
   },
   mounted() {
-    this.handleDataFromChild();
+    this.handleDataFromChild("Электроинструменты");
   },
 };
 </script>
@@ -46,13 +47,12 @@ export default {
   <div class="content">
     <CatalogMenu @data-from-child="handleDataFromChild" />
     <div class="content-links mt-4">
-      <h1>{{ this.data }}</h1>
+      <h1>{{ this.title }}</h1>
       <ul class="mt-5" v-if="tmps">
         <li v-for="item in tmps" :key="item.url" class="mr-3">
           <a :href="item.url">{{ item.title }}</a>
         </li>
       </ul>
-      <p v-else>Товары для этой категории не найдены.</p>
     </div>
   </div>
 </template>
