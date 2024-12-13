@@ -89,7 +89,7 @@ export default {
             />
           </svg>
         </button>
-        <button v-else="isLogged" class="acc" @click="this.$router.push('/Login')">
+        <button v-if="!isLogged" class="acc" @click="this.$router.push('/Login')">
           Войти
         </button>
       </div>
@@ -172,7 +172,7 @@ export default {
           />
         </svg>
       </button>
-      <button v-else="isLogged" class="acc" @click="this.$router.push('/Login')">
+      <button v-if="!isLogged" class="acc" @click="this.$router.push('/Login')">
         Войти
       </button>
     </div>

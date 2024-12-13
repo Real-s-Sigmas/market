@@ -15,7 +15,7 @@ const router = createRouter({
     {
       path: "/Login",
       name: "login",
-      component: () => import("../componets/Forms/EmailPage.vue"),
+      component: () => import("../componets/Forms/LoginPage.vue"),
     },
     {
       path: "/Enter",
@@ -50,7 +50,7 @@ const router = createRouter({
     {
       path: "/Login",
       name: "Login",
-      component: () => import("../componets/Forms/EmailPage.vue"),
+      component: () => import("../componets/Forms/LoginPage.vue"),
     },
     {
       path: "/EnterEmail",
@@ -73,7 +73,7 @@ const router = createRouter({
       component: () => import("../componets/orders/BasketPage.vue")
     },
     {
-      path: "/notfound",
+      path: "/:pathMatch(.*)",
       name: "NotFound",
       component: () => import("../componets/reuse/NotFound.vue")
     },

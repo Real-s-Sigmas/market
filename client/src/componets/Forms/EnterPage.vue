@@ -4,24 +4,24 @@ export default {
     return {
       disabled: false,
       code: "",
-      error: "",
     };
   },
   methods: {
-    input($event) {
-      this.disabled = true;
-      if ($event) {
-        if (this.code.length == 0) {
-          this.error = "Поле не должно быть пустым!";
-        } else if (this.code.length > 0) {
-          this.error = "";
-          this.disabled = false;
-        } else if (this.code.length < 5) {
-          this.error = "Минимум 5 символов!";
-        } else if (this.code.length == 5) {
-          this.error = "";
-          this.disabled = true;
-        }
+    async login() {
+      try {
+        let response = await axios.post(`/user/email-code`, {
+            code: this.code,
+        });
+          this.error = response.data.res
+
+          if (this.error == "Ok") {
+              this.$router.push("/Catalog")
+          } else{
+            this.error = "Неверный код!"
+          }
+      } catch (err) {
+        console.error(err)
+        this.error = "Ошибка сервера";
       }
     },
   },
@@ -31,18 +31,16 @@ export default {
   <div class="window">
     <div class="container">
       <div class="div-nickname">
-        <form>
+        <form @submit.prevent="login">
           <input
             type="text"
             class="input"
             autofocus
             required
             v-model="code"
-            @input="input($event)"
-            maxlength="5"
+            placeholder="Код подтверждения"
           />
-          <span сlass="nick">Код</span>
-          <button class="btn" :disabled="disabled">Отправить</button>
+          <button class="btn" type="submit">Отправить</button>
         </form>
         <p class="error">{{ error }}</p>
       </div>
@@ -54,29 +52,30 @@ export default {
   --font-family: "Rubik", sans-serif;
   --second-family: "Inter", sans-serif;
 }
-.head {
-  font-family: var(--font-family);
-  font-weight: 700;
-  font-size: 25px;
-  position: absolute;
-  top: 230px;
-  color: #000000;
-}
 .error {
   font-family: var(--font-family);
   font-weight: 700;
   font-size: 17px;
   color: red;
-  position: absolute;
-  top: 155px;
   z-index: 10000;
-  left: 5px;
 }
+
+.haveAcc {
+  color: #ff812c;
+  font-size: 18px;
+  font-weight: 500;
+  line-height: 50px;
+}
+
+.haveAcc:hover {
+  color: #d95700;
+}
+
 .btn {
   top: 77px;
   font-family: var(--font-family);
   font-weight: 700;
-  font-size: 25px;
+  font-size: 20px;
   text-align: center;
   color: #ffffff;
   background: #ff812c;
@@ -85,9 +84,15 @@ export default {
   width: 430px;
   height: 60px;
   border: none;
-  cursor: pointer;
   z-index: 7000;
+  transition: all 0.1s;
+
 }
+
+.btn:hover {
+  background-color: #d95700;
+}
+
 .btn:disabled {
   top: 77px;
   font-family: var(--font-family);
@@ -108,10 +113,7 @@ export default {
   background: #e1e1e1;
   transition: all 0.3s;
 }
-.btn:hover {
-  background: #ef7c30;
-  transition: all 0.3s;
-}
+
 .container {
   display: flex;
   justify-content: center;

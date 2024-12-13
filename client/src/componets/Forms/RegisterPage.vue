@@ -4,32 +4,31 @@ export default {
     return {
       disabled: false,
       email: "",
-      nickName: "",
+      password: "",
       error: "",
+      phonenumber: "",
+      name: "",
     };
   },
   methods: {
-    input($event) {
-      this.disabled = true;
-      this.error = "";
-      
-      if (this.email) {
-        if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(this.email)) {
-          this.disabled = false;
-        } else if (this.email.length > 7 ) {
-            this.error = "Почта невалидна!";
-        }
-      }
+    async login() {
+      try {
+        let response = await axios.post(`/user/sign-in`, {
+          email: this.email,
+          password: this.password,
+          phonenumber: this.phonenumber,
+          name: this.name,
+        });
+        this.error = response.data.res;
 
-      if (!this.nickName) {
-        this.error = "Поле имени должно быть заполнено!";   
-        this.disabled = true;
-      } else if (this.nickName.length < 2) {
-        this.error = "В имени должно быть не менее 2 букв!";
-        this.disabled = true;
-      } else if (!/^[a-zA-Zа-яА-ЯёЁ]+$/.test(this.nickName)) {
-        this.error = "Имя должно содержать только буквы!";
-        this.disabled = true;
+        if (this.error == "Ok") {
+          this.$router.push("/EnterEmail");
+        } else {
+          this.error = "Заполните все поля правильно!";
+        }
+      } catch (err) {
+        console.error(err);
+        this.error = "Ошибка сервера";
       }
     },
   },
@@ -39,26 +38,40 @@ export default {
   <div class="window">
     <div class="container">
       <div class="div-nickname">
-        <form>
+        <form @submit.prevent="login">
           <input
             type="text"
-            class="input input-nick-span"
+            class="input"
+            autofocus
+            required
+            v-model="name"
+            placeholder="Ваше имя"
+          />
+          <input
+            type="text"
+            class="input"
+            autofocus
+            required
+            v-model="phonenumber"
+            placeholder="Номер телефона"
+          />
+          <input
+            type="text"
+            class="input"
             autofocus
             required
             v-model="email"
-            @input="input($event)"
+            placeholder="Почта"
           />
-          <span class="nick-span">Почта</span>
-
           <input
-            type="text"
-            class="input input-nickName"
+            type="password"
+            class="input"
+            autofocus
             required
-            v-model="nickName"
-            @input="input($event)"
+            v-model="password"
+            placeholder="Пароль"
           />
-          <span class="nickName">Имя</span>
-          <button class="btn" :disabled="disabled">Зарегистрироваться</button>
+          <button class="btn" type="submit">Зарегистрироваться</button>
         </form>
         <a href="/Login" class="haveAcc">Уже есть аккаунт?</a>
         <p class="error">{{ error }}</p>
@@ -84,7 +97,6 @@ export default {
   font-size: 18px;
   font-weight: 500;
   line-height: 50px;
-  transition: all 0.1s;
 }
 
 .haveAcc:hover {
@@ -92,11 +104,13 @@ export default {
 }
 
 .btn {
+  top: 77px;
   font-family: var(--font-family);
   font-weight: 700;
-  font-size: 25px;
+  font-size: 20px;
+  text-align: center;
   color: #ffffff;
-  background-color: #ff812c;
+  background: #ff812c;
   cursor: pointer;
   border-radius: 15px;
   width: 430px;
@@ -142,13 +156,25 @@ export default {
   align-items: center;
   min-height: 600px;
 }
-
+.input {
+  margin-bottom: 20px;
+  border-radius: 15px;
+  width: 430px;
+  height: 60px;
+  background: #eae9e9;
+  border: none;
+  padding: 20px;
+  font-family: var(--font-family);
+  font-weight: 500;
+  font-size: 20px;
+  color: #000000;
+}
 .div-nickname {
   position: relative;
   width: 420px;
 }
-.nick-span {
-  position: absolute !important;
+.div-nickname span {
+  position: absolute;
   font-family: var(--font-family);
   font-weight: 700;
   font-size: 25px;
@@ -160,23 +186,6 @@ export default {
   border-radius: 15px;
   width: 115px;
 }
-
-.nickName {
-  position: absolute !important;
-  font-family: var(--font-family);
-  font-weight: 700;
-  font-size: 25px;
-  color: #5b5a5a;
-  top: 94px;
-  left: 18px;
-  pointer-events: none;
-  transition: 0.3s ease;
-  border-radius: 15px;
-  width: 115px; 
-}
-
-
-
 .input {
   margin-bottom: 20px;
   border-radius: 15px;
@@ -197,21 +206,8 @@ export default {
   border: 4px solid #ff812c;
   transition: all 0.1s;
 }
-.input-nick-span:focus ~ .nick-span,
-.input-nick-span:valid ~ .nick-span {
-  transform: translateY(-115%);
-  font-size: 20px;
-  left: 15px;
-  border: solid #ff812c;
-  background: #ff812c;
-  color: #fff;
-  width: 110px;
-  text-align: center;
-  border-radius: 15px;
-}
-
-.input-nickName:focus ~ .nickName,
-.input-nickName:valid ~ .nickName {
+.input:focus ~ span,
+.input:valid ~ span {
   transform: translateY(-115%);
   font-size: 20px;
   left: 15px;

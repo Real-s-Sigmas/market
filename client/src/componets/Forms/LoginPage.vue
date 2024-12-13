@@ -4,21 +4,27 @@ export default {
     return {
       disabled: false,
       email: "",
+      password: "",
       error: "",
     };
   },
   methods: {
-    input($event) {
-      this.disabled = true;
-      if ($event) {
-        if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(this.email)) {
-          this.disabled = false;
-          this.error = "";
-        } else {
-          if (this.email.length > 7) {
-            this.error = "Почта невалидна!";
+    async login() {
+      try {
+        let response = await axios.post(`/user/sign-in`, {
+            email: this.email,
+            password: this.password,
+        });
+          this.error = response.data.res
+
+          if (this.error == "Ok") {
+              this.$router.push("/Login")
+          } else{
+            this.error = "Вы не ввели код"
           }
-        }
+      } catch (err) {
+        console.error(err)
+        this.error = "Ошибка сервера";
       }
     },
   },
@@ -28,17 +34,24 @@ export default {
   <div class="window">
     <div class="container">
       <div class="div-nickname">
-        <form>
+        <form @submit.prevent="login">
           <input
             type="text"
             class="input"
             autofocus
             required
             v-model="email"
-            @input="input($event)"
+            placeholder="Почта"
           />
-          <span сlass="nick">Почта</span>
-          <button class="btn" :disabled="disabled">Войти</button>
+          <input
+            type="password"
+            class="input"
+            autofocus
+            required
+            v-model="password"
+            placeholder="Пароль"
+          />
+          <button class="btn" type="submit">Войти</button>
         </form>
         <a href="/SignUp" class="haveAcc">Еще нет аккаунта?</a>
         <p class="error">{{ error }}</p>
@@ -74,7 +87,7 @@ export default {
   top: 77px;
   font-family: var(--font-family);
   font-weight: 700;
-  font-size: 25px;
+  font-size: 20px;
   text-align: center;
   color: #ffffff;
   background: #ff812c;
