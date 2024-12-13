@@ -94,7 +94,7 @@ const router = createRouter({
     },
     {
       path: "/FindProducts",
-      name: "signup",
+      name: "findproduct",
       component: () => import("../componets/FindProducts/FindProducts.vue")
     },
   ],
