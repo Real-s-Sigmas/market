@@ -84,7 +84,7 @@ export default {
        justify-content: center;
        align-items: center;
 
-       gap: 55px;
+       gap: 18px;
 
        input {
            border: 2px solid #ff812c;

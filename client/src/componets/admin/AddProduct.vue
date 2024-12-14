@@ -89,11 +89,11 @@ export default {
                         <input type="text" id='title' v-model='form.title' class='mb-5'>
                     </div>
                     <div class="select-block">
-                        <select class='text-2xl pl-10 pe-20 mt-3' v-model='form.topic'>
+                        <select class='sell text-2xl px-10 pe-16 mt-3' v-model='form.topic'>
                             <option selected value="">Категория</option>
                             <option :value="topic" v-for='topic in topics'>{{ topic }}</option>
                         </select>
-                        <img class='arrow-down' src="../../assets/arrowDown.png">
+                        <!-- <img class='arrow-down' src="../../assets/arrowDown.png"> -->
                     </div>
                 </div>
                 <div class="text-2xl ">
@@ -220,6 +220,16 @@ select {
     border-radius: 15px;
     appearance: none;
     position: relative;
+    background-image: url('../../assets/arrowDown.png');
+    background-size: 24px 12px;
+    background-position: 85% 54%;
+    background-repeat: no-repeat;
+}
+
+@media (max-width: 1124px) {
+    select {
+        background-position: 96% 54%;
+    }
 }
 
 input,
