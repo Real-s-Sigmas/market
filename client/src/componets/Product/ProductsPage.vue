@@ -64,6 +64,8 @@ export default {
 .main-page-window {
     padding: 0 100px 0 100px;
     
+    margin-top: 20px;
+    
     display: flex;
     flex-direction: column;
     justify-content: start;
@@ -130,7 +132,7 @@ export default {
     }
   }
 
-  @media (max-width: 920px) {
+  @media (max-width: 1000px) {
     .cards {
       grid-template-columns: auto auto;
     }
@@ -145,6 +147,11 @@ export default {
         .search-find {
             padding: 8px 20px;
         }
+    }
+  }
+
+  @media (max-width: 490px) {
+    .cards {
     }
   }
 

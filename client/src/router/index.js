@@ -97,6 +97,11 @@ const router = createRouter({
       name: "findproduct",
       component: () => import("../componets/FindProducts/FindProducts.vue")
     },
+    {
+      path: "/ProductComp",
+      name: "productcomp",
+      component: () => import("../componets/Product/ProductComp.vue")
+    },
   ],
 });
 

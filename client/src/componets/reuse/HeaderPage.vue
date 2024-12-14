@@ -175,6 +175,7 @@ export default {
       <button v-if="!isLogged" class="acc" @click="this.$router.push('/Login')">
         Войти
       </button>
+      <a class="shortTg" href="#!"><img src="../../assets/icons/tgicon.svg"  alt="" /></a>
     </div>
   </div>
 </template>
@@ -225,7 +226,7 @@ button {
 }
 
 .block-btns {
-  width: 250px;
+  width: 310px;
   gap: 20px;
 }
 
@@ -307,8 +308,10 @@ button {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 0 20px 15px 20px;
+
+  z-index: 1000;
 }
+
 
 .title {
   font-weight: 700;
@@ -485,7 +488,7 @@ button {
   }
 
   .btn-top {
-    right: -10px;
+    right: 10px;
   }
 }
 </style>
