@@ -121,10 +121,7 @@ export default {
 
     <div class="orders-container mx-10">
         <h2 class='mt-10 text-3xl font-bold'>Корзина</h2>
-        <form class="search" @submit.prevent='findProducts()'>
-            <input type="text" v-model='title'>
-            <button class="search-find" type="submit">Найти</button>
-        </form>
+        
         <h2 class='text-red-500 text-xl text-semibold flex justify-center mt-10 mb-4' v-if='this.errorProduct'>{{
             errorProduct }}</h2>
 

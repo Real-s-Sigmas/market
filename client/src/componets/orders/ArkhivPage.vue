@@ -55,10 +55,7 @@ export default {
             <h2 @click="this.$router.push('/myorders')" class='mt-10 text-3xl font-bold w-fit cursor-pointer'>Все заказы</h2>
             <h2 class='mt-10 text-3xl font-bold border-b-2 border-black w-fit cursor-pointer'>Архив</h2>
         </div>
-        <form @submit.prevent='findProducts()' class='flex gap-8 my-6'>
-            <input class='w-full' v-model='title'>
-            <button class="btn" type="submit">Найти</button>
-        </form>
+        
 
         <div class="products-container">
             <div class="card border-b-2 border-black py-4 mt-1" v-for='(product) in products'>
