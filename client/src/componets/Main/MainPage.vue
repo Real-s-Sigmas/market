@@ -74,6 +74,7 @@ export default {
         
         width: 100%;
         height: 100vh;
+        background-image: "https://static.tildacdn.com/tild6564-3331-4561-a230-326432353832/Image01_1.jpg";
     }
 
     .search {

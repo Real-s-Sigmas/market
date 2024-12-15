@@ -37,6 +37,6 @@ export default {
 
 <style>
 .mh {
-  min-height: 67.65vh !important;
+  min-height: 68vh !important;
 }
 </style>
