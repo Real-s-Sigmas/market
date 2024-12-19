@@ -56,24 +56,6 @@ export default {
                 this.error = 'Действие невозможно. Повторите попытку позже';
             }
         },
-
-        async findProducts() {
-            try {
-                let res = await axios.get('/basket/find-by-title', {
-                    params: {
-                        title: this.title,
-                    }
-                });
-                if(res.data.res) {
-                    this.products = res.data.res;
-                } else {
-                    this.errorProduct = 'Товаров не найдено';
-                }
-            } catch (error) {
-                this.errorProduct = 'Невозможно найти товар. Повторите попытку позже';
-            }
-        },
-
         async loadOrder() {
             try {
                 let ids = [];

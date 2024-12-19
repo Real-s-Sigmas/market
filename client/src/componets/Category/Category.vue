@@ -59,7 +59,7 @@ export default {
 		<h2 v-if='this.error' class='mt-6 flex justify-center text-red-500 text-xl font-bold'>{{ error }}</h2>
 		<div class="card-container flex xl:flex-row justify-center gap-6 mt-6 flex-wrap">
 			<div class="card rounded-2xl transition-all duration-300 hover:-translate-y-5 cursor-pointer"
-				v-for='product in products' @click='this.$router.push(`/Product/${product.id}`)'>
+				v-for='product in products' @click='this.$router.push(`/Product/${product.id}`)' :key="product.title">
 				<img class='rounded-t-2xl' :src="product.images[0]" :alt="product.title">
 				<div class="info-block p-6 flex flex-col">
 					<h3 class='text-2xl font-bold'>{{ product.title }}</h3>
