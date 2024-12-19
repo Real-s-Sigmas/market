@@ -107,6 +107,21 @@ const router = createRouter({
       name: "productcomp",
       component: () => import("../componets/Product/ProductComp.vue")
     },
+    {
+      path: "/AdminPanel/actions",
+      name: "adminpanelActions",
+      component: () => import("../componets/admin/PanelComp.vue")
+    },
+    {
+      path: "/AdminPanel/orders",
+      name: "adminpanelOrders",
+      component: () => import("../componets/admin/AdminOrders.vue")
+    },
+    {
+      path: "/OrdersAdminComp",
+      name: "ordersadmincomp",
+      component: () => import("../componets/admin/OrdersAdminComp.vue")
+    }
   ],
 });
 

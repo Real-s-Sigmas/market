@@ -59,7 +59,9 @@ export default {
         }
       } catch (error) {
         this.error = "Действие невозможно. Повторите попытку позже";
+        console.log(error)
       }
+      
     },
   },
 };
@@ -91,7 +93,7 @@ export default {
                 }}<span v-if="product.description.length >= 40">...</span>
               </p>
               <span class="absolute bottom-0 left-0"
-                ><b>Цена:</b>  <p class="price">{{ product.price }}</p></span
+                ><b>Цена:</b>  <p class="price">{{ product.price }} ₽</p></span
               >
             </div>
           </div>
@@ -100,16 +102,14 @@ export default {
               class="like-btn mt-4"
               @click="deleteProduct(product.id, index)"
             >
-              <img
-                v-if="product.isFavorite"
-                src="../../assets/icons/favoriteDelete.svg"
-                alt="favorite"
-              />
-              <img
-                v-else
-                src="../../assets/icons/favorite.svg"
-                alt="favorite"
-              />
+              <svg v-if="product.isFavorite"  width="29px" height="29px" viewBox="0 0 24 24" fill="#f0853f" xmlns="http://www.w3.org/2000/svg">
+                <path fill-rule="evenodd" clip-rule="evenodd" d="M12 6.00019C10.2006 3.90317 7.19377 3.2551 4.93923 5.17534C2.68468 7.09558 2.36727 10.3061 4.13778 12.5772C5.60984 14.4654 10.0648 18.4479 11.5249 19.7369C11.6882 19.8811 11.7699 19.9532 11.8652 19.9815C11.9483 20.0062 12.0393 20.0062 12.1225 19.9815C12.2178 19.9532 12.2994 19.8811 12.4628 19.7369C13.9229 18.4479 18.3778 14.4654 19.8499 12.5772C21.6204 10.3061 21.3417 7.07538 19.0484 5.17534C16.7551 3.2753 13.7994 3.90317 12 6.00019Z" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+              
+              <svg v-else width="29px" height="29px" viewBox="0 0 24 24" fill="#f0853f" xmlns="http://www.w3.org/2000/svg">
+                <path fill-rule="evenodd" clip-rule="evenodd" d="M12 6.00019C10.2006 3.90317 7.19377 3.2551 4.93923 5.17534C2.68468 7.09558 2.36727 10.3061 4.13778 12.5772C5.60984 14.4654 10.0648 18.4479 11.5249 19.7369C11.6882 19.8811 11.7699 19.9532 11.8652 19.9815C11.9483 20.0062 12.0393 20.0062 12.1225 19.9815C12.2178 19.9532 12.2994 19.8811 12.4628 19.7369C13.9229 18.4479 18.3778 14.4654 19.8499 12.5772C21.6204 10.3061 21.3417 7.07538 19.0484 5.17534C16.7551 3.2753 13.7994 3.90317 12 6.00019Z" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+
             </button>
             <button
               class="order-btn mt-4 btn-liink"
@@ -150,6 +150,14 @@ box-shadow: 0px 2px 8px 7px rgba(34, 60, 80, 0.2);
   -moz-box-shadow: 4px 4px 8px 0px rgba(34, 60, 80, 0.2);
   box-shadow: 4px 4px 8px 0px rgba(34, 60, 80, 0.2);
 }
+
+
+  .like-btn:hover {
+    svg {
+      fill: #fff;
+    }
+  }
+  
 .search {
   margin: 20px 0;
   /* width: 100%;  */
@@ -239,8 +247,8 @@ box-shadow: 0px 2px 8px 7px rgba(34, 60, 80, 0.2);
 }
 
 .like-btn img {
-  width: 20px !important;
-  height: 20px !important;
+  width: 30px !important;
+  height: 30px !important;
 }
 
 .like-btn:hover {

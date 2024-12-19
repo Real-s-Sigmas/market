@@ -180,7 +180,7 @@ export default {
             <!-- Блок с ценой -->
             <div class="price">
               <p>
-                <b>Цена:</b> <span>{{ this.product.price }}</span> р
+                <b>Цена:</b> <span>{{ this.product.price }}</span> ₽
               </p>
             </div>
           </div>
@@ -425,7 +425,7 @@ export default {
   align-items: center;
   color: #ff802c;
   font-size: 24px;
-  font-weight: 700;  
+  font-weight: 500;  
   width: 240px;
   height: 55px;
 
