@@ -1,9 +1,12 @@
 <script>
+import axios from 'axios';
+
 export default {
   data() {
     return {
       product_count: 1,
-      isFav: false, // Является ли товар избранным у клинта
+      isInCart: false,
+      isInFavorite: false, // Является ли товар избранным у клинта
 
       text: "", // Текст отзыва клиента
       symb_count: 0, // Количество символов в комментарии
@@ -25,7 +28,7 @@ export default {
       },
 
       currentImageIndex: 0,
-      images: [
+      photos: [
         "http://localhost:5173/src/assets/shup.png",
         "https://avatars.mds.yandex.net/i?id=a63e656f4279da0e7ce32f3a7fa74c6b_l-4238413-images-thumbs&n=13",
       ],
@@ -52,7 +55,7 @@ export default {
       }
     },
 
-    // Проверяет, чтобы счетчик не заходил за 10001 и не уходил дальше 1
+    // Проверяет, чтобы счетчик не заходил за 10000 и не уходил дальше 1
     checkCount() {
       if (this.product_count > 10000) {
         this.product_count = 10000;
@@ -84,7 +87,7 @@ export default {
     },
 
     nextImage() {
-      if (this.currentImageIndex < this.images.length - 1) {
+      if (this.currentImageIndex < this.photos.length - 1) {
         this.currentImageIndex++;
       }
     },
@@ -98,6 +101,69 @@ export default {
     selectImage(index) {
       this.currentImageIndex = index;
     },
+
+    async checkBasket() {
+      let res = await axios.get('/item/check-basket', {
+        params: {
+          id: this.$route.params.id,
+        }
+      });
+      this.isInCart = res.data.res.isInCart;
+      this.isInFavorite = res.data.res.isInFavorite;
+    },
+
+    async addToCart() {
+      try {
+        await axios.post('/basket/add-item', {
+          count: this.product_count,
+          id: this.$route.params.id,
+        });
+        this.checkBasket();
+      } catch (error) {
+        console.error(error)
+      }
+    },
+
+    async deleteFromCart() {
+      try {
+        await axios.delete('/basket/delete-item', {
+          id: this.$route.params.id,
+        });
+        this.checkBasket();
+      } catch (error) {
+        console.error(error)
+      }
+    },
+
+    async addToFavotite() {
+      try {
+        if(!this.isInFavorite) {
+          await axios.post('/user/post-favorites', {
+            id: this.$route.params.id,
+          });
+        } else {
+          await axios.delete('/user/delete-favorites', {
+            id: this.$route.params.id,
+          });
+        }
+        this.checkBasket();
+      } catch (error) {
+        console.error(error)
+      }
+    },
+
+    async getProduct() {
+      try {
+        let res = await axios.get('/', {
+          params: {
+            id: this.$route.params.id
+          }
+        });
+        this.product = res.data.res;
+      } catch (error) {
+        console.error(error)
+      }
+    }
   },
 
   computed: {
@@ -125,14 +191,19 @@ export default {
         start = 0;
         end = this.visibleImages;
       }
-      if (end > this.images.length) {
-        end = this.images.length;
-        start = this.images.length - this.visibleImages;
+      if (end > this.photos.length) {
+        end = this.photos.length;
+        start = this.photos.length - this.visibleImages;
       }
 
-      return this.images.slice(start, end);
+      return this.photos.slice(start, end);
     },
   },
+
+  mounted() {
+    this.checkBasket();
+    this.getProduct();
+  }
 };
 </script>
 <template>
@@ -141,7 +212,7 @@ export default {
     <!-- Блок с информацией о товара (с картинкой) -->
     <div class="product-info">
       <div class="images">
-        <img class="prod-img" :src="images[currentImageIndex]" alt="" />
+        <img class="prod-img" :src="photos[currentImageIndex]" alt="" />
         <div class="mini-img">
           <button @click="prevImage" :disabled="currentImageIndex === 0">
             <img class="arrow-btn" src="../../assets/arrow-prev.svg" alt="" />
@@ -151,15 +222,15 @@ export default {
             v-for="(image, index) in visibleThumbnails"
             :key="image"
             :class="{
-              'active-thumbnail': images.indexOf(image) == currentImageIndex,
+              'active-thumbnail': photos.indexOf(image) == currentImageIndex,
             }"
-            @click="selectImage(images.indexOf(image))"
+            @click="selectImage(photos.indexOf(image))"
           >
             <img :src="image" alt="" />
           </div>
           <button
             @click="nextImage"
-            :disabled="currentImageIndex == images.length - 1"
+            :disabled="currentImageIndex == photos.length - 1"
           >
             <img class="arrow-btn" src="../../assets/arrow-next.svg" alt="" />
           </button>
@@ -209,12 +280,13 @@ export default {
             <div class="order-fav">
               <!-- Блок с кнопкой заказть -->
               <div class="order">
-                <button>Добавить в корзину</button>
+                <button v-if='!this.isInCart' @click='addToCart'>Добавить в корзину</button>
+                <button class='bg-white' v-else @click='deleteFromCart'>В Корзине</button>
               </div>
 
               <!-- Блок с кнопкой "В избранное" -->
-              <div class="fav" :class="{ favDone: this.isFav }">
-                <button @click="this.isFav = !this.isFav">
+              <div class="fav" :class="{ favDone: this.isInFavorite }">
+                <button @click="addToFavotite">
                   <svg
                     width="30px"
                     height="30px"
