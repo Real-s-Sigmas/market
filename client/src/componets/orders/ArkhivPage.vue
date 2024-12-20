@@ -54,7 +54,6 @@ export default {
                         <div class="info-block flex flex-col gap-0 relative text-base">
                             <h3 class='text-4xl font-bold'>{{ product.title }}</h3>
                             <span>Код товара: {{ product.code }}</span>
-                            <span>Количество хуев у вас в жопе: 10^345715187651754   </span>
                             <p>Описание: {{ product.description.substring(0, 40) }}<span v-if='product.description.length >= 40'>...</span> </p>
     
                             <span class='absolute bottom-0 left-0'>Цена: {{ product.price }}</span>
