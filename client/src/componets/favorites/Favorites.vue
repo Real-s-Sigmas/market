@@ -7,14 +7,15 @@ export default {
       products: [
         {
           id: 52,
-          image: `src/assets/1111.jpeg`,
+          photos: [`src/assets/1111.jpeg`],
           title: `Отвертка подзалупная. `,
           description: `loremloremloremloremloremloremloremloremloremloremloremloremloremloremloremloremloremloremloremloremloremloremloremloremloremloremloremloremloremloremloremloremloremloremloremloremlorem`,
           price: 52000,
+          
         },
         {
           id: 52,
-          image: `src/assets/1111.jpeg`,
+          photos: [`src/assets/1111.jpeg`],
           title: `Чё то тут`,
           description: `Чё то там`,
           price: 52000,
@@ -85,7 +86,7 @@ export default {
       >
         <div class="info-card flex gap-6 justify-between">
           <div class="info-container flex gap-6">
-            <img class="rounded-xl image" :src="product.image" />
+            <img class="rounded-xl image" :src="product.photos[0]" />
             <div class="info-block flex flex-col gap-0 relative text-base">
               <h3 class="text-3xl font-bold">{{ product.title }}</h3>
               <p class="mt-5"> 

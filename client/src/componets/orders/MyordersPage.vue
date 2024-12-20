@@ -32,8 +32,13 @@ export default {
 
     methods: {
         async loadProducts() {
-            let res = await axios.get('/basket/get-orders');
-            this.products = res.data;
+            try {
+                let res = await axios.get('/orders/show-orders');
+                this.products = res.data;
+
+            } catch (err) {
+                console.error(err)
+            }
         },
 
         async findProducts() {

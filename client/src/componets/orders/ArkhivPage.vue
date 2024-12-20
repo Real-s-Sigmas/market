@@ -7,17 +7,15 @@ export default {
             products: [
                 {
                     code: 8652525252,
-                    image: `src/assets/1111.jpeg`,
+                    photos: [`src/assets/1111.jpeg`],
                     title: `Чё то тут`,
-                    count: 52,
                     description: `Чё то там, Чё то тамЧё то тамЧё то тамЧё то тамЧё то там`,
                     price: 52000,
                 },
                 {
                     code: 8652525252,
-                    image: `src/assets/1111.jpeg`,
+                    photos: [`src/assets/1111.jpeg`],
                     title: `Чё то тут`,
-                    count: 52,
                     description: `Чё то там`,
                     price: 52000,
                 },
@@ -32,18 +30,9 @@ export default {
 
     methods: {
         async loadProducts() {
-            let res = await axios.get('/basket/history');
+            let res = await axios.get('/order/history');
             this.products = res.data;
         },
-
-        async findProducts() {
-            let res = await axios.get('/favorites/find-by-title', {
-                params: {
-                    title: this.title,
-                }
-            });
-            this.products = res.data;
-        }
     }
 }
 </script>
@@ -65,7 +54,7 @@ export default {
                         <div class="info-block flex flex-col gap-0 relative text-base">
                             <h3 class='text-4xl font-bold'>{{ product.title }}</h3>
                             <span>Код товара: {{ product.code }}</span>
-                            <span>Количество: {{ product.count }}</span>
+                            <span>Количество хуев у вас в жопе: 10^345715187651754   </span>
                             <p>Описание: {{ product.description.substring(0, 40) }}<span v-if='product.description.length >= 40'>...</span> </p>
     
                             <span class='absolute bottom-0 left-0'>Цена: {{ product.price }}</span>
