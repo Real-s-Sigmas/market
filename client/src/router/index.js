@@ -98,6 +98,16 @@ const router = createRouter({
       component: () => import("../componets/Forms/RegisterPage.vue")
     },
     {
+      path: "/ResetPassword",
+      name: "reset password",
+      component: () => import("../componets/Forms/EmailPassword.vue")
+    },
+      {
+      path: "/NewPassword",
+      name: "NewPassword",
+      component: () => import("../componets/Forms/NewPassword.vue")
+    },
+    {
       path: "/FindProducts",
       name: "findproduct",
       component: () => import("../componets/FindProducts/FindProducts.vue")

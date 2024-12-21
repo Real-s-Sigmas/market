@@ -7,6 +7,7 @@ export default {
       products: [
         {
           id: 52,
+          count: 1,
           photos: [`src/assets/1111.jpeg`],
           title: `Отвертка подзалупная.`,
           description: `Чё то там, Чё то тамЧё то тамЧё то тамЧё то тамЧё то там`,
@@ -14,6 +15,7 @@ export default {
         },
         {
           id: 52,
+          count: 1,
           photos: [`src/assets/1111.jpeg`],
           title: `Чё то тут`,
           description: `Чё то там`,
@@ -61,7 +63,10 @@ export default {
         let ids = [];
 
         for (let i = 0; i < this.product.length; i++) {
-          ids.push(this.product[i].id);
+            ids.push({
+                id: this.product[i].id,
+                count: this.product[i].count
+             }, );
         }
 
         let res = await axios.post("/order/add-oder", {
