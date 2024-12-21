@@ -2,7 +2,6 @@
 export default {
 	data() {
 		return {
-			topic: ``,
 			rusParametr: ``,
 			error: ``,
 			products: [ 
@@ -12,17 +11,12 @@ export default {
 	},
 
 	methods: {
-		getParams() {
-			this.topic = this.$route.params.firstParametr + '/' + this.$route.params.secondParametr + '/' + this.$route.params.thirdParametr;
-			this.rusParametr = this.$route.query.rusParametr;
-		},
-
 		async loadProduct() {
 			if(this.secondParametr) {
 				try {
 					let res = await axios.get('/items/show-items', {
 						params: {
-							topic: this.topic
+							topic: this.$route.params.rusParametr
 						}
 					});
 	
@@ -45,7 +39,6 @@ export default {
 	},
 
 	mounted() {
-		this.getParams();
 		this.loadProduct();
 	}
 }
@@ -55,7 +48,7 @@ export default {
 <template>
 
 	<div class="flex flex-col md:mx-16 mx-6 mt-8">
-		<h3 class='text-slate-500 text-2xl'>{{ rusParametr }}</h3>
+		<h3 class='text-slate-500 text-2xl'>{{ this.$route.params.rusParametr }}</h3>
 		<h2 v-if='this.error' class='mt-6 flex justify-center text-red-500 text-xl font-bold'>{{ error }}</h2>
 		<div class="card-container flex xl:flex-row justify-center gap-6 mt-6 flex-wrap">
 			<div class="card rounded-2xl transition-all duration-300 hover:-translate-y-5 cursor-pointer"

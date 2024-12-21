@@ -88,7 +88,7 @@ const router = createRouter({
       component: () => import("../componets/Catalog/Catalog.vue")
     },
     {
-      path: "/Category/:firstParametr/:secondParametr/:thirdParametr?",
+      path: "/Category/:rusParametr/",
       name: "category",
       component: () => import("../componets/Category/Category.vue")
     },

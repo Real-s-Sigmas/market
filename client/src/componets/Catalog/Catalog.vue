@@ -50,7 +50,7 @@ export default {
       <h1>{{ this.title }}</h1>
       <ul class="mt-5" v-if="tmps">
         <li v-for="item in tmps" :key="item.url" class="mr-3">
-          <a :href="`/Category${item.url}?rusParametr=${item.category} > ${item.title}`">{{ item.title }}</a>
+          <a :href="`/Category/${item.category} > ${item.title}`">{{ item.title }}</a>
         </li>
       </ul>
     </div>
