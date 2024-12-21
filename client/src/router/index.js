@@ -121,7 +121,12 @@ const router = createRouter({
       path: "/OrdersAdminComp",
       name: "ordersadmincomp",
       component: () => import("../componets/admin/OrdersAdminComp.vue")
-    }
+    },
+    {
+      path: "/BasketAdmin",
+      name: "basketadmin",
+      component: () => import("../componets/admin/BasketAdmin.vue")
+    },
   ],
 });
 
