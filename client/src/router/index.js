@@ -88,7 +88,7 @@ const router = createRouter({
       component: () => import("../componets/Catalog/Catalog.vue")
     },
     {
-      path: "/Category/:firstParametr/:secondParametr/:thirdParametr?",
+      path: "/Category/:rusParametr/",
       name: "category",
       component: () => import("../componets/Category/Category.vue")
     },
@@ -131,7 +131,12 @@ const router = createRouter({
       path: "/OrdersAdminComp",
       name: "ordersadmincomp",
       component: () => import("../componets/admin/OrdersAdminComp.vue")
-    }
+    },
+    {
+      path: "/BasketAdmin",
+      name: "basketadmin",
+      component: () => import("../componets/admin/BasketAdmin.vue")
+    },
   ],
 });
 

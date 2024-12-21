@@ -9,7 +9,7 @@
 </script>
 
 <template>
-  <a href="">
+  <a href="/basketadmin">
     <div class="comp-block">
       <h3>№ {{orderNum}}</h3>
       <p>Сверло/Дрель/Вибратор/Паяльник/Вантуз/Стаместка</p>
