@@ -4,16 +4,20 @@
       return {
         orderNum: "000001",
       }
+    },
+
+    props: {
+      order: Object
     }
   }
 </script>
 
 <template>
-  <a href="/basketadmin">
+  <a :href="`/basketadmin/${order.id}`">
     <div class="comp-block">
-      <h3>№ {{orderNum}}</h3>
-      <p>Сверло/Дрель/Вибратор/Паяльник/Вантуз/Стаместка</p>
-      <p>13.12.2024</p>
+      <h3>№ {{ order.orderNum }}</h3>
+      <p>{{ order.description }}</p>
+      <p>{{ order.date }}</p>
     </div>
   </a>
   

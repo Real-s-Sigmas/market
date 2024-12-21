@@ -1,15 +1,55 @@
 <script>
+import axios from 'axios';
 import OrdersAdminComp from '../admin/OrdersAdminComp.vue';
   
   export default {
     data() {
       return {
-        
+        orders: [
+          {
+            id: 'akshdg26tuq-wd-1',
+            orderNum: 241,
+            description: '525252rqyhsg vdkjahsvdhjkgasvjdhgavjhsgdvjas',
+            date: '28.11.28',
+          },
+          {
+            id: 'akshdg26tuq-wd-2',
+            orderNum: 2431,
+            description: '525252rqyhsg vdkjahsvdhjkgasvjdhgavjhsgdvjas',
+            date: '28.11.28',
+          },
+          {
+            id: 'akshdg26tuq-wd-3',
+            orderNum: 2451,
+            description: '525252rqyhsg vdkjahsvdhjkgasvjdhgavjhsgdvjas',
+            date: '28.11.28',
+          },
+        ],
+        error: ``,
       }
     },
 
     components: {
       OrdersAdminComp,
+    },
+
+    methods: {
+      async getOrders() {
+        try {
+          let res = await axios.get('/admin/orders');
+          this.orders = res.data.res;
+          if(this.orders.length == 0) {
+            this.error = 'Заказов нет';
+          }
+        } catch (error) {
+          this.error = 'Невозможно найти заказы';
+          console.log(error);
+        }
+      }
+    },
+
+    mounted() {
+      // this.getOrders();
     }
       
   }  
@@ -25,39 +65,9 @@ import OrdersAdminComp from '../admin/OrdersAdminComp.vue';
       Заказы
     </button>
   </div>
+  <h2 v-if='this.error' class='text-red-500 font-bold text-2xl flex justify-center'>{{ error }}</h2>
   <div class="orders-list">
-    <OrdersAdminComp></OrdersAdminComp>
-    <OrdersAdminComp></OrdersAdminComp>
-    <OrdersAdminComp></OrdersAdminComp>
-    <OrdersAdminComp></OrdersAdminComp>
-    <OrdersAdminComp></OrdersAdminComp>
-    <OrdersAdminComp></OrdersAdminComp>
-    <OrdersAdminComp></OrdersAdminComp>
-    <OrdersAdminComp></OrdersAdminComp>
-    <OrdersAdminComp></OrdersAdminComp>
-    <OrdersAdminComp></OrdersAdminComp>
-    <OrdersAdminComp></OrdersAdminComp>
-    <OrdersAdminComp></OrdersAdminComp>
-    <OrdersAdminComp></OrdersAdminComp>
-    <OrdersAdminComp></OrdersAdminComp>
-    <OrdersAdminComp></OrdersAdminComp>
-    <OrdersAdminComp></OrdersAdminComp>
-    <OrdersAdminComp></OrdersAdminComp>
-    <OrdersAdminComp></OrdersAdminComp>
-    <OrdersAdminComp></OrdersAdminComp>
-    <OrdersAdminComp></OrdersAdminComp>
-    <OrdersAdminComp></OrdersAdminComp>
-    <OrdersAdminComp></OrdersAdminComp>
-    <OrdersAdminComp></OrdersAdminComp>
-    <OrdersAdminComp></OrdersAdminComp>
-    <OrdersAdminComp></OrdersAdminComp>
-    <OrdersAdminComp></OrdersAdminComp>
-    <OrdersAdminComp></OrdersAdminComp>
-    <OrdersAdminComp></OrdersAdminComp>
-    <OrdersAdminComp></OrdersAdminComp>
-    <OrdersAdminComp></OrdersAdminComp>
-    <OrdersAdminComp></OrdersAdminComp>
-    <OrdersAdminComp></OrdersAdminComp>
+    <OrdersAdminComp v-for='order in orders' :order='order'></OrdersAdminComp>
   </div>
 </div> 
 </template>

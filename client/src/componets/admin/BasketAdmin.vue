@@ -1,5 +1,33 @@
 <script>
-  
+import axios from 'axios';
+export default {
+  data() {
+    return {
+      order: {},
+      error: ``,
+    }
+  },
+
+  methods: {
+    async getOrder() {
+      try {
+        let res = await axios.get('/admin/order', {
+          params: {
+            id: this.$route.params.id,
+          }
+        });
+        this.order = res.data.res;
+      } catch (error) {
+        this.error = 'Невозможно найти заказ';
+        console.log(error);
+      }
+    }
+  },
+
+  mounted() {
+    this.getOrder();
+  }
+}  
 </script>
 
 <template>
@@ -12,41 +40,40 @@
       Заказы
     </button>
   </div>
-  <div class="orderNumber">
-    <p>№ 000001  / 19.12.2024</p>
+  <div class="orderNumber" v-if='!this.error'>
+    <p>№ {{ order.orderNum }}  / {{ order.date }}</p>
   </div>
-  <div class="orders">
+  <div class="orders" v-if='!this.error && this.order.title'>
     <div class="card">
       <div class="image-info">
         <div class="image">
-          <img src="../../assets/shup.png" alt="">
+          <img :src="order.photos[0]" alt="">
         </div>
         <div class="info">
           <div class="code-count">
-            <p>Код товара: 209181</p>
-            <p>Количество: 1шт</p>  
+            <p>Код товара: {{ order.code }}</p>
+            <p>Количество: {{ order.count }}шт</p>  
           </div>
           
           <div class="title-desc">
-            <h2>Шуруповерт “Сверлило 3000 ультра вибратор  298 в 1”</h2>
-            <h4>Описание: Если вам сказали, что вы не мужик,  докажи всем обратное и купи эту херь</h4>  
+            <h2>{{ order.title }}</h2>
+            <h4>Описание: {{ order.description }}</h4>  
           </div>
           
-          <p class="price">Цена: 5 000 000 р</p>
+          <p class="price">Цена: {{ order.price }} р</p>
         </div>  
       </div>
       
       <div class="btns">
-        <button>К товару</button>
+        <button @click='this.$router.push(`/Product/${order.idProduct}`)'>К товару</button>
       </div>
     </div>
   </div>
+  <h2 v-else class='text-red-500 font-bold text-2xl flex justify-center'>{{ error }}</h2>
 </div>
 </template>
 
 <style scoped>
-
-
 .window {
   margin-top: 50px;
   display: flex;

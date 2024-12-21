@@ -123,7 +123,7 @@ const router = createRouter({
       component: () => import("../componets/admin/OrdersAdminComp.vue")
     },
     {
-      path: "/BasketAdmin",
+      path: "/BasketAdmin/:id",
       name: "basketadmin",
       component: () => import("../componets/admin/BasketAdmin.vue")
     },
