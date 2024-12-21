@@ -413,7 +413,6 @@ export default {
 
   font-size: 24px;
   font-weight: 700;
-
   user-select: none;
 }
 .price b {
