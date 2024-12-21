@@ -121,27 +121,23 @@ export default {
 
     <div class="products-container">
       <div
-        class="card border-b-2 border-black py-4 mt-1"
+        class="card border-b-2  py-4 mt-1"
         v-for="product in products"
       >
         <div class="info-card flex gap-6 justify-between">
           <div class="info-container flex gap-6">
             <img
-              class="rounded-xl border-2 border-black"
+              class="rounded-xl "
               :src="product.photos[0]"
             />
             <div class="info-block flex flex-col gap-0 relative text-base">
-              <h3 class="text-4xl font-bold">{{ product.title }}</h3>
-              <p>
-                Описание: {{ product.description.substring(0, 40)
+              <h3 class="text-3xl font-bold">{{ product.title }}</h3>
+              <p class="mt-5"> 
+                <b>Описание:</b> {{ product.description.substring(0, 30)
                 }}<span v-if="product.description.length >= 40">...</span>
               </p>
-              <!-- <span class='absolute bottom-0 left-0 text-2xl font-bold'>Цена: {{ product.price }}</span> -->
-              <div class="price absolute bottom-0 left-0">
-                <p>
-                  Цена: <span>{{ product.price }}</span> р
-                </p>
-              </div>
+              <span class="absolute bottom-0 left-0"
+                ><b>Цена:</b>  <p class="price">{{ product.price }} ₽</p></span>
             </div>
           </div>
           <div class="actions flex gap-3">
@@ -172,17 +168,14 @@ export default {
 
 <style scoped>
 .price {
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  font-size: 30px;
+  color: #ff812c;
+}
 
-  font-size: 24px;
-
-  width: 200px;
-  height: 55px;
-
-  border: 2px solid #000;
-  border-radius: 12px;
+img {
+  -webkit-box-shadow: 4px 4px 8px 0px rgba(34, 60, 80, 0.2);
+  -moz-box-shadow: 4px 4px 8px 0px rgba(34, 60, 80, 0.2);
+  box-shadow: 4px 4px 8px 0px rgba(34, 60, 80, 0.2);
 }
 
 .search {
@@ -213,7 +206,7 @@ export default {
   }
 
   .search-find:hover {
-    background-color: #d95700;
+  background-color: #d95700;
   }
 }
 
@@ -298,36 +291,59 @@ export default {
   .price {
     position: relative;
     margin-top: 10px;
-    font-size: 18px;
     width: fit-content;
-    padding: 10px 40px;
   }
 }
 
-@media (max-width: 500px) {
-  .search {
-    input {
-      width: 100%;
-    }
-    .search-find {
-      padding: 10.5px 20px;
-    }
+@media (max-width: 800px) {
+  .info-card {
+    flex-direction: column;
+    position: relative;
+    gap: 0px;
   }
-}
+
+  .info-card img {
+    width: 100% !important;
+    height: 250px;
+  }
+
+  .info-container {
+    flex-direction: column;
+  }
+
+  .info-block span {
+    position: relative;
+  }
+
+  .actions {
+    justify-content: space-between;
+  }
+
+  .text-3xl {
+    font-size: 1.5rem;
+  }
+}   
+
+
 .del-btn {
   display: flex;
   justify-content: center;
   align-items: center;
   height: 50px;
   border-radius: 12px;
-  border: 2px solid #000000;
-  padding: 10px 10px;
+  padding: 10px 20px;
 
   font-size: 18px;
 
   transition: all 200ms;
 
   background-color: #ffffff;
+}
+
+.del-btn {
+ -webkit-box-shadow: 0px 2px 8px 7px rgba(34, 60, 80, 0.2);
+-moz-box-shadow: 0px 2px 8px 7px rgba(34, 60, 80, 0.2);
+box-shadow: 0px 2px 8px 7px rgba(34, 60, 80, 0.2); 
 }
 
 .del-btn:hover {
@@ -340,7 +356,6 @@ export default {
   width: 200px;
   height: 50px;
   border-radius: 12px;
-  border: 2px solid #ff812c;
   color: #fff;
 
   font-size: 22px;
@@ -411,4 +426,32 @@ input {
   height: 250px;
   object-fit: cover;
 }
+
+    @media (max-width: 620px) {
+      .orders-container {
+        margin-left: 0.5rem;
+        margin-right: 0.5rem;
+      }
+    }
+
+    @media (max-width: 470px) {
+      .del-btn {
+        font-size: 16px;
+      }
+
+      .order-btn {
+        font-size: 16px;
+        width: auto;
+        padding: 0 40px;
+      }
+    }
+
+    @media (max-width: 400px) {
+      .actions {
+        flex-direction: column;
+        height: auto;
+      }
+
+      
+    }
 </style>

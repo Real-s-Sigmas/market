@@ -159,37 +159,7 @@ box-shadow: 0px 2px 8px 7px rgba(34, 60, 80, 0.2);
     }
   }
   
-.search {
-  margin: 20px 0;
-  /* width: 100%;  */
 
-  display: flex;
-  justify-content: center;
-  align-items: center;
-
-  gap: 55px;
-
-  input {
-    border: 2px solid #ff812c;
-    border-radius: 12px;
-    width: 720px;
-    height: 45px;
-    padding: 0 10px;
-  }
-
-  .search-find {
-    padding: 10.5px 42px;
-    border-radius: 50px;
-    background-color: #ff812c;
-    color: #fff;
-
-    transition: all 100ms;
-  }
-
-  .search-find:hover {
-    background-color: #d95700;
-  }
-}
 
 @media (max-width: 800px) {
   .info-card {
@@ -218,18 +188,13 @@ box-shadow: 0px 2px 8px 7px rgba(34, 60, 80, 0.2);
   .search {
     gap: 20px;
   }
-}
 
-@media (max-width: 500px) {
-  .search {
-    input {
-      width: 100%;
-    }
-    .search-find {
-      padding: 10.5px 20px;
-    }
+  .text-3xl {
+    font-size: 1.5rem;
   }
 }
+
+
 
 .like-btn {
   display: flex;
@@ -254,7 +219,6 @@ box-shadow: 0px 2px 8px 7px rgba(34, 60, 80, 0.2);
 
 .like-btn:hover {
   background-color: #fc6600;
-  border: 2px solid #ff812c;
   color: #fff !important;
 }
 
@@ -262,7 +226,6 @@ box-shadow: 0px 2px 8px 7px rgba(34, 60, 80, 0.2);
   width: 200px;
   height: 50px;
   border-radius: 12px;
-  border: 2px solid #ff812c;
   color: #fff;
 
   font-size: 22px;
@@ -317,4 +280,11 @@ input {
   height: 250px;
   object-fit: cover;
 }
+
+      @media (max-width: 620px) {
+        .orders-container {
+          margin-left: 0.5rem;
+          margin-right: 0.5rem;
+        }
+    }
 </style>
