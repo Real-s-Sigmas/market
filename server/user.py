@@ -210,7 +210,7 @@ def Profile(id: str) -> Union[list, str]:
     return 0
 
 @app.route('/user/profile', methods=['GET'])
-def profile():
+def profiler():
     responce_object = {'status': 'success'}
 
     responce_object['res'] = Profile(session.get('id'))

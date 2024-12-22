@@ -14,19 +14,19 @@ logging.basicConfig(
 logging.info("other.py have connected")
 
 @app.route('/other/session', methods=['GET'])
-def all_orders():
+def sessionr():
     responce_object = {'status': 'success'}
     responce_object['res'] = check.IsInSession()
     return jsonify(responce_object)
 
 @app.route('/other/id', methods=['GET'])
-def all_orders():
+def idr():
     responce_object = {'status': 'success'}
     responce_object['res'] = check.GetId()
     return jsonify(responce_object)
 
 @app.route('/other/is-admin', methods=['GET'])
-def all_orders():
+def is_admin():
     responce_object = {'status': 'success'}
     responce_object['res'] = check.IsAdminSession()
     return jsonify(responce_object)
