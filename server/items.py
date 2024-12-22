@@ -438,9 +438,9 @@ def getCategory() -> dict:
 
         cursor = pg.cursor(cursor_factory=psycopg2.extras.DictCursor)
 
-        cursor.execute(f"SELECT big, GROUP_CONCAT(name) as names
+        cursor.execute(f"""SELECT big, GROUP_CONCAT(name) as names
                             FROM topics
-                            GROUP BY big;")
+                            GROUP BY big;""")
 
 
     except (Exception, Error) as error:
@@ -457,7 +457,7 @@ def getCategory() -> dict:
 
 
 @app.route("/items/category", methods=["GET"])
-def get_items_topic():
+def get_items_category():
     response_object = {'status': 'success'} #БаZа
 
 

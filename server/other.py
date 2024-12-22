@@ -45,11 +45,11 @@ def serve_file(filename):
 
     return send_from_directory(directory='topic-photo/', path=path)
 
-@app.route('/item/<path:filename>')
-def serve_file(filename):
-    path = filename
-    # if not os.path.exists('{}/{}'.format('avatar/', filename)):
-    #     logging.info({'error': 'File not found'}, 404)
-    #     return jsonify({'error': 'File not found'}), 404
+# @app.route('/item/<path:filename>')
+# def serve_file(filename):
+#     path = filename
+#     # if not os.path.exists('{}/{}'.format('avatar/', filename)):
+#     #     logging.info({'error': 'File not found'}, 404)
+#     #     return jsonify({'error': 'File not found'}), 404
 
-    return send_from_directory(directory='items-photo/', path=path)
+#     return send_from_directory(directory='items-photo/', path=path)
