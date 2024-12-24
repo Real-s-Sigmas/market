@@ -460,7 +460,46 @@ def getCategory() -> dict:
 def get_items_category():
     response_object = {'status': 'success'} #БаZа
 
-
     response_object["res"] = getCategory()
+
+    return jsonify(response_object)
+
+
+def search_items(search_query: str) -> list:
+    try:
+        pg = psycopg2.connect(f"""
+            host={HOST_PG}
+            dbname=postgres
+            user={USER_PG}
+            password={PASSWORD_PG}
+            port={PORT_PG}
+        """)
+
+        cursor = pg.cursor(cursor_factory=psycopg2.extras.DictCursor)
+
+        # Используем LIKE для поиска
+        cursor.execute("SELECT * FROM items WHERE title ILIKE %s", (f'%{search_query}%',))
+        results = cursor.fetchall()
+
+        return [dict(result) for result in results]
+
+    except (Exception, Error) as error:
+        logging.error(f'DB: ', error)
+        return []
+
+    finally:
+        if pg:
+            cursor.close()
+            pg.close()
+            logging.info("Соединение с PostgreSQL закрыто")
+
+
+@app.route("/items/one-item", methods=['GET'])
+def get_one_item():
+    search_query = request.args.get('search', '')
+
+    response_object = {'status': 'success'}
+
+    response_object["res"] = search_items(search_query)
 
     return jsonify(response_object)

@@ -72,10 +72,10 @@ def add_tables():
         
         cursor.execute(f"""create table if not exists items(
                         id uuid UNIQUE,
-                        title text VARCHAR(30),
+                        title VARCHAR(30),
                         descriptions text,
                         price float,
-                        photos []text,
+                        photos text[],
                         topic text, 
                         date_create timestamp
                     )""")
@@ -83,7 +83,7 @@ def add_tables():
 
         cursor.execute(f"""create table if not exists orders (
                         id uuid UNIQUE,
-                        ids_items []text,
+                        ids_items text[],
                         id_user uuid,
                         comment VARCHAR(100),
                         contacts VARCHAR(50),

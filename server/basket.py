@@ -135,3 +135,57 @@ def delete_item():
     response_object["res"] = ShowwItemFromBasket(session.get("id"))
 
     return jsonify(response_object)
+
+def modify_fav_item(user_id: str, item_id: str, action: str) -> str:
+    try:
+        pg = psycopg2.connect(f"""
+            host={HOST_PG}
+            dbname=postgres
+            user={USER_PG}
+            password={PASSWORD_PG}
+            port={PORT_PG}
+        """)
+
+        cursor = pg.cursor(cursor_factory=psycopg2.extras.DictCursor)
+
+        if action == 'add':
+            cursor.execute(f"UPDATE users SET favs = array_append(favs, %s) WHERE id_user = %s", (item_id, user_id))
+        elif action == 'delete':
+            cursor.execute(f"UPDATE users SET favs = array_remove(favs, %s) WHERE id_user = %s", (item_id, user_id))
+
+        pg.commit()
+        return "Success"
+
+    except (Exception, Error) as error:
+        logging.error(f'DB: ', error)
+        return "Error"
+
+    finally:
+        if pg:
+            cursor.close()
+            pg.close()
+            logging.info("Соединение с PostgreSQL закрыто")
+
+
+@app.route("/basket/add-fav", methods=['POST'])
+def add_fav():
+    item_id = request.args.get('id')
+    user_id = session.get("id")
+
+    if user_id and item_id:
+        result = modify_fav_item(user_id, item_id, 'add')
+        return jsonify({'status': result}), 200
+
+    return jsonify({'status': 'bad request'}), 400
+
+
+@app.route("/basket/delete-fav", methods=['DELETE'])
+def delete_fav():
+    item_id = request.args.get('id')
+    user_id = session.get("id")
+
+    if user_id and item_id:
+        result = modify_fav_item(user_id, item_id, 'delete')
+        return jsonify({'status': result}), 200
+
+    return jsonify({'status': 'bad request'}), 400

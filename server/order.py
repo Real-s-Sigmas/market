@@ -179,3 +179,47 @@ def delete_order():
     return jsonify(response_object)
 
 
+def get_orders_by_id(order_id: str) -> dict:
+    try:
+        pg = psycopg2.connect(f"""
+            host={HOST_PG}
+            dbname=postgres
+            user={USER_PG}
+            password={PASSWORD_PG}
+            port={PORT_PG}
+        """)
+
+        cursor = pg.cursor(cursor_factory=psycopg2.extras.DictCursor)
+
+        cursor.execute("SELECT * FROM orders WHERE id = %s", (order_id,))
+        result = cursor.fetchone()
+
+        if result:
+            return dict(result)
+        else:
+            return {}
+
+    except (Exception, Error) as error:
+        logging.error(f'DB: ', error)
+        return {}
+
+    finally:
+        if pg:
+            cursor.close()
+            pg.close()
+            logging.info("Соединение с PostgreSQL закрыто")
+
+
+@app.route("/orders/show-orders", methods=['GET'])
+def show_orders():
+    order_id = request.args.get('id')
+
+    response_object = {'status': 'success'}
+
+    if order_id:
+        response_object["res"] = get_orders_by_id(order_id)
+    else:
+        response_object["status"] = 'bad request'
+        response_object["message"] = "Missing order ID"
+
+    return jsonify(response_object)
