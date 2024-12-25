@@ -1,33 +1,5 @@
 <script>
-import axios from 'axios';
-export default {
-  data() {
-    return {
-      order: {},
-      error: ``,
-    }
-  },
-
-  methods: {
-    async getOrder() {
-      try {
-        let res = await axios.get('/admin/order', {
-          params: {
-            id: this.$route.params.id,
-          }
-        });
-        this.order = res.data.res;
-      } catch (error) {
-        this.error = 'Невозможно найти заказ';
-        console.log(error);
-      }
-    }
-  },
-
-  mounted() {
-    this.getOrder();
-  }
-}  
+  
 </script>
 
 <template>
@@ -40,27 +12,27 @@ export default {
       Заказы
     </button>
   </div>
-  <div class="orderNumber" v-if='!this.error'>
-    <p>№ {{ order.orderNum }}  / {{ order.date }}</p>
+  <div class="orderNumber" >
+    <p>№  123456 / 13.12.2010</p>
   </div>
-  <div class="orders" v-if='!this.error && this.order.title'>
+  <div class="orders" >
     <div class="card">
       <div class="image-info">
         <div class="image">
-          <img :src="order.photos[0]" alt="">
+          <img src="../../assets/shup.png" alt="">
         </div>
         <div class="info">
           <div class="code-count">
-            <p>Код товара: <b>{{ order.code }}</b></p>
-            <p>Количество: {{ order.count }}шт</p>  
+            <p>Код товара: <b>123456</b></p>
+            <p>Количество: 10шт</p>  
           </div>
           
           <div class="title-desc">
-            <h2><b>{{ order.title }}</b></h2>
-            <h4>Описание: {{ order.description }}</h4>  
+            <h2><b>Шуруповерт RT-20</b></h2>
+            <h4>Описание: Обалденная штука, надо брать, по любому, 100 проц, куплю прям завтра</h4>  
           </div>
           
-          <p class="price">Цена: {{ order.price }} р</p>
+          <p class="price">Цена: 10000 р</p>
         </div>  
       </div>
       
@@ -69,11 +41,11 @@ export default {
       </div>
     </div>
   </div>
-  <h2 v-else class='text-red-500 font-bold text-2xl flex justify-center'>{{ error }}</h2>
+  <h2  class='text-red-500 font-bold text-2xl flex justify-center'>{{ error }}</h2>
 </div>
 </template>
 
-<style scoped>
+<style>
 .window {
   margin-top: 50px;
   display: flex;
@@ -253,4 +225,8 @@ export default {
       width: 150px !important;
     }
   }
-}</style>
+}
+
+
+
+</style>
