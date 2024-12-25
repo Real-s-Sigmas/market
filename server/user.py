@@ -42,8 +42,8 @@ def SignUp(name: str, surname: str, phonenumber, password: str, email: str) -> s
         cursor = pg.cursor(cursor_factory=psycopg2.extras.DictCursor)
 
         send_user = []
-        cursor.execute(f"SELECT COUNT(*) FROM users WHERE username=$${name}$$")
-        send_user.append(cursor.fetchone())
+        # cursor.execute(f"SELECT COUNT(*) FROM users WHERE username=$${name}$$")
+        # send_user.append(cursor.fetchone())
 
         cursor.execute(f"SELECT COUNT(*) FROM users WHERE email=$${email}$$")
         send_user.append(cursor.fetchone())
@@ -51,18 +51,19 @@ def SignUp(name: str, surname: str, phonenumber, password: str, email: str) -> s
         cursor.execute(f"SELECT COUNT(*) FROM users WHERE phonenumber=$${phonenumber}$$")
         send_user.append(cursor.fetchone())
         # Проверка существует ли такой пользователь
-        if send_user[0][0] == 0 and send_user[1][0] == 0 and send_user[2][0]:
-            cursor.execute(f'''INSERT INTO comments(id, username, surname, phonenumber, password, email, admin, date_create) 
-                            VALUES (
-                            '{uuid.uuid4().hex}', 
-                            '{name}',
-                            '{surname}'
-                            '{phonenumber}',
-                            '{hash_password(password)}',
-                            '{email}',
-                            false,
-                            '{datetime.now().isoformat()}'
-                            )''')
+        if send_user[0][0] == 0 and send_user[1][0] == 0:
+            cursor.execute(f'''INSERT INTO users(id, username, surname, phonenumber, password, email, admin, date_create) 
+                                VALUES (
+                                '{uuid.uuid4().hex}', 
+                                '{name}',
+                                '{surname}',  -- Добавлена запятая здесь
+                                '{phonenumber}',
+                                '{hash_password(password)}',
+                                '{email}',
+                                false,
+                                '{datetime.now().isoformat()}'
+                                )''')
+
             
             pg.commit()
             logging.info("Пользователь зарегестрирован!")
@@ -100,6 +101,8 @@ def sign_up():
     else:
         responce_object["res"] = "Password length too small"
 
+    return jsonify(responce_object)
+
 
 def SignIn(phonenumber: str, password: str):
     try:
@@ -112,20 +115,18 @@ def SignIn(phonenumber: str, password: str):
         """)
 
         cursor = pg.cursor(cursor_factory=psycopg2.extras.DictCursor)
-        cursor.execute(f"SELECT COUNT(*) FROM users WHERE phonenumber=$${phonenumber}$$")
+        cursor.execute(f"SELECT COUNT(*) FROM users WHERE email=$${phonenumber}$$")
 
         # Проверка есть ли такой пользователь
         if cursor.fetchall()[0][0]==1:
 
-            cursor.execute(f"SELECT * FROM users WHERE phonenumber=$${phonenumber}$$")
-            user = cursor.fetchone()
+            cursor.execute(f"SELECT * FROM users WHERE email=$${phonenumber}$$")
+            user = dict(cursor.fetchone())
 
             # Проверка пароля
-            if user[4] == password:
-                return_data = user[2]
-
-                logging.info(f"Login to: {user[2]}")
-                return_data = ['ok', user[0]]
+            if verify_password(user["password"], password):
+                logging.info(f"Login to: {user["id"]}")
+                return_data = ['ok', user["id"]]
 
             else:
                 logging.warning("Incorrect Password")
@@ -151,7 +152,7 @@ def sign_in():
 
     data = request.get_json()
     
-    smth = SignIn(data.get('phonenumber'), data.get('password'))
+    smth = SignIn(data.get('email'), data.get('password'))
 
     if smth[0] == 'ok':
         session['id'] = smth[1]
@@ -216,3 +217,46 @@ def profiler():
     responce_object['res'] = Profile(session.get('id'))
 
     return jsonify(responce_object)
+
+def check_admin_status(user_id: str) -> bool:
+    try:
+        pg = psycopg2.connect(f"""
+            host={HOST_PG}
+            dbname=postgres
+            user={USER_PG}
+            password={PASSWORD_PG}
+            port={PORT_PG}
+        """)
+
+        cursor = pg.cursor()
+        cursor.execute("SELECT admin FROM users WHERE id = %s;", (user_id,))
+        result = cursor.fetchone()
+
+        if result and result[0]:
+            return True
+        return False
+
+    except (Exception, psycopg2.Error) as error:
+        logging.error('DB error: %s', error)
+        return False
+
+    finally:
+        if pg:
+            cursor.close()
+            pg.close()
+            logging.info("Соединение с PostgreSQL закрыто")
+
+@app.route('/user/activate-admin', methods=['GET'])
+def activate_admin():
+    user_id = session.get('id')
+
+    if not user_id:
+        return jsonify({'message': 'Unauthorized'}), 401
+
+    if check_admin_status(user_id):
+        session['isAdmin'] = True
+        session.permanent = True
+        session.modified = True
+        return jsonify({'message': 'Admin access granted'})
+
+    return jsonify({'message': 'No admin access'})

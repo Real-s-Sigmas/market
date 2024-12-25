@@ -19,8 +19,8 @@ export default {
         });
           this.error = response.data.res
 
-          if (this.error == "Ok") {
-              this.$router.push("/Login")
+          if (this.error == "ok") {
+              this.$router.push("/")
           } else{
             this.error = "Вы не ввели код"
           }

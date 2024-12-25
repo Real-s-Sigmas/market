@@ -30,8 +30,9 @@ app = Flask(__name__)
 
 app.secret_key = "/zxc/"
 app.permanent_session_lifetime = 60 * 60 * 24 * 28
-app.config["SESSION_COOKIE_SAMESITE"] = "None"  # None позволяет отправлять cookie в кросс-доменных запросах
-app.config["SESSION_COOKIE_SECURE"] = True    # False, так как мы используем HTTP
+app.config["SESSION_COOKIE_SAMESITE"] = "None"  # или "Strict"
+app.config["SESSION_COOKIE_SECURE"] = False  # Оставьте False, если на HTTP
+
 
 # enable CORS
 CORS(app, resources={r"*": {"origins": "*", 'supports_credentials': True}})
@@ -118,7 +119,7 @@ from other import *
 from admin import *
 from comments import *
 from items import *
-
+from basket import *
 
 if __name__ == '__main__':
       add_tables()

@@ -1,10 +1,11 @@
 import psycopg2, logging, check
 
+from check import chek_for_admin, chek_for_user
 from psycopg2 import Error
 from flask import jsonify, request
 from typing import Union
 from app import *
-from app import app, PASSWORD_PG, PORT_PG, USER_PG, HOST_PG
+from app import app, PASSWORD_PG, PORT_PG, USER_PG, HOST_PG, session
 
 logging.basicConfig(
     level=logging.DEBUG,
@@ -25,9 +26,9 @@ def AddItemToBasket(id_item: str, id_user: str) -> str:
 
         cursor = pg.cursor(cursor_factory=psycopg2.extras.DictCursor)
 
-        cursor.execute(f"UPDATE users
+        cursor.execute(f"""UPDATE users
                         SET basket = COALESCE(basket, '{id_item}') || ARRAY[?]
-                        WHERE id_user =$${id_user}$$;")
+                        WHERE id_user =$${id_user}$$;""")
 
         pg.commit()
         return_data = "Ok"
@@ -68,9 +69,9 @@ def DeleteItemToBasket(id_item: str, id_user: str) -> str:
 
         cursor = pg.cursor(cursor_factory=psycopg2.extras.DictCursor)
 
-        cursor.execute(f"UPDATE users
+        cursor.execute(f"""UPDATE users
                         SET basket = array_remove(basket, {id_item})
-                        WHERE id_user =$${id_user}$$;")
+                        WHERE id_user =$${id_user}$$;""")
 
         pg.commit()
         return_data = "Ok"
@@ -89,7 +90,7 @@ def DeleteItemToBasket(id_item: str, id_user: str) -> str:
 
 @app.route("/basket/delete-item", methods=['POST'])
 @chek_for_user
-def delete_item():
+def delete_item_():
     response_object = {'status': 'success'} #БаZа
     post_data = request.get_json()
 
@@ -127,9 +128,9 @@ def ShowwItemFromBasket(id_user: str) -> Union[str, list]:
             return return_data
 
 
-@app.route("/basket/show-basket", methods=['POST'])
+@app.route("/basket/show-basket", methods=['GET'])
 @chek_for_user
-def delete_item():
+def delete_item__():
     response_object = {'status': 'success'} #БаZа
 
     response_object["res"] = ShowwItemFromBasket(session.get("id"))

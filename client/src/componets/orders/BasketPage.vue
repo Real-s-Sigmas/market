@@ -33,7 +33,7 @@ export default {
   },
 
   mounted() {
-    // this.loadProducts();
+    this.loadProducts();
   },
 
   methods: {
