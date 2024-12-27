@@ -2,7 +2,6 @@
 export default {
   data() {
     return {
-      disabled: false,
       code: "",
     };
   },
@@ -14,14 +13,14 @@ export default {
         });
           this.error = response.data.res
 
-          if (this.error == "Ok") {
-              this.$router.push("/Catalog")
+          if (this.error == "ok") {
+              this.$router.push("/")
           } else{
             this.error = "Неверный код!"
           }
       } catch (err) {
         console.error(err)
-        this.error = "Ошибка сервера";
+        this.error = "Неизвестная ошибка.";
       }
     },
   },

@@ -3,7 +3,7 @@ export default {
   data() {
     return {
       disabled: false,
-      code: "",
+      email: "",
       error: "",
     };
   },
@@ -11,15 +11,14 @@ export default {
     async login() {
       try {
         let response = await axios.post(`/user/change-password-email`, {
-          code: this.code,
-         
+          email: this.email,
         });
         this.error = response.data.res;
 
-        if (this.error == "Ok") {
-          this.$router.push("/Сatalog");
+        if (this.error == "ok") {
+          this.$router.push("/ResetPassword");
         } else {
-          this.error = "Вы неправильно ввели код";
+          this.error = "Ошибка. Введите код правильно!";
         }
       } catch (err) {
         console.error(err);

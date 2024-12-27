@@ -13,7 +13,7 @@ export default {
   methods: {
     async login() {
       try {
-        let response = await axios.post(`/user/sign-in`, {
+        let response = await axios.post(`/user/sign-up`, {
           email: this.email,
           password: this.password,
           phonenumber: this.phonenumber,
@@ -21,8 +21,8 @@ export default {
         });
         this.error = response.data.res;
 
-        if (this.error == "Ok") {
-          this.$router.push("/EnterEmail");
+        if (this.error == "ok") {
+          this.$router.push("/");
         } else {
           this.error = "Заполните все поля правильно!";
         }

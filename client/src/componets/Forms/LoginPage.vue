@@ -17,10 +17,10 @@ export default {
         });
           this.error = response.data.res
 
-          if (this.error == "Ok") {
-              this.$router.push("/Login")
+          if (this.error == "ok") {
+              this.$router.push("/")
           } else{
-            this.error = "Вы не ввели код"
+            this.error = "Заполните поля правильно!"
           }
       } catch (err) {
         console.error(err)
@@ -53,7 +53,10 @@ export default {
           />
           <button class="btn" type="submit">Войти</button>
         </form>
-        <a href="/SignUp" class="haveAcc">Еще нет аккаунта?</a>
+        <div class="links ">
+        <div class="h-8"><a href="/SignUp" class="haveAcc">Еще нет аккаунта?</a></div>
+        <a href="/ResetPassword" class="dontremember">Забыли пароль?</a>
+        </div>
         <p class="error">{{ error }}</p>
       </div>
     </div>
@@ -64,6 +67,7 @@ export default {
   --font-family: "Rubik", sans-serif;
   --second-family: "Inter", sans-serif;
 }
+
 .error {
   font-family: var(--font-family);
   font-weight: 700;
@@ -71,12 +75,20 @@ export default {
   color: red;
   z-index: 10000;
 }
-
+.dontremember{
+  color: #ff812c;
+  font-size: 18px;
+  font-weight: 500;
+  line-height: 50px;
+  width: 100%;
+  margin-top: -300px;
+}
 .haveAcc {
   color: #ff812c;
   font-size: 18px;
   font-weight: 500;
   line-height: 50px;
+  width: 100%;
 }
 
 .haveAcc:hover {
