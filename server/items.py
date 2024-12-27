@@ -1,12 +1,14 @@
-import uuid, psycopg2, logging
+import random, uuid, psycopg2, smtplib, logging, hashlib
 
+from app import HOST_PG, USER_PG, PASSWORD_PG, PORT_PG, app
 from psycopg2 import Error
-from flask import jsonify, request
-from typing import Union, Tuple
-from app import *
-from app import app, PASSWORD_PG, PORT_PG, USER_PG, HOST_PG, MEDIA, AVATAR
-from check import chek_for_admin
-import check
+from flask import jsonify, request, session
+from email.mime.text import MIMEText
+from datetime import datetime
+from dotenv import load_dotenv
+from typing import Union, Optional, Tuple
+from check import chek_for_admin, chek_for_user
+
 logging.basicConfig(
     level=logging.DEBUG,
     format="%(asctime)s %(levelname)s %(message)s",
@@ -15,7 +17,7 @@ logging.basicConfig(
 
 #TODO: сделать
 def GetPhotos(photos: list) -> list:
-    pass
+    return []
 
 def PostItem(title: str, description: str, price: int, photos: list, topic: str) -> str:
     try:
@@ -30,8 +32,13 @@ def PostItem(title: str, description: str, price: int, photos: list, topic: str)
         cursor = pg.cursor(cursor_factory=psycopg2.extras.DictCursor)
         photos_links = GetPhotos(photos)
 
+        photos_links.append("mb")
+
         id = uuid.uuid4().hex
-        cursor.execute(f"INSERT INTO itemes(id, title, description, price, photos, topic) VALUES('{id}', '{title}', '{description}', '{price}', '{photos_links}', '{topic}')")
+        cursor.execute(
+            "INSERT INTO items(id, title, descriptions, price, photos, topic) VALUES(%s, %s, %s, %s, %s::text[], %s)",
+            (id, title, description, price, photos_links, topic)
+        )
 
         pg.commit()
         return_data = "Ok"
@@ -48,21 +55,17 @@ def PostItem(title: str, description: str, price: int, photos: list, topic: str)
             return return_data
 
 
-@app.route("/items/new_item", methods=["POST"])
+@app.route("/items/new-item", methods=["POST"])
 @chek_for_admin
 def new_item():
-    response_object = {'status': 'success'} #БаZа
-    
+    responce_object = {'status': 'success'}
     post_data = request.get_json()
 
-    res = PostItem(post_data.get("title"), post_data.get("description"), post_data.get("price"), post_data.get("topic"))
+    res = PostItem(post_data.get("title"), post_data.get("description"), post_data.get("price"), [], post_data.get("topic"))
 
-    if res == "Error":
-        response_object["res"] = "Server Err"
-        return jsonify(response_object), 500
-    
-    response_object["res"] = res
-    return jsonify(response_object), 200
+    responce_object['res'] = res
+    return jsonify(responce_object), 201
+
 
 
 def PutItem(title: str, description: str, price: int, photos: list, topic: str, id: str) -> str:
@@ -460,7 +463,46 @@ def getCategory() -> dict:
 def get_items_category():
     response_object = {'status': 'success'} #БаZа
 
-
     response_object["res"] = getCategory()
+
+    return jsonify(response_object)
+
+
+def search_items(search_query: str) -> list:
+    try:
+        pg = psycopg2.connect(f"""
+            host={HOST_PG}
+            dbname=postgres
+            user={USER_PG}
+            password={PASSWORD_PG}
+            port={PORT_PG}
+        """)
+
+        cursor = pg.cursor(cursor_factory=psycopg2.extras.DictCursor)
+
+        # Используем LIKE для поиска
+        cursor.execute("SELECT * FROM items WHERE title ILIKE %s", (f'%{search_query}%',))
+        results = cursor.fetchall()
+
+        return [dict(result) for result in results]
+
+    except (Exception, Error) as error:
+        logging.error(f'DB: ', error)
+        return []
+
+    finally:
+        if pg:
+            cursor.close()
+            pg.close()
+            logging.info("Соединение с PostgreSQL закрыто")
+
+
+@app.route("/items/one-item", methods=['GET'])
+def get_one_item():
+    search_query = request.args.get('search', '')
+
+    response_object = {'status': 'success'}
+
+    response_object["res"] = search_items(search_query)
 
     return jsonify(response_object)

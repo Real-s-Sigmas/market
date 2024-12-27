@@ -1,4 +1,6 @@
 <script>
+import axios from 'axios';
+
 export default {
   data() {
     return {
@@ -14,6 +16,7 @@ export default {
     async login() {
       try {
         let response = await axios.post(`/user/sign-up`, {
+        let response = await axios.post(`/user/sign-up`, {
           email: this.email,
           password: this.password,
           phonenumber: this.phonenumber,
@@ -21,8 +24,8 @@ export default {
         });
         this.error = response.data.res;
 
-        if (this.error == "ok") {
-          this.$router.push("/");
+        if (this.error == "Ok") {
+          this.$router.push("/EnterEmail");
         } else {
           this.error = "Заполните все поля правильно!";
         }

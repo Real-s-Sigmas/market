@@ -102,7 +102,7 @@ const router = createRouter({
       name: "reset password",
       component: () => import("../componets/Forms/EmailPassword.vue")
     },
-      {
+    {
       path: "/NewPassword",
       name: "NewPassword",
       component: () => import("../componets/Forms/NewPassword.vue")
@@ -136,6 +136,11 @@ const router = createRouter({
       path: "/BasketAdmin/:id",
       name: "basketadmin",
       component: () => import("../componets/admin/BasketAdmin.vue")
+    },
+    {
+      path: "/TestComp",
+      name: "testcomp",
+      component: () => import("../componets/admin/TestComp.vue")
     },
   ],
 });
