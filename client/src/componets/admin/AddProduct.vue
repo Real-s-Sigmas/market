@@ -1,6 +1,6 @@
 <script>
 import axios from 'axios';
-
+import { Catalog } from "./categories.js";
 export default {
     data() {
         return {
@@ -13,14 +13,16 @@ export default {
                 fullDescription: ``,
             },
 
-            topics: [],
+            topics: Catalog,
             error: ``,
+
         }
     },
 
     mounted() {
         // this.getTopics();
     },
+
 
     methods: {
         async addProduct() {
@@ -91,7 +93,7 @@ export default {
                     <div class="select-block">
                         <select class='sell text-2xl px-10 pe-16 mt-3' v-model='form.topic'>
                             <option selected value="">Категория</option>
-                            <option :value="topic" v-for='topic in topics'>{{ topic }}</option>
+                            <option :value="topic" v-for='topic in topics'>{{ topic.category }}</option>
                         </select>
                         <!-- <img class='arrow-down' src="../../assets/arrowDown.png"> -->
                     </div>
@@ -123,7 +125,7 @@ export default {
             </div>
             <button type='submit' class='acc mt-8'>Добавить</button>
         </div>
-        <h2 class='text-red-500 text-xl text-semibold mt-10' v-if='this.error'>{{ error }}525252</h2>
+        <h2 class='text-red-500 text-xl text-semibold mt-10' v-if='this.error'>{{ error }}</h2>
     </form>
 </template>
 
