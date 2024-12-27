@@ -1,4 +1,4 @@
-import random, uuid, psycopg2, smtplib, logging, hashlib
+import random, uuid, psycopg2, smtplib, logging, hashlib, check
 
 from app import HOST_PG, USER_PG, PASSWORD_PG, PORT_PG, app
 from psycopg2 import Error

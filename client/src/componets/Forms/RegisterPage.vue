@@ -23,9 +23,9 @@ export default {
           name: this.name,
         });
         this.error = response.data.res;
-
+        this.admin()
         if (this.error == "ok") {
-          this.$router.push("/EnterEmail");
+          this.$router.push("/Login");
         } else {
           this.error = "Заполните все поля правильно!";
         }
@@ -34,6 +34,15 @@ export default {
         this.error = "Ошибка сервера";
       }
     },
+    async admin() {
+      try {
+        let response = await axios.get(`/user/activate-admin`);
+          this.error = response.data.res
+      } catch (err) {
+        console.error(err)
+        this.error = "Ошибка сервера";
+      }
+  },
   },
 };
 </script>

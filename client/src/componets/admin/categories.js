@@ -11,7 +11,6 @@ const Category = [
   {
     category: "Садовая сантехника",
   },
-
   {
     category: "Расходные материалы",
   },
