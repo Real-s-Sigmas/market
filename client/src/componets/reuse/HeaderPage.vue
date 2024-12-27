@@ -1,4 +1,6 @@
 <script>
+import axios from 'axios'
+
 export default {
   data() {
     return {
@@ -18,6 +20,7 @@ export default {
         let response = await axios.get(`/user/profile`);
         if (response.data.res) {
           this.isAdmin = response.data.res.admin;
+          console.log(this.isAdmin)
           this.isLogged = true;
         } else {
           this.isLogged = false;

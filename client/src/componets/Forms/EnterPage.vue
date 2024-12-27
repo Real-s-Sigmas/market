@@ -10,13 +10,13 @@ export default {
   methods: {
     async login() {
       try {
-        let response = await axios.post(`/user/email-code`, {
+        let response = await axios.post(`/user/check-email-code`, {
             code: this.code,
         });
           this.error = response.data.res
 
           if (this.error == "ok") {
-              this.$router.push("/")
+              this.$router.push("/NewPassword")
           } else{
             this.error = "Неверный код!"
           }
