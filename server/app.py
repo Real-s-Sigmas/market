@@ -23,6 +23,8 @@ USER_PG = os.getenv('USER_PG')
 HOST_PG = os.getenv('HOST_PG')
 MEDIA = os.getenv('MEDIA')
 AVATAR = os.getenv('AVATAR')
+PASSWORD_EMAIL = os.getenv('PASSWORD_EMAIL')
+EMAIL = os.getenv('EMAIL')
 
 
 

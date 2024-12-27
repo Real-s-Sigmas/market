@@ -1,12 +1,13 @@
 import random, uuid, psycopg2, smtplib, logging, hashlib
 
-from app import HOST_PG, USER_PG, PASSWORD_PG, PORT_PG, app
+from app import HOST_PG, USER_PG, PASSWORD_PG, PORT_PG, PASSWORD_EMAIL, EMAIL, app
 from psycopg2 import Error
 from flask import jsonify, request, session
 from email.mime.text import MIMEText
 from datetime import datetime
 from dotenv import load_dotenv
 from typing import Union, Optional, Tuple
+from email.message import EmailMessage
 
 
 load_dotenv()
@@ -260,3 +261,240 @@ def activate_admin():
         return jsonify({'message': 'Admin access granted'})
 
     return jsonify({'message': 'No admin access'})
+
+
+def ChangePasswordEmail(password: str, email: str) -> str:
+    try:
+        pg = psycopg2.connect(f"""
+            host={HOST_PG}
+            dbname=postgres
+            user={USER_PG}
+            password={PASSWORD_PG}
+            port={PORT_PG}
+        """)
+        cursor = pg.cursor(cursor_factory=psycopg2.extras.DictCursor)
+
+        cursor.execute(f'''UPDATE users
+                        SET password=$${hash_password(password)}$$
+                        WHERE email=$${email}$$;
+                        ''')
+        pg.commit()
+        return_data = "ok"
+        logging.info(f'Пароль изменен на {email}')
+
+
+
+    except (Exception, Error) as error:
+        logging.error(f"Ошибка получения данных: {error}" )
+        return_data = "Error"
+
+    finally:
+        if pg:
+            cursor.close
+            pg.close
+            logging.info("Соединение с PostgreSQL закрыто")
+            return return_data
+        
+def SendCode(email: str) -> str:
+    message_1 = """<!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title></title>
+        
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,300..900;1,300..900&display=swap" rel="stylesheet">
+        <style>
+        * {
+            margin: 0;
+            font-family: "Rubik", system-ui;
+        }
+
+        @media (max-width: 500px) {
+            .window {
+            width: 370px;
+            }
+
+            h1 {
+            font-size: 21px;
+            }
+
+            p {
+            font-size: 10px;
+            }
+
+            h2 {
+            font-size: 22px;
+            width: 30px;
+            }
+        }
+        
+        
+        </style>
+    </head>"""
+
+    sender = EMAIL
+    send_password = PASSWORD_EMAIL
+    code_pas = ""
+    
+    a = random.randint(0, 9)
+    b = random.randint(0, 9)
+    c = random.randint(0, 9)
+    d = random.randint(0, 9)
+    code_pas = str(a) + str(b) + str(c) + str(d)
+
+    message_2 = f"""    <body style="width: 100%">
+        <div style="width: 100%; height: 450px; text-align: center; font-family: 'Rubik', system-ui;">
+            <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                <tr>
+                    <td align="center">
+                        <h1 style="color: #ff813c; border-bottom: 3px solid #ff813c; padding-bottom: 20px; margin-bottom: 20px; text-align: center; width: 500px;">С.и.Р</h1>
+                    </td>
+                </tr>
+            </table>
+            <p style="color: #ff813c; font-weight: 600; font-size: 13px; margin-bottom: 60px;">Здравствуйте!</p>
+            <p style="color: #ff813c; font-weight: 600; font-size: 13px; margin-bottom: 40px;">Для смены пароля введите в поле этот код:</p>
+            <table width="100%" border="0" cellspacing="0" cellpadding="0" style="margin-bottom:20px;">
+                <tr>
+                    <td align="center">
+                        <table width="20%" border="0" cellspacing="0" cellpadding="0"" style="border: 2px solid black; border-radius: 8px; padding:16px 10px; background-color: #fff2e2">
+                            <tr>
+                                <td align="center">
+                                    <td align="center"><h2>{a}</h2></td> <td align="center"><h2>{b}</h2></td> <td align="center"><h2>{c}</h2></td> <td align="center"><h2>{d}</h2></td>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+            </table>
+            <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                <tr>
+                    <td align="center">
+                        <p style="color: #ff813c; font-weight: 600; font-size: 13px; text-align: center;">
+                            Пожалуйста! Обратите внимание, кто-то пытается сменить пароль на вашем аккаунте. <br>
+                            Если это были не вы, никому не сообщайте данный код! <br>
+                        </p>
+
+                        <p style="border-top: 3px solid #ff813c; padding-top: 20px; color: #ff813c; font-weight: 600; font-size: 13px; text-align: center; width: 500px; margin-top: 30px;">
+                            Спасибо, что остаетесь с нами! <br> С заботой о Вас, магазин строительства и ремонта СИР
+                        </p>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </body>
+</html>"""
+
+    msg = EmailMessage()
+
+    msg["Subject"] = "Ваш код"
+    msg["From"] = sender
+    msg["To"] = email
+    msg.set_content("Код для подтверждения регистрации")
+    msg.add_alternative(message_1 + message_2, subtype="html")
+    
+    try:
+        server = smtplib.SMTP('smtp.gmail.com', 587)
+        server.ehlo()
+        server.starttls()
+        server.ehlo()
+        server.login(sender, send_password)
+        server.send_message(msg)
+        logging.info("Email sent successfully!")
+
+    except smtplib.SMTPRecipientsRefused:
+        logging.info("Error: Recipient's email does not exist.")
+        return "err"
+
+    finally:
+        server.quit()
+        # держим пароль в сессии
+        session['code'] = str(code_pas)
+        session.modified = True
+
+        logging.info(f'Пароль {code_pas} отправлен на почту {email}')
+
+        return str(code_pas)
+
+def IsEmail(email: str) -> Union[bool, str]:
+    try:
+        pg = psycopg2.connect(f"""
+            host={HOST_PG}
+            dbname=postgres
+            user={USER_PG}
+            password={PASSWORD_PG}
+            port={PORT_PG}
+        """)
+
+        cursor = pg.cursor(cursor_factory=psycopg2.extras.DictCursor)
+
+        cursor.execute(f"SELECT COUNT(*) FROM users WHERE email=$${email}$$")
+        cnt = cursor.fetchall()[0][0]
+        logging.info(cnt)
+        return_data = True if cnt != 0 else False
+
+    except (Exception, Error) as error:
+        logging.info(f"Ошибка получения данных: {error}")
+        return_data = 'Error'
+
+    finally:
+        if pg:
+            cursor.close()
+            pg.close()
+            logging.info("Соединение с PostgreSQL закрыто")
+            return return_data
+
+@app.route("/user/check-email-code", methods=["POST"])
+def CheckEmailCode():
+    if False:
+        return jsonify({"message": "Forbidden"}), 403
+
+    response_object = {'status': 'success'}
+    post_data = request.get_json()
+
+    logging.info(session.get("code"))
+    if session.get("code") == str(post_data.get("code")):
+        response_object["res"] = "True"
+        session["isVerif"] = True
+        session.modified = True
+        session.pop("code")
+        session.modified = True
+    else:
+        response_object["res"] = "False"
+
+    return jsonify(response_object)
+
+@app.route('/user/change-password-email', methods=['POST', 'PUT'])
+def change_password_email():
+    if False:
+        return jsonify({"message": "Forbidden"}), 403
+
+    response_object = {'status': 'success'}
+    post_data = request.get_json()
+    logging.info(post_data.get("email"))
+    if IsEmail(post_data.get("email")) is True:
+        res = SendCode(post_data.get("email"))
+
+        match res:
+            case "err":
+                response_object["res"] = "Bad email"
+            case _:
+                response_object["res"] = "ok"
+    else: response_object["res"] = "0 email"
+    return jsonify(response_object)
+
+@app.route("/user/new-pass", methods=["POST"])
+def new_password():
+    if False:
+        return jsonify({"message": "Forbidden"}), 403
+
+    response_object = {'status': 'success'}
+    post_data = request.get_json()
+
+    if session.get("isVerif") is True:
+        response_object["res"] = ChangePasswordEmail(post_data.get("password"), post_data.get("email"))
+    else:
+        response_object["res"] = "not veref"
+
+    return jsonify(response_object)
