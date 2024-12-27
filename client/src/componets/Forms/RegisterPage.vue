@@ -24,7 +24,7 @@ export default {
         });
         this.error = response.data.res;
 
-        if (this.error == "Ok") {
+        if (this.error == "ok") {
           this.$router.push("/EnterEmail");
         } else {
           this.error = "Заполните все поля правильно!";

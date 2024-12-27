@@ -13,7 +13,7 @@ export default {
   methods: {
     async login() {
       try {
-        let response = await axios.put(`/user/change-password`, {
+        let response = await axios.put(`/user/change-password-email`, {
           password: this.password,
           expassword: this.expassword,
         });

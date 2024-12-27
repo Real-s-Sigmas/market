@@ -5,6 +5,7 @@ export default {
       isOpen: true,
       isLogged: false,
       burg: true,
+      isAdmin: false,
     };
   },
 
@@ -12,13 +13,32 @@ export default {
     burgmenu() {
       this.burg = !this.burg;
     },
+    async getUser() {
+      try {
+        let response = await axios.get(`/user/profile`);
+        if (response.data.res) {
+          this.isAdmin = response.data.res.admin;
+          this.isLogged = true;
+        } else {
+          this.isLogged = false;
+        }
+      } catch (err) {
+        console.error(err);
+      }
+    },
+  },
+  mounted() {
+    this.getUser();
   },
 };
 </script>
 
 <template>
   <div class="header" :class="{ open: this.isOpen }">
-    <div class="div-ob logo-title cursor-pointer" @click="this.$router.push('/')">
+    <div
+      class="div-ob logo-title cursor-pointer"
+      @click="this.$router.push('/')"
+    >
       <img width="50" src="../../assets/icons/logoMarket.svg" alt="" />
       <h1>
         Строительство <br />
@@ -28,9 +48,15 @@ export default {
     </div>
     <div class="navigate">
       <div class="links">
-        <button class="link-btn" @click="this.$router.push('/')">Главная</button>
-        <button class="link-btn" @click="this.$router.push('/Catalog')">Каталог</button>
-        <button class="link-btn" @click="this.$router.push('/aboutus')">О нас</button>
+        <button class="link-btn" @click="this.$router.push('/')">
+          Главная
+        </button>
+        <button class="link-btn" @click="this.$router.push('/Catalog')">
+          Каталог
+        </button>
+        <button class="link-btn" @click="this.$router.push('/aboutus')">
+          О нас
+        </button>
       </div>
       <div class="div-ob fav-acc">
         <a href="/Favorites">
@@ -89,8 +115,29 @@ export default {
             />
           </svg>
         </button>
-        <button v-if="!isLogged" class="acc" @click="this.$router.push('/Login')">
+        <button
+          v-if="!isLogged && !isAdmin"
+          type="button"
+          class="acc"
+          @click="this.$router.push('/Login')"
+        >
           Войти
+        </button>
+        <button
+          v-else-if="isLogged && isAdmin"
+          type="button"
+          class="acc"
+          @click="this.$router.push('/Admin')"
+        >
+         Админ панель
+        </button>
+        <button
+          v-else-if="isLogged"
+          type="button"
+          class="acc"
+          @click="this.$router.push('/Profile')"
+        >
+          Кабинет
         </button>
       </div>
     </div>
@@ -99,21 +146,33 @@ export default {
       <p>
         Для связи: <br />
         8 495 255 87 65
-        <a class="shortTg" href="#!"><img src="../../assets/icons/tgicon.svg"  alt="" /></a>
+        <a class="shortTg" href="#!"
+          ><img src="../../assets/icons/tgicon.svg" alt=""
+        /></a>
       </p>
-      <a class="tg" href="#!"><img src="../../assets/icons/tgicon.svg" alt="" /></a>
+      <a class="tg" href="#!"
+        ><img src="../../assets/icons/tgicon.svg" alt=""
+      /></a>
     </div>
   </div>
   <div class="btn-top">
-    <button >
-      <img @click="this.isOpen = !this.isOpen" src="../../assets/menu.svg" alt="" />
+    <button>
+      <img
+        @click="this.isOpen = !this.isOpen"
+        src="../../assets/menu.svg"
+        alt=""
+      />
     </button>
   </div>
   <div class="two-blocks" :class="{ close: this.isOpen }">
     <div class="bl block-link">
       <button class="link-btn" @click="this.$router.push('/')">Главная</button>
-      <button class="link-btn" @click="this.$router.push('/catalog')">Каталог</button>
-      <button class="link-btn" @click="this.$router.push('/aboutus')">О нас</button>
+      <button class="link-btn" @click="this.$router.push('/catalog')">
+        Каталог
+      </button>
+      <button class="link-btn" @click="this.$router.push('/aboutus')">
+        О нас
+      </button>
     </div>
     <div class="bl block-btns">
       <a href="/Favorites">
@@ -175,7 +234,9 @@ export default {
       <button v-if="!isLogged" class="acc" @click="this.$router.push('/Login')">
         Войти
       </button>
-      <a class="shortTg" href="#!"><img src="../../assets/icons/tgicon.svg"  alt="" /></a>
+      <a class="shortTg" href="#!"
+        ><img src="../../assets/icons/tgicon.svg" alt=""
+      /></a>
     </div>
   </div>
 </template>
@@ -205,7 +266,8 @@ button {
   height: 20px;
 }
 
-.contact p {}
+.contact p {
+}
 
 .bl {
   width: 180px;
@@ -238,7 +300,6 @@ button {
   display: flex;
   align-items: center;
   justify-content: space-between;
-
 
   width: 100%;
   height: 80px;
@@ -311,7 +372,6 @@ button {
 
   z-index: 1000;
 }
-
 
 .title {
   font-weight: 700;
