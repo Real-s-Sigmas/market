@@ -16,7 +16,7 @@ export default {
     async login() {
       try {
         let response = await axios.post(`/user/sign-up`, {
-        let response = await axios.post(`/user/sign-up`, {
+       
           email: this.email,
           password: this.password,
           phonenumber: this.phonenumber,
