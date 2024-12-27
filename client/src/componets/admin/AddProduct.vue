@@ -1,6 +1,8 @@
 <script>
 import axios from 'axios';
-import { Catalog } from "./categories.js";
+import { Category } from "./categories.js";
+import { Catalog } from "../Catalog/catalog.js";
+
 export default {
     data() {
         return {
@@ -10,27 +12,36 @@ export default {
                 price: null,
                 photos: [],
                 topic: ``,
-                fullDescription: ``,
+                under_topic: ``,
+                full_description: ``,
             },
 
-            topics: Catalog,
+            topics: Category,
+            underTopics: [],
             error: ``,
-
         }
     },
 
-    mounted() {
-        // this.getTopics();
-    },
-
-
+    watch: {
+       'form.topic'(newValue) {
+           this.underTopics = [];
+           for (let i = 0; i < Catalog.length; i++) {
+               if (Object.keys(Catalog[i])[0] == this.form.topic.category) {
+                   for (let j = 0; j < Catalog[i][Object.keys(Catalog[i])[0]].length; j++) {
+                       this.underTopics.push(Catalog[i][Object.keys(Catalog[i])[0]][j].title);
+                   }
+               }
+           }
+       }
+   },
+   
     methods: {
         async addProduct() {
             try {
                 let res = await axios.post('/items/new-item', {
                     form: this.form,
                 });
-                if(res.data.res == 'Error') {
+                if (res.data.res == 'Error') {
                     this.error = 'Ошибка добавления товара';
                 } else {
                     this.$router.push('/');
@@ -40,21 +51,12 @@ export default {
             }
         },
 
-        async getTopics() {
-            try {
-                let res = await axios.get('/items/topics');
-                this.topics = res.data.all;
-            } catch (error) {
-                this.error = 'Ошибка загрузки категорий';
-            }
-        },
-
 
         convertImages(event) {
             let files = event.target.files;
             let imagesArray = [];
 
-            for(let i = 0; i < files.length; i++) {
+            for (let i = 0; i < files.length; i++) {
                 const reader = new FileReader();
                 reader.onload = () => {
                     imagesArray.push(reader.result);
@@ -95,7 +97,10 @@ export default {
                             <option selected value="">Категория</option>
                             <option :value="topic" v-for='topic in topics'>{{ topic.category }}</option>
                         </select>
-                        <!-- <img class='arrow-down' src="../../assets/arrowDown.png"> -->
+                        <select class='sell text-2xl px-10 pe-16 mt-3' v-model='form.under_topic' v-if='this.form.topic'>
+                            <option selected value="">Подкатегория</option>
+                            <option :value="title" v-for='title in underTopics'>{{ title }}</option>
+                        </select>
                     </div>
                 </div>
                 <div class="text-2xl ">
@@ -115,7 +120,7 @@ export default {
 
         <div class="m-c flex flex-col">
             <label for="fullDescription" class='text-2xl  mt-8'>Подробное описание:</label>
-            <textarea id='fullDescription' rows='10' v-model='form.fullDescription'
+            <textarea id='fullDescription' rows='10' v-model='form.full_description'
                 class='border-2 border-black mt-3 p-1 rounded'></textarea>
         </div>
         <div class="price-block m-c flex xl:justify-between xl:flex-row flex-col gap-10">
@@ -132,20 +137,20 @@ export default {
 
 <style scoped>
 .acc {
-  padding: 8px 34px;
-  border-radius: 50px;
+    padding: 8px 34px;
+    border-radius: 50px;
 
-  background-color: #ff812c;
-  color: #fff;
+    background-color: #ff812c;
+    color: #fff;
 
-  font-size: 20px;
-  font-weight: 600;
+    font-size: 20px;
+    font-weight: 600;
 
-  transition: all 100ms;
+    transition: all 100ms;
 }
 
 .acc:hover {
-  padding: 14px 50px !important;
+    padding: 14px 50px !important;
 }
 
 .select-block {
@@ -175,10 +180,10 @@ export default {
 }
 
 #imageContainer {
-	display: flex;
-	gap: 62.8px;
-	flex-wrap: wrap;
-	/* justify-content: space-between; */
+    display: flex;
+    gap: 62.8px;
+    flex-wrap: wrap;
+    /* justify-content: space-between; */
     margin-top: 30px !important;
 }
 
@@ -273,7 +278,8 @@ textarea {
     }
 
 
-    .up-info, .text-red-500 {
+    .up-info,
+    .text-red-500 {
         margin: 0 185px;
     }
 
@@ -295,7 +301,7 @@ textarea {
 
     .m-c,
     .up-info,
-    .text-red-500  {
+    .text-red-500 {
         margin: 0 30px;
     }
 }
@@ -346,7 +352,7 @@ textarea {
         bottom: 32px;
     }
 
-    .price-block  {
+    .price-block {
         flex-direction: column;
         gap: 0;
     }
