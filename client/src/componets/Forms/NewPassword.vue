@@ -12,13 +12,13 @@ export default {
   methods: {
     async login() {
       try {
-        let response = await axios.put(`/user/new-pass`, {
+        let response = await axios.post(`/user/new-pass`, {
           password: this.password,
         });
         this.error = response.data.res;
 
         if (this.error == "ok") {
-          this.$router.push("/Сatalog");
+          this.$router.push("/");
         } else {
           this.error = "Вы неправильно ввели код";
         }
