@@ -42,10 +42,11 @@ def PostItem(title: str, description: str, price: int, photos: list, topic: str)
 
         pg.commit()
         return_data = "Ok"
+        logging.info(return_data)
 
     except (Exception, Error) as error:
         logging.error(f'DB: ', error)
-        return_data = f"Error"
+        return_data = "Error"
 
     finally:
         if pg:
@@ -58,13 +59,32 @@ def PostItem(title: str, description: str, price: int, photos: list, topic: str)
 @app.route("/items/new-item", methods=["POST"])
 @chek_for_admin
 def new_item():
-    responce_object = {'status': 'success'}
+    response_object = {'status': 'success'}
     post_data = request.get_json()
 
-    res = PostItem(post_data.get("title"), post_data.get("description"), post_data.get("price"), [], post_data.get("topic"))
+    if not post_data:
+        response_object['status'] = 'error'
+        response_object['message'] = 'No data provided.'
+        return jsonify(response_object), 400
 
-    responce_object['res'] = res
-    return jsonify(responce_object), 201
+    res = PostItem(
+        post_data.get("title"),
+        post_data.get("description"),
+        post_data.get("price"),
+        [],
+        post_data.get("topic")
+    )
+
+    if res == "Ok":
+        response_object['message'] = 'Item created successfully.'
+    else:
+        response_object['status'] = 'error'
+        response_object['message'] = 'Error creating item.'
+
+    logging.info(response_object)
+
+    return jsonify(response_object)
+
 
 
 
