@@ -126,7 +126,7 @@ def change_item():
 
     post_data = request.get_json()
 
-    res = PutItem(post_data.get("title"), post_data.get("description"), post_data.get("price"), post_data.get("topic"), post_data.get("id"))
+    res = PutItem(post_data.get("title"), post_data.get("description"),post_data.get("photos"), post_data.get("price"), post_data.get("topic"), post_data.get("id"))
 
     if res == "Error":
         response_object["res"] = "Server Err"
