@@ -40,7 +40,8 @@ export default {
   <!-- Блок поиска -->
         <div class="search">
             <input type="text" v-model='search' placeholder='Поиск товаров'>
-            <button class="search-find" @click='findProduct'>Найти</button>
+            <button class="search-find" @click='findProduct'><span class="find-word">Найти</span> <img class="find-img" src="../../assets/icons/find-icon.svg"></button>
+            <img src="" alt="">
         </div>
 
         <!-- Блок приветствия -->
@@ -54,6 +55,8 @@ export default {
 
 <style scoped>
     /* Главное окно */
+
+    
 
     h1, h5 {
         user-select: none;
@@ -179,11 +182,23 @@ export default {
         }
     }
 
-    @media (max-width: 1000px) {
+    @media (min-width: 1035px) {
+        .search {
+            .find-img {
+                display: none ;
+            }
+        }
+    }
+
+    @media (max-width: 1035px) {
         .search {
             position: absolute;
             top: -10px;
             gap: 15px;
+
+            .find-word {
+                display: none;
+            }
 
             input {
                 width: 70%;
