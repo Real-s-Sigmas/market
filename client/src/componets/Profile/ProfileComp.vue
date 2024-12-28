@@ -5,7 +5,7 @@
 <template>
 <div class="window">
   <h2>Приветствую, Имя</h2>
-  <a href="#!">Изменить пароль</a>
+  <a href="/ResetPassword">Изменить пароль</a>
 </div>
 </template>
 

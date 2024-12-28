@@ -14,8 +14,7 @@ export default {
             code: this.code,
         });
           this.error = response.data.res
-
-          if (this.error == "ok") {
+          if (this.error == "True") {
               this.$router.push("/NewPassword")
           } else{
             this.error = "Неверный код!"

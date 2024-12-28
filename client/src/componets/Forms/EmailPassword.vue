@@ -20,7 +20,7 @@ export default {
         if (this.error == "ok") {
           this.$router.push("/EnterEmail");
         } else {
-          this.error = "Ошибка. Введите код правильно!";
+          this.error = "Ошибка.";
         }
       } catch (err) {
         console.error(err);
