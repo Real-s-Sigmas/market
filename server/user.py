@@ -480,6 +480,9 @@ def change_password_email():
     if IsEmail(post_data.get("email")) is True:
         res = SendCode(post_data.get("email"))
 
+        session["email"] = post_data.get("email")
+        session.modified = True
+
         match res:
             case "err":
                 response_object["res"] = "Bad email"
@@ -497,7 +500,9 @@ def new_password():
     post_data = request.get_json()
 
     if session.get("isVerif") is True:
-        response_object["res"] = ChangePasswordEmail(post_data.get("password"), post_data.get("email"))
+        response_object["res"] = ChangePasswordEmail(post_data.get("password"), session.get("email"))
+        session.pop("email")
+        session.modified = True
     else:
         response_object["res"] = "not veref"
 
