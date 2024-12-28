@@ -78,17 +78,23 @@ def chek_for_admin(func):
     @wraps(func)
     def wrapper(*args, **kwargs):
         if session.get("isAdmin") == True:
-            func(*args, **kwargs)
-        else: return jsonify({"status": "success", "res": "Not Admin"}), 400
+            return func(*args, **kwargs)
+        else:
+            return jsonify({"status": "error", "message": "Not Admin"}), 403
     return wrapper
+
+from functools import wraps
+from flask import jsonify, session
 
 def chek_for_user(func):
     @wraps(func)
     def wrapper(*args, **kwargs):
         if "id" in session:
-            func(*args, **kwargs)
-        else: return jsonify({"status": "success", "res": "Not in session"}), 400
+            return func(*args, **kwargs)
+        else:
+            return jsonify({"status": "error", "message": "Not in session"}), 403
     return wrapper
+
 
 
 def doQuery(query: str):
