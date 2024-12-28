@@ -130,7 +130,7 @@ export default {
           v-else-if="isLogged && isAdmin"
           type="button"
           class="acc"
-          @click="this.$router.push('/Admin')"
+          @click="this.$router.push('/AdminPanel/actions')"
         >
          Админ панель
         </button>
@@ -246,7 +246,7 @@ export default {
           v-else-if="isLogged && isAdmin"
           type="button"
           class="acc"
-          @click="this.$router.push('/Admin')"
+          @click="this.$router.push('/AdminPanel/actions')"
         >
          Админ панель
         </button>
