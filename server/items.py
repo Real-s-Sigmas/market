@@ -19,7 +19,7 @@ logging.basicConfig(
 def GetPhotos(photos: list) -> list:
     return []
 
-def PostItem(title: str, description: str, price: int, photos: list, topic: str) -> str:
+def PostItem(title: str, description: str, price: float, photos: list, topic: str, category: str = None, small_category: str = None) -> str:
     try:
         pg = psycopg2.connect(f"""
             host={HOST_PG}
@@ -30,14 +30,21 @@ def PostItem(title: str, description: str, price: int, photos: list, topic: str)
         """)
 
         cursor = pg.cursor(cursor_factory=psycopg2.extras.DictCursor)
-        photos_links = GetPhotos(photos)
+        
+        photos_links = GetPhotos(photos) 
 
-        photos_links.append("mb")
+        if not photos_links:
+            photos_links = []
 
         id = uuid.uuid4().hex
+        date_create = datetime.now()
+
         cursor.execute(
-            "INSERT INTO items(id, title, descriptions, price, photos, topic) VALUES(%s, %s, %s, %s, %s::text[], %s)",
-            (id, title, description, price, photos_links, topic)
+            """
+            INSERT INTO items(id, title, descriptions, price, photos, topic, date_create, category, small_category) 
+            VALUES(%s, %s, %s, %s, %s::text[], %s, %s, %s, %s)
+            """,
+            (id, title, description, price, photos_links, topic, date_create, category, small_category)
         )
 
         pg.commit()
@@ -45,7 +52,7 @@ def PostItem(title: str, description: str, price: int, photos: list, topic: str)
         logging.info(return_data)
 
     except (Exception, Error) as error:
-        logging.error(f'DB: ', error)
+        logging.error(f'DB Error: {error}')
         return_data = "Error"
 
     finally:
@@ -53,7 +60,8 @@ def PostItem(title: str, description: str, price: int, photos: list, topic: str)
             cursor.close()
             pg.close()
             logging.info("Соединение с PostgreSQL закрыто")
-            return return_data
+    
+    return return_data
 
 
 @app.route("/items/new-item", methods=["POST"])
@@ -68,11 +76,13 @@ def new_item():
         return jsonify(response_object), 400
 
     res = PostItem(
-        post_data.get("title"),
-        post_data.get("description"),
-        post_data.get("price"),
-        [],
-        post_data.get("topic")
+        title=post_data.get("title"),
+        description=post_data.get("description"),
+        price=post_data.get("price"),
+        photos=post_data.get("photos", []),
+        topic=post_data.get("topic"),
+        category=post_data.get("category"),
+        small_category=post_data.get("small_category")
     )
 
     if res == "Ok":
@@ -88,16 +98,17 @@ def new_item():
 
 
 
-def PutItem(title: str, description: str, price: float, photos: list, topic: str, id: str) -> str:
+
+def PutItem(title: str, description: str, price: float, photos: list, topic: str, id: str, category: str = None, small_category: str = None) -> str:
     # Проверка на корректность входных данных
     if not title or not description or price is None or not isinstance(price, (int, float)) or not topic or not id:
         return "Error: Invalid input values"
 
     # Получаем ссылки на фотографии
-    photos_links = GetPhotos(photos)
+    photos_links = GetPhotos(photos)  # Убедитесь, что эта функция возвращает корректные ссылки
 
     # # Проверяем, что photos_links не пустой
-    # if not photos_links:
+    # if photos_links is None:
     #     return "Error: photos_links is empty"
 
     try:
@@ -114,9 +125,9 @@ def PutItem(title: str, description: str, price: float, photos: list, topic: str
         # Используем параметризованный запрос для обновления
         cursor.execute("""
             UPDATE items
-            SET title = %s, descriptions = %s, price = %s, photos = %s, topic = %s
+            SET title = %s, descriptions = %s, price = %s, photos = %s, topic = %s, category = %s, small_category = %s
             WHERE id = %s
-        """, (title, description, price, photos_links, topic, id))
+        """, (title, description, price, photos_links, topic, category, small_category, id))
 
         pg.commit()
         return "Ok"
@@ -132,12 +143,10 @@ def PutItem(title: str, description: str, price: float, photos: list, topic: str
             logging.info("Соединение с PostgreSQL закрыто")
 
 
-
-
 @app.route("/items/change-item", methods=["PUT"])
 @chek_for_admin
 def change_item():
-    response_object = {'status': 'success'} #БаZа
+    response_object = {'status': 'success'}  # База
 
     post_data = request.get_json()
 
@@ -147,14 +156,15 @@ def change_item():
         price=post_data.get("price"),
         photos=post_data.get("photos"),
         topic=post_data.get("topic"),
-        id=post_data.get("id")
+        id=post_data.get("id"),
+        category=post_data.get("category"),
+        small_category=post_data.get("small_category")
     )
+
     if res == "Error":
         response_object["res"] = "Server Err"
-        return jsonify(response_object), 500
-    
-    response_object["res"] = res
-    return jsonify(response_object), 200
+
+    return jsonify(response_object)
 
 
 def DeleteItem(id: str) -> str:
