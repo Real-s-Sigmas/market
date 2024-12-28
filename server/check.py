@@ -38,8 +38,8 @@ def IsAdmin(id: str) -> bool:
 
     finally:
         if pg:
-            cursor.close
-            pg.close
+            cursor.close()
+            pg.close()
             logging.info("Соединение с PostgreSQL закрыто")
             return return_data
         
@@ -112,7 +112,7 @@ def doQuery(query: str):
 
     finally:
         if pg:
-            cursor.close
-            pg.close
+            cursor.close()
+            pg.close()
             logging.info("Соединение с PostgreSQL закрыто")
             return return_data
