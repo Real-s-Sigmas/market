@@ -88,7 +88,18 @@ def new_item():
 
 
 
-def PutItem(title: str, description: str, price: int, photos: list, topic: str, id: str) -> str:
+def PutItem(title: str, description: str, price: float, photos: list, topic: str, id: str) -> str:
+    # Проверка на корректность входных данных
+    if not title or not description or price is None or not isinstance(price, (int, float)) or not topic or not id:
+        return "Error: Invalid input values"
+
+    # Получаем ссылки на фотографии
+    photos_links = GetPhotos(photos)
+
+    # # Проверяем, что photos_links не пустой
+    # if not photos_links:
+    #     return "Error: photos_links is empty"
+
     try:
         pg = psycopg2.connect(f"""
             host={HOST_PG}
@@ -99,24 +110,28 @@ def PutItem(title: str, description: str, price: int, photos: list, topic: str, 
         """)
 
         cursor = pg.cursor(cursor_factory=psycopg2.extras.DictCursor)
-        photos_links = GetPhotos(photos)
 
-        cursor.execute(f"UPDATE itemes(id, title, description, price, photos, topic) SET('{id}', '{title}', '{description}', '{price}', '{photos_links}', '{topic}')")
+        # Используем параметризованный запрос для обновления
+        cursor.execute("""
+            UPDATE items
+            SET title = %s, descriptions = %s, price = %s, photos = %s, topic = %s
+            WHERE id = %s
+        """, (title, description, price, photos_links, topic, id))
 
         pg.commit()
-        return_data = "Ok"
-            
+        return "Ok"
 
     except (Exception, Error) as error:
-        logging.error(f'DB: ', error)
-        return_data = f"Error"
+        logging.error(f'DB: {error}')
+        return "Error"
 
     finally:
         if pg:
             cursor.close()
             pg.close()
             logging.info("Соединение с PostgreSQL закрыто")
-            return return_data
+
+
 
 
 @app.route("/items/change-item", methods=["PUT"])
@@ -126,8 +141,14 @@ def change_item():
 
     post_data = request.get_json()
 
-    res = PutItem(post_data.get("title"), post_data.get("description"),post_data.get("photos"), post_data.get("price"), post_data.get("topic"), post_data.get("id"))
-
+    res = PutItem(
+        title=post_data.get("title"),
+        description=post_data.get("description"),
+        price=post_data.get("price"),
+        photos=post_data.get("photos"),
+        topic=post_data.get("topic"),
+        id=post_data.get("id")
+    )
     if res == "Error":
         response_object["res"] = "Server Err"
         return jsonify(response_object), 500
