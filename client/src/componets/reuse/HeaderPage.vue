@@ -234,9 +234,30 @@ export default {
           />
         </svg>
       </button>
-      <button v-if="!isLogged" class="acc" @click="this.$router.push('/Login')">
-        Войти
-      </button>
+      <button
+          v-if="!isLogged && !isAdmin"
+          type="button"
+          class="acc"
+          @click="this.$router.push('/Login')"
+        >
+          Войти
+        </button>
+        <button
+          v-else-if="isLogged && isAdmin"
+          type="button"
+          class="acc"
+          @click="this.$router.push('/Admin')"
+        >
+         Админ панель
+        </button>
+        <button
+          v-else-if="isLogged"
+          type="button"
+          class="acc"
+          @click="this.$router.push('/Profile')"
+        >
+          Кабинет
+        </button>
       <a class="shortTg" href="#!"
         ><img src="../../assets/icons/tgicon.svg" alt=""
       /></a>

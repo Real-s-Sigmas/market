@@ -9,8 +9,8 @@ export default {
           id: 52,
           count: 1,
           photos: [`src/assets/1111.jpeg`],
-          title: `Отвертка подзалупная.`,
-          description: `Чё то там, Чё то тамЧё то тамЧё то тамЧё то тамЧё то там`,
+          title: `Отвертка`,
+          description: `Мега круто`,
           price: 52000,
         },
         {
