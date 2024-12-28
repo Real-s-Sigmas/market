@@ -426,59 +426,59 @@ def fil_item():
     return jsonify(response_object)
 
 
-def getItemsTopic(fil: dict, start: int, end: int) -> Tuple[Union[list, str], str]:
-    try:
-        pg = psycopg2.connect(f"""
-            host={HOST_PG}
-            dbname=postgres
-            user={USER_PG}
-            password={PASSWORD_PG}
-            port={PORT_PG}
-        """)
+# def getItemsTopic(fil: dict, start: int, end: int) -> Tuple[Union[list, str], str]:
+#     try:
+#         pg = psycopg2.connect(f"""
+#             host={HOST_PG}
+#             dbname=postgres
+#             user={USER_PG}
+#             password={PASSWORD_PG}
+#             port={PORT_PG}
+#         """)
 
-        cursor = pg.cursor(cursor_factory=psycopg2.extras.DictCursor)
+#         cursor = pg.cursor(cursor_factory=psycopg2.extras.DictCursor)
 
-        cursor.execute(f"SELECT * FROM items WHERE topic=$${fil["topic"]}$$ ORDER BY date_create DESC LIMIT {end-start+1} OFFSET {start}")
+#         cursor.execute(f"SELECT * FROM items WHERE topic=$${fil["topic"]}$$ ORDER BY date_create DESC LIMIT {end-start+1} OFFSET {start}")
 
-        return_data = cursor.fetchall()
+#         return_data = cursor.fetchall()
 
-        q = cursor.fetchall()
-        return_data = []
+#         q = cursor.fetchall()
+#         return_data = []
 
-        for row in q:
-            return_data.append(dict(row))
-
-
-        cursor.execute(f"SELECT COUNT(*) FROM items WHERE topic=$${fil["topic"]}$$")
-
-        count = cursor.fetchall()
-
-    except (Exception, Error) as error:
-        logging.error(f'DB: ', error)
-        return_data = f"Error"
-
-    finally:
-        if pg:
-            cursor.close()
-            pg.close()
-            logging.info("Соединение с PostgreSQL закрыто")
-            return return_data, count
+#         for row in q:
+#             return_data.append(dict(row))
 
 
+#         cursor.execute(f"SELECT COUNT(*) FROM items WHERE topic=$${fil["topic"]}$$")
 
-@app.route("/items/show-items", methods=["GET"])
-def get_items_topic():
-    response_object = {'status': 'success'} #БаZа
+#         count = cursor.fetchall()
 
-    start, end = int(request.args.get("start"))-1, int(request.args.get('end'))-1
+#     except (Exception, Error) as error:
+#         logging.error(f'DB: ', error)
+#         return_data = f"Error"
 
-    filtrs = {
-        'topic': request.args.get('topic'),
-    }
+#     finally:
+#         if pg:
+#             cursor.close()
+#             pg.close()
+#             logging.info("Соединение с PostgreSQL закрыто")
+#             return return_data, count
 
-    response_object["res"], response_object["count"] = getItemsTopic(filtrs, start, end)
 
-    return jsonify(response_object)
+
+# @app.route("/items/show-items", methods=["GET"])
+# def get_items_topic():
+#     response_object = {'status': 'success'} #БаZа
+
+#     start, end = int(request.args.get("start"))-1, int(request.args.get('end'))-1
+
+#     filtrs = {
+#         'topic': request.args.get('topic'),
+#     }
+
+#     response_object["res"], response_object["count"] = getItemsTopic(filtrs, start, end)
+
+#     return jsonify(response_object)
 
 def getCategory() -> dict:
     try:
@@ -556,4 +556,40 @@ def get_one_item():
 
     response_object["res"] = search_items(search_query)
 
+    return jsonify(response_object)
+
+
+def getAllItems():
+    try:
+        pg = psycopg2.connect(f"""
+            host={HOST_PG}
+            dbname=postgres
+            user={USER_PG}
+            password={PASSWORD_PG}
+            port={PORT_PG}
+        """)
+
+        cursor = pg.cursor(cursor_factory=psycopg2.extras.DictCursor)
+
+        # Используем LIKE для поиска
+        cursor.execute("SELECT * FROM items")
+        results = cursor.fetchall()
+
+        return [dict(result) for result in results]
+
+    except (Exception, Error) as error:
+        logging.error(f'DB: ', error)
+        return []
+
+    finally:
+        if pg:
+            cursor.close()
+            pg.close()
+            logging.info("Соединение с PostgreSQL закрыто")
+
+@app.route("/items/show-items", methods=["GET"])
+def get_items_topic():
+    response_object = {'status': 'success'} #БаZа
+
+    response_object["res"] = getAllItems()
     return jsonify(response_object)
