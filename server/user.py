@@ -213,12 +213,12 @@ def Profile(id: str) -> Union[list, str]:
 
 @app.route('/user/profile', methods=['GET'])
 def profiler():
-    responce_object = {'status': 'success'}
     user_id = session.get('id')
 
     if not user_id:
         return jsonify({'message': 'Unauthorized'}), 401
 
+    responce_object = {'status': 'success'}
     responce_object['res'] = Profile(session.get('id'))
 
     return jsonify(responce_object)
