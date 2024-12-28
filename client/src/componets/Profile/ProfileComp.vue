@@ -1,10 +1,19 @@
 <script>
+import axios from 'axios';
+
+export default {
+  data() {
+    return {
+      userName: "Meee",
+    }
+  }
+}
   
 </script>
 
 <template>
 <div class="window">
-  <h2>Приветствую, Имя</h2>
+  <h2>Приветствую, {{userName}}</h2>
   <a href="/ResetPassword">Изменить пароль</a>
 </div>
 </template>
