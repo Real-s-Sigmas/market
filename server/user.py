@@ -79,8 +79,8 @@ def SignUp(name: str, surname: str, phonenumber, password: str, email: str) -> s
 
     finally:
         if pg:
-            cursor.close
-            pg.close
+            cursor.close()
+            pg.close()
             logging.info("Соединение с PostgreSQL закрыто")
             return return_data
     return 0
@@ -142,8 +142,8 @@ def SignIn(phonenumber: str, password: str):
 
     finally:
         if pg:
-            cursor.close
-            pg.close
+            cursor.close()
+            pg.close()
             logging.info("Соединение с PostgreSQL закрыто")
             return return_data
 
@@ -205,8 +205,8 @@ def Profile(id: str) -> Union[list, str]:
 
     finally:
         if pg:
-            cursor.close
-            pg.close
+            cursor.close()
+            pg.close()
             logging.info("Соединение с PostgreSQL закрыто")
             return return_data
     return 0
@@ -214,6 +214,10 @@ def Profile(id: str) -> Union[list, str]:
 @app.route('/user/profile', methods=['GET'])
 def profiler():
     responce_object = {'status': 'success'}
+    user_id = session.get('id')
+
+    if not user_id:
+        return jsonify({'message': 'Unauthorized'}), 401
 
     responce_object['res'] = Profile(session.get('id'))
 
@@ -290,8 +294,8 @@ def ChangePasswordEmail(password: str, email: str) -> str:
 
     finally:
         if pg:
-            cursor.close
-            pg.close
+            cursor.close()
+            pg.close()
             logging.info("Соединение с PostgreSQL закрыто")
             return return_data
         

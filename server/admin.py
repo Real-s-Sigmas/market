@@ -1,10 +1,15 @@
-import logging, psycopg2, check
-
-from app import app, PASSWORD_PG, PORT_PG, USER_PG, HOST_PG, MEDIA, AVATAR
-from flask import Flask, jsonify, request, session, make_response, send_from_directory
+import os
+import uuid
+import psycopg2
 from psycopg2 import extras, Error
-from typing import Union, Optional, Tuple
-from check import chek_for_admin
+from flask import Flask, jsonify, request, session, make_response, send_from_directory
+from flask_cors import CORS
+from datetime import datetime
+from dotenv import load_dotenv
+import base64
+import logging
+
+load_dotenv()
 
 logging.basicConfig(
     level=logging.DEBUG,
@@ -12,92 +17,114 @@ logging.basicConfig(
     datefmt="%Y—%m—%d %H:%M:%S",
 )
 
-logging.info("admin.py have connected")
+PASSWORD_PG = os.getenv('PASSWORD_PG')
+PORT_PG = os.getenv('PORT_PG')
+USER_PG = os.getenv('USER_PG')
+HOST_PG = os.getenv('HOST_PG')
+MEDIA = os.getenv('MEDIA')
+AVATAR = os.getenv('AVATAR')
+PASSWORD_EMAIL = os.getenv('PASSWORD_EMAIL')
+EMAIL = os.getenv('EMAIL')
 
 
-def AllOrders() -> Union[list, str]:
+
+app = Flask(__name__)
+
+app.secret_key = "/zxc/"
+app.permanent_session_lifetime = 60 * 60 * 24 * 28
+app.config['SESSION_COOKIE_SAMESITE'] = 'None'
+app.config['SESSION_COOKIE_SECURE'] = True  # Установите True для использования HTTPS
+
+
+# enable CORS
+CORS(app, resources={r"*": {"origins": "*", 'supports_credentials': True}})
+
+#Главная страница
+@app.route('/', methods=['GET'])
+def home():
+
+    response_object = {'status': 'success'} #БаZа
+    response_object['message'] = session.get('id')
+    logging.warning('1')
+    # logging.info(session.get('id')) #debug
+    logging.warning(response_object)
+    session.pop('id', None)
+    return jsonify(response_object)
+
+def add_tables():
     try:
         pg = psycopg2.connect(f"""
-            host={HOST_PG}
-            dbname=postgres
-            user={USER_PG}
-            password={PASSWORD_PG}
-            port={PORT_PG}
-        """)
-
+                host={HOST_PG}
+                dbname=postgres
+                user={USER_PG}
+                password={PASSWORD_PG}
+                port={PORT_PG}
+            """)
         cursor = pg.cursor(cursor_factory=psycopg2.extras.DictCursor)
 
-        cursor.execute(f"SELECT * FROM orders ORDER BY data")
+        cursor.execute(f"""create table if not exists users(
+                        id uuid ,
+                        username text,
+                        surname text,
+                        phonenumber text,
+                        password text,
+                        email text,
+                        admin bool,
+                        date_create timestamp
+                    )""")
+        
+        cursor.execute(f"""create table if not exists items(
+                        id uuid UNIQUE,
+                        title VARCHAR(30),
+                        descriptions text,
+                        price float,
+                        photos text[],
+                        topic text, 
+                        date_create timestamp
+                    )""")
+        
 
-        data_ = cursor.fetchall()
-        return_data = []
-        for row in data_:
-            return_data.append(dict(row))
+        cursor.execute(f"""create table if not exists orders (
+                        id uuid UNIQUE,
+                        ids_items text[],
+                        id_user uuid,
+                        comment VARCHAR(100),
+                        contacts VARCHAR(50),
+                        status text,
+                        date_create timestamp
+                    )""")
+        
+        cursor.execute(f"""create table if not exists comments(
+                        id uuid UNIQUE,
+                        id_user uuid,
+                        id_item uuid,
+                        content VARCHAR(333),
+                        stars TINYINT,
+                        date_create timestamp
+                    )""")
 
-        logging.info('Все заказы показаны')
-
+        #TODO: orders table
+        pg.commit()
     except (Exception, Error) as error:
-        logging.info(f"Ошибка получения данных: {error}")
-        return_data = 'Error'
+        logging.error(f'DB: ', error)
+        return_data = f"Error" 
 
     finally:
         if pg:
             cursor.close()
             pg.close()
             logging.info("Соединение с PostgreSQL закрыто")
-            return return_data
+    
 
-@app.route('/admin/orders', methods=['GET'])
-def all_orders():
-    responce_object = {'status': 'success'}
+from user import * 
+from other import *
+from admin import *
+from comments import *
+from items import *
+from basket import *
 
-    if check.IsAdmin():
-        responce_object['res'] = AllOrders()
-    else:
-        responce_object["res"] = "Not Admin"
-
-    return jsonify(responce_object)
-
-
-def OneOrder(id_user: str) -> Union[list, str]:
-    try:
-        pg = psycopg2.connect(f"""
-            host={HOST_PG}
-            dbname=postgres
-            user={USER_PG}
-            password={PASSWORD_PG}
-            port={PORT_PG}
-        """)
-
-        cursor = pg.cursor(cursor_factory=psycopg2.extras.DictCursor)
-
-        cursor.execute(f"SELECT * FROM orders WHERE id_user = $${id_user}$$ ORDER BY data")
-
-        data_ = cursor.fetchall()
-        return_data = []
-        for row in data_:
-            return_data.append(dict(row))
-
-        logging.info('Все заказы показаны')
-
-    except (Exception, Error) as error:
-        logging.info(f"Ошибка получения данных: {error}")
-        return_data = 'Error'
-
-    finally:
-        if pg:
-            cursor.close()
-            pg.close()
-            logging.info("Соединение с PostgreSQL закрыто")
-            return return_data
-
-@app.route('/admin/order', methods=['GET'])
-@chek_for_admin
-def one_order():
-    responce_object = {'status': 'success'}
+if __name__ == '__main__':
+      add_tables()
+      app.run(host='0.0.0.0', port=80)
 
 
-    responce_object['res'] = OneOrder(request.args.get('id'))
-
-
-    return jsonify(responce_object)
