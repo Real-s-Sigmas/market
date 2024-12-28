@@ -152,11 +152,18 @@ export default {
 
 
   <!-- центрируйте пж -->
-  <h2 class="mt-10 text-3xl font-bold">Корзина пуста!</h2>
+  <h2 class="mt-10 text-3xl bask-empty font-bold">Корзина пуста!</h2>
 
 </template>
 
 <style scoped>
+
+
+.bask-empty {
+  padding-top: 30px;
+  text-align: center;
+}
+
 .price {
   font-size: 30px;
   color: #ff812c;

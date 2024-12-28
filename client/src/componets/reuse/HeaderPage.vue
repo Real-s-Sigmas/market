@@ -5,9 +5,9 @@ export default {
   data() {
     return {
       isOpen: true,
-      isLogged: false,
+      isLogged: true,
       burg: true,
-      isAdmin: false,
+      isAdmin: true,
     };
   },
 
@@ -254,9 +254,15 @@ button {
 
 .shortTg {
   display: block;
-  width: 20px;
-  height: 20px;
+  width: 25px;
+  height: 25px;
+
+  img {
+    width: 25px;
+    height: 25px;
+  }
 }
+
 
 .contact p {
 }
@@ -285,7 +291,7 @@ button {
 }
 
 .acc:hover {
-  padding: 8px 34px !important;
+  background-color: #d95700;
 }
 
 .header {
@@ -380,7 +386,8 @@ button {
 }
 
 .acc {
-  padding: 8px 34px;
+  width: 200px;
+  height: 50px;
   border-radius: 50px;
 
   background-color: #ff812c;
@@ -389,12 +396,9 @@ button {
   font-size: 20px;
   font-weight: 600;
 
-  transition: all 100ms;
+  transition: all 200ms;
 }
 
-.acc:hover {
-  padding: 10px 40px !important;
-}
 
 .acc:active {
   background-color: #d95700;
@@ -434,9 +438,22 @@ button {
   display: none;
 }
 
-@media (min-width: 1000px) {
+@media (min-width: 1035px) {
   .btn-top img {
     display: none;
+  }
+}
+
+@media (max-width: 1420px) {
+  .acc {
+    font-size: 16px;
+    width: 160px;
+  }
+}
+
+@media (max-width: 1360px) {
+  .fav-acc a {
+    margin-right: 20px;
   }
 }
 
@@ -511,7 +528,7 @@ button {
   }
 }
 
-@media (max-width: 1000px) {
+@media (max-width: 1035px) {
   .btn-top button {
     background-color: #191919;
     padding: 5px;
@@ -531,6 +548,15 @@ button {
     position: absolute;
     top: 25px;
     right: 20px;
+  }
+
+  .acc {
+    height: 35px;
+    width: 140px;
+  }
+
+  .block-btns {
+    gap: 15px;
   }
 }
 
