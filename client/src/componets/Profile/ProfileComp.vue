@@ -4,8 +4,22 @@ import axios from 'axios';
 export default {
   data() {
     return {
-      userName: "Meee",
+      userName: "",
     }
+  },
+  methods: {
+    async getUser() {
+      try {
+        let response = await axios.get(`/user/profile`);
+        this.userName = response.data.res.username
+
+      } catch (err) {
+        console.error(err);
+      }
+    }
+  },
+  mounted() {
+    this.getUser()
   }
 }
   
