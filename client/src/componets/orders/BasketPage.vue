@@ -4,24 +4,7 @@ import axios from "axios";
 export default {
   data() {
     return {
-      products: [
-        {
-          id: 52,
-          count: 1,
-          photos: [`src/assets/1111.jpeg`],
-          title: `Отвертка`,
-          description: `Мега круто`,
-          price: 52000,
-        },
-        {
-          id: 52,
-          count: 1,
-          photos: [`src/assets/1111.jpeg`],
-          title: `Чё то тут`,
-          description: `Чё то там`,
-          price: 52000,
-        },
-      ],
+      products: [],
       title: ``,
       error: ``,
       errorProduct: ``,
@@ -109,7 +92,7 @@ export default {
     <div class="bg-black"></div>
   </div>
 
-  <div class="orders-container mx-10">
+  <div class="orders-container mx-10" v-if="this.products.length != 0">
     <h2 class="mt-10 text-3xl font-bold">Корзина</h2>
 
     <h2
@@ -164,6 +147,13 @@ export default {
       <button class="ord-button" @click="loadOrder">Заказать</button>
     </div>
   </div>
+
+
+
+
+  <!-- центрируйте пж -->
+  <h2 class="mt-10 text-3xl font-bold">Корзина пуста!</h2>
+
 </template>
 
 <style scoped>
