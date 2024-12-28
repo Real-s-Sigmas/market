@@ -111,8 +111,8 @@ def add_tables():
 
     finally:
         if pg:
-            cursor.close
-            pg.close
+            cursor.close()
+            pg.close()
             logging.info("Соединение с PostgreSQL закрыто")
     
 
