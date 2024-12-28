@@ -17,7 +17,7 @@ export default {
             email: this.email,
             password: this.password,
         });
-          console.log(this.admin())
+          this.admin()
           this.error = response.data.res
           if (this.error == "ok") {
             this.$router.push("/")
