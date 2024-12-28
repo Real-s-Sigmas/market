@@ -26,23 +26,28 @@ def AddItemToBasket(id_item: str, id_user: str) -> str:
 
         cursor = pg.cursor(cursor_factory=psycopg2.extras.DictCursor)
 
-        cursor.execute(f"""UPDATE users
-                        SET basket = COALESCE(basket, '{id_item}') || ARRAY[?]
-                        WHERE id_user =$${id_user}$$;""")
+        # Используем параметризованный запрос для безопасности
+        cursor.execute("""
+            UPDATE users
+            SET basket = COALESCE(basket, '{}')::text[] || %s::text[]
+            WHERE id = %s;
+        """, ([id_item], id_user))
 
         pg.commit()
         return_data = "Ok"
 
     except (Exception, Error) as error:
-        logging.error(f'DB: ', error)
-        return_data = f"Error"
+        logging.error(f'DB: {error}')
+        return_data = "Error"
 
     finally:
         if pg:
             cursor.close()
             pg.close()
-            logging.info("Соединение с PostgreSQL закрыто")
-            return return_data
+
+    return return_data
+
+
 
 
 @app.route("/basket/add-item", methods=['POST'])
@@ -57,7 +62,7 @@ def add_item():
 
 
 
-def DeleteItemToBasket(id_item: str, id_user: str) -> str:
+def DeleteSingleItemFromBasket(id_item: str, id_user: str) -> str:
     try:
         pg = psycopg2.connect(f"""
             host={HOST_PG}
@@ -69,32 +74,52 @@ def DeleteItemToBasket(id_item: str, id_user: str) -> str:
 
         cursor = pg.cursor(cursor_factory=psycopg2.extras.DictCursor)
 
-        cursor.execute(f"""UPDATE users
-                        SET basket = array_remove(basket, {id_item})
-                        WHERE id_user =$${id_user}$$;""")
+        # Получаем текущий массив basket
+        cursor.execute("SELECT basket FROM users WHERE id = %s;", (id_user,))
+        current_basket = cursor.fetchone()
 
-        pg.commit()
-        return_data = "Ok"
+        if current_basket and current_basket[0]:
+            # Преобразуем массив в список
+            basket_list = list(current_basket[0])
+
+            # Удаляем только одно вхождение id_item
+            if id_item in basket_list:
+                basket_list.remove(id_item)
+
+            # Обновляем массив в базе данных
+            cursor.execute("""
+                UPDATE users
+                SET basket = %s
+                WHERE id = %s;
+            """, (basket_list, id_user))
+
+            pg.commit()
+            return_data = "Ok"
+        else:
+            return_data = "Item not found in basket"
 
     except (Exception, Error) as error:
-        logging.error(f'DB: ', error)
-        return_data = f"Error"
+        logging.error(f'DB: {error}')
+        return_data = "Error"
 
     finally:
         if pg:
             cursor.close()
             pg.close()
             logging.info("Соединение с PostgreSQL закрыто")
-            return return_data
+
+    return return_data
 
 
-@app.route("/basket/delete-item", methods=['POST'])
+
+
+@app.route("/basket/delete-item", methods=['DELETE'])
 @chek_for_user
 def delete_item_():
     response_object = {'status': 'success'} #БаZа
     post_data = request.get_json()
 
-    response_object["res"] = DeleteItemToBasket(post_data.get("id"), session.get("id"))
+    response_object["res"] = DeleteSingleItemFromBasket(post_data.get("id"), session.get("id"))
 
     return jsonify(response_object)
 
@@ -112,9 +137,18 @@ def ShowwItemFromBasket(id_user: str) -> Union[str, list]:
 
         cursor = pg.cursor(cursor_factory=psycopg2.extras.DictCursor)
 
-        cursor.execute(f"SELECT basket FROM users WHERE id_user=$${id_user}$$")
+        # Использование параметризованного запроса
+        cursor.execute("SELECT basket FROM users WHERE id = %s", (id_user,))
+        
+        return_data = cursor.fetchone()  # Получаем один результат (так как id уникален)
 
-        return_data = cursor.fetchall()
+        # Преобразование результата в массив, если данные найдены
+        if return_data and return_data[0] is not None:
+            basket_array = return_data[0]  # basket уже является массивом
+        else:
+            basket_array = []  # Пустой массив, если данные отсутствуют
+
+        return basket_array
 
     except (Exception, Error) as error:
         logging.error(f'DB: ', error)
@@ -125,7 +159,7 @@ def ShowwItemFromBasket(id_user: str) -> Union[str, list]:
             cursor.close()
             pg.close()
             logging.info("Соединение с PostgreSQL закрыто")
-            return return_data
+            # return return_data
 
 
 @app.route("/basket/show-basket", methods=['GET'])
@@ -136,6 +170,7 @@ def delete_item__():
     response_object["res"] = ShowwItemFromBasket(session.get("id"))
 
     return jsonify(response_object)
+
 
 def modify_fav_item(user_id: str, item_id: str, action: str) -> str:
     try:
@@ -150,15 +185,23 @@ def modify_fav_item(user_id: str, item_id: str, action: str) -> str:
         cursor = pg.cursor(cursor_factory=psycopg2.extras.DictCursor)
 
         if action == 'add':
-            cursor.execute(f"UPDATE users SET favs = array_append(favs, %s) WHERE id_user = %s", (item_id, user_id))
+            cursor.execute("""
+                UPDATE users 
+                SET favs = array_append(favs, %s) 
+                WHERE id = %s
+            """, (item_id, user_id))
         elif action == 'delete':
-            cursor.execute(f"UPDATE users SET favs = array_remove(favs, %s) WHERE id_user = %s", (item_id, user_id))
+            cursor.execute("""
+                UPDATE users 
+                SET favs = array_remove(favs, %s) 
+                WHERE id = %s
+            """, (item_id, user_id))
 
         pg.commit()
         return "Success"
 
     except (Exception, Error) as error:
-        logging.error(f'DB: ', error)
+        logging.error(f'DB: {error}')
         return "Error"
 
     finally:
@@ -170,7 +213,7 @@ def modify_fav_item(user_id: str, item_id: str, action: str) -> str:
 
 @app.route("/basket/add-fav", methods=['POST'])
 def add_fav():
-    item_id = request.args.get('id')
+    item_id = request.get_json().get('id')
     user_id = session.get("id")
 
     if user_id and item_id:
@@ -179,14 +222,98 @@ def add_fav():
 
     return jsonify({'status': 'bad request'}), 400
 
+def DeleteSingleFavItem(user_id: str, item_id: str) -> str:
+    try:
+        pg = psycopg2.connect(f"""
+            host={HOST_PG}
+            dbname=postgres
+            user={USER_PG}
+            password={PASSWORD_PG}
+            port={PORT_PG}
+        """)
+
+        cursor = pg.cursor(cursor_factory=psycopg2.extras.DictCursor)
+
+        # Получаем текущий массив favs
+        cursor.execute("SELECT favs FROM users WHERE id = %s;", (user_id,))
+        current_favs = cursor.fetchone()
+
+        if current_favs and current_favs[0]:
+            # Преобразуем массив в список
+            favs_list = list(current_favs[0])
+
+            # Удаляем только одно вхождение item_id
+            if item_id in favs_list:
+                favs_list.remove(item_id)
+
+                # Обновляем массив в базе данных
+                cursor.execute("""
+                    UPDATE users
+                    SET favs = %s
+                    WHERE id = %s;
+                """, (favs_list, user_id))
+
+                pg.commit()
+                return "Ok"
+            else:
+                return "Item not found in favorites"
+        else:
+            return "No favorites found"
+
+    except (Exception, Error) as error:
+        logging.error(f'DB: {error}')
+        return "Error"
+
+    finally:
+        if pg:
+            cursor.close()
+            pg.close()
+            logging.info("Соединение с PostgreSQL закрыто")
 
 @app.route("/basket/delete-fav", methods=['DELETE'])
 def delete_fav():
-    item_id = request.args.get('id')
+    item_id = request.get_json().get('id')
     user_id = session.get("id")
 
     if user_id and item_id:
-        result = modify_fav_item(user_id, item_id, 'delete')
+        result = DeleteSingleFavItem(user_id, item_id)
         return jsonify({'status': result}), 200
+
+    return jsonify({'status': 'bad request'}), 400
+
+@app.route("/basket/show-favs", methods=['GET'])
+def show_fav():
+    user_id = session.get("id")
+
+    if user_id:
+        try:
+            pg = psycopg2.connect(f"""
+                host={HOST_PG}
+                dbname=postgres
+                user={USER_PG}
+                password={PASSWORD_PG}
+                port={PORT_PG}
+            """)
+
+            cursor = pg.cursor(cursor_factory=psycopg2.extras.DictCursor)
+
+            # Извлекаем массив избранных элементов
+            cursor.execute("SELECT favs FROM users WHERE id = %s;", (user_id,))
+            favs = cursor.fetchone()
+
+            if favs and favs[0]:
+                return jsonify({'status': 'success', 'favs': favs[0]}), 200
+            else:
+                return jsonify({'status': 'success', 'favs': []}), 200  # Пустой массив, если нет избранных
+
+        except (Exception, Error) as error:
+            logging.error(f'DB: {error}')
+            return jsonify({'status': 'error', 'message': 'Database error'}), 500
+
+        finally:
+            if pg:
+                cursor.close()
+                pg.close()
+                logging.info("Соединение с PostgreSQL закрыто")
 
     return jsonify({'status': 'bad request'}), 400
