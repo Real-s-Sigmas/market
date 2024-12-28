@@ -18,7 +18,6 @@ export default {
             password: this.password,
         });
           this.error = response.data.res
-
           if (this.error == "ok") {
               this.$router.push("/")
           } else{
@@ -29,7 +28,11 @@ export default {
         this.error = "Ошибка сервера";
       }
     },
+      
   },
+
+
+
 };
 </script>
 <template>

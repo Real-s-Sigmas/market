@@ -1,4 +1,4 @@
-const Catalog = [
+const Category = [
   {
     category: "Электроинструменты",
   },
@@ -11,7 +11,6 @@ const Catalog = [
   {
     category: "Садовая сантехника",
   },
-
   {
     category: "Расходные материалы",
   },
@@ -29,4 +28,4 @@ const Catalog = [
     category: "Принадлежности для сварки",
   },
 ];
-export { Catalog };
+export { Category };

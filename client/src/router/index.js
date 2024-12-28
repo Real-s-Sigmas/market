@@ -142,6 +142,11 @@ const router = createRouter({
       name: "testcomp",
       component: () => import("../componets/admin/TestComp.vue")
     },
+    {
+      path: "/Profile",
+      name: "profile",
+      component: () => import("../componets/Profile/ProfileComp.vue")
+    },
   ],
 });
 

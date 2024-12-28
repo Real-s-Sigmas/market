@@ -6,16 +6,14 @@ export default {
     return {
       disabled: false,
       password: "",
-      expassword: "",
       error: "",
     };
   },
   methods: {
     async login() {
       try {
-        let response = await axios.put(`/user/change-password-email`, {
+        let response = await axios.put(`/user/new-pass`, {
           password: this.password,
-          expassword: this.expassword,
         });
         this.error = response.data.res;
 
@@ -45,14 +43,6 @@ export default {
             required
             v-model="password"
             placeholder="Пароль"
-          />
-          <input
-            type="password"
-            class="input"
-            autofocus
-            required
-            v-model="expassword"
-            placeholder="Повторите пароль"
           />
           <button class="btn" type="submit">Сохранить</button>
         </form>

@@ -18,7 +18,7 @@ export default {
         this.error = response.data.res;
 
         if (this.error == "ok") {
-          this.$router.push("/ResetPassword");
+          this.$router.push("/EnterEmail");
         } else {
           this.error = "Ошибка. Введите код правильно!";
         }

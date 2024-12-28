@@ -32,8 +32,8 @@ app = Flask(__name__)
 
 app.secret_key = "/zxc/"
 app.permanent_session_lifetime = 60 * 60 * 24 * 28
-app.config["SESSION_COOKIE_SAMESITE"] = "None"  # или "Strict"
-app.config["SESSION_COOKIE_SECURE"] = False  # Оставьте False, если на HTTP
+app.config['SESSION_COOKIE_SAMESITE'] = 'None'
+app.config['SESSION_COOKIE_SECURE'] = True  # Установите True для использования HTTPS
 
 
 # enable CORS
