@@ -146,11 +146,11 @@ export default {
     font-size: 20px;
     font-weight: 600;
 
-    transition: all 100ms;
+    transition: all 200ms;
 }
 
 .acc:hover {
-    padding: 14px 50px !important;
+    background-color: #d95700;
 }
 
 .select-block {

@@ -14,7 +14,13 @@
     </div>
     <div class="actions-block">
       <div class="add-product">
-        <a href="/addproduct"><button ><img src="../../assets/Plus.svg" alt=""></button></a>
+        <a href="/addproduct"><button>
+            <svg width="50" height="50" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M10.8696 2L10.8696 20" stroke="#272727" stroke-width="1" stroke-linecap="round"/>
+              <path d="M2 10.8696H20" stroke="#272727" stroke-width="1" stroke-linecap="round"/>
+            </svg>
+ 
+            </button></a>
         <h3>Добавить товар</h3>
       </div>
       <div class="add-category">
