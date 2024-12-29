@@ -80,7 +80,6 @@ def add_tables():
                         descriptions text,
                         price float,
                         photos text[],
-                        topic text,
                         date_create timestamp,
                         category text,
                         small_category text
