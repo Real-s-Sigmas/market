@@ -41,7 +41,7 @@ def PostItem(title: str, description: str, price: float, photos: list, topic: st
 
         cursor.execute(
             """
-            INSERT INTO items(id, title, descriptions, price, photos, topic, date_create, category, small_category) 
+            INSERT INTO items(id, title, descriptions, price, photos, characteristics, date_create, category, small_category) 
             VALUES(%s, %s, %s, %s, %s::text[], %s, %s, %s, %s)
             """,
             (id, title, description, price, photos_links, topic, date_create, category, small_category)
@@ -80,7 +80,7 @@ def new_item():
         description=post_data.get("description"),
         price=post_data.get("price"),
         photos=post_data.get("photos", []),
-        topic=post_data.get("topic"),
+        topic=post_data.get("characteristics"),
         category=post_data.get("category"),
         small_category=post_data.get("small_category")
     )
@@ -125,7 +125,7 @@ def PutItem(title: str, description: str, price: float, photos: list, topic: str
         # Используем параметризованный запрос для обновления
         cursor.execute("""
             UPDATE items
-            SET title = %s, descriptions = %s, price = %s, photos = %s, topic = %s, category = %s, small_category = %s
+            SET title = %s, descriptions = %s, price = %s, photos = %s, characteristics = %s, category = %s, small_category = %s
             WHERE id = %s
         """, (title, description, price, photos_links, topic, category, small_category, id))
 
@@ -155,7 +155,7 @@ def change_item():
         description=post_data.get("description"),
         price=post_data.get("price"),
         photos=post_data.get("photos"),
-        topic=post_data.get("topic"),
+        topic=post_data.get("characteristics"),
         id=post_data.get("id"),
         category=post_data.get("category"),
         small_category=post_data.get("small_category")
@@ -438,7 +438,7 @@ def fil_item():
 
 #         cursor = pg.cursor(cursor_factory=psycopg2.extras.DictCursor)
 
-        # cursor.execute(f"""SELECT * FROM items WHERE topic=$${fil["topic"]}$$ ORDER BY date_create DESC LIMIT {end-start+1} OFFSET {start}""")
+#         cursor.execute(f"SELECT * FROM items WHERE topic=$${fil["topic"]}$$ ORDER BY date_create DESC LIMIT {end-start+1} OFFSET {start}")
 
 #         return_data = cursor.fetchall()
 
@@ -449,7 +449,7 @@ def fil_item():
 #             return_data.append(dict(row))
 
 
-        # cursor.execute(f"""SELECT COUNT(*) FROM items WHERE topic=$${fil["topic"]}$$""")
+#         cursor.execute(f"SELECT COUNT(*) FROM items WHERE topic=$${fil["topic"]}$$")
 
 #         count = cursor.fetchall()
 
@@ -549,7 +549,7 @@ def search_items(search_query: str) -> list:
 
 
 @app.route("/items/search", methods=['GET'])
-def get_one_item():
+def search():
     search_query = request.args.get('search', '')
 
     response_object = {'status': 'success'}
@@ -559,7 +559,7 @@ def get_one_item():
     return jsonify(response_object)
 
 
-def getAllItems():
+def getAllItems(category: str, small_category: str):
     try:
         pg = psycopg2.connect(f"""
             host={HOST_PG}
@@ -572,7 +572,7 @@ def getAllItems():
         cursor = pg.cursor(cursor_factory=psycopg2.extras.DictCursor)
 
         # Используем LIKE для поиска
-        cursor.execute("SELECT * FROM items")
+        cursor.execute(f"SELECT * FROM items WHERE category=$${category}$$ and small_category=$${small_category}$$")
         results = cursor.fetchall()
 
         return [dict(result) for result in results]
@@ -587,11 +587,14 @@ def getAllItems():
             pg.close()
             logging.info("Соединение с PostgreSQL закрыто")
 
+
+
 @app.route("/items/show-items", methods=["GET"])
 def get_items_topic():
     response_object = {'status': 'success'} #БаZа
+    post_data = request.args
 
-    response_object["res"] = getAllItems()
+    response_object["res"] = getAllItems(post_data.get("category"), post_data.get("small_category"))
     return jsonify(response_object)
 
 
