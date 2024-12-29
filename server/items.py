@@ -19,7 +19,7 @@ logging.basicConfig(
 def GetPhotos(photos: list) -> list:
     return []
 
-def PostItem(title: str, description: str, price: int, photos: list, topic: str) -> str:
+def PostItem(title: str, description: str, price: float, photos: list, topic: str, category: str = None, small_category: str = None) -> str:
     try:
         pg = psycopg2.connect(f"""
             host={HOST_PG}
@@ -30,14 +30,21 @@ def PostItem(title: str, description: str, price: int, photos: list, topic: str)
         """)
 
         cursor = pg.cursor(cursor_factory=psycopg2.extras.DictCursor)
-        photos_links = GetPhotos(photos)
+        
+        photos_links = GetPhotos(photos) 
 
-        photos_links.append("mb")
+        if not photos_links:
+            photos_links = []
 
         id = uuid.uuid4().hex
+        date_create = datetime.now()
+
         cursor.execute(
-            "INSERT INTO items(id, title, descriptions, price, photos, topic) VALUES(%s, %s, %s, %s, %s::text[], %s)",
-            (id, title, description, price, photos_links, topic)
+            """
+            INSERT INTO items(id, title, descriptions, price, photos, topic, date_create, category, small_category) 
+            VALUES(%s, %s, %s, %s, %s::text[], %s, %s, %s, %s)
+            """,
+            (id, title, description, price, photos_links, topic, date_create, category, small_category)
         )
 
         pg.commit()
@@ -45,7 +52,7 @@ def PostItem(title: str, description: str, price: int, photos: list, topic: str)
         logging.info(return_data)
 
     except (Exception, Error) as error:
-        logging.error(f'DB: ', error)
+        logging.error(f'DB Error: {error}')
         return_data = "Error"
 
     finally:
@@ -53,7 +60,8 @@ def PostItem(title: str, description: str, price: int, photos: list, topic: str)
             cursor.close()
             pg.close()
             logging.info("Соединение с PostgreSQL закрыто")
-            return return_data
+    
+    return return_data
 
 
 @app.route("/items/new-item", methods=["POST"])
@@ -68,11 +76,13 @@ def new_item():
         return jsonify(response_object), 400
 
     res = PostItem(
-        post_data.get("title"),
-        post_data.get("description"),
-        post_data.get("price"),
-        [],
-        post_data.get("topic")
+        title=post_data.get("title"),
+        description=post_data.get("description"),
+        price=post_data.get("price"),
+        photos=post_data.get("photos", []),
+        topic=post_data.get("topic"),
+        category=post_data.get("category"),
+        small_category=post_data.get("small_category")
     )
 
     if res == "Ok":
@@ -88,16 +98,17 @@ def new_item():
 
 
 
-def PutItem(title: str, description: str, price: float, photos: list, topic: str, id: str) -> str:
+
+def PutItem(title: str, description: str, price: float, photos: list, topic: str, id: str, category: str = None, small_category: str = None) -> str:
     # Проверка на корректность входных данных
     if not title or not description or price is None or not isinstance(price, (int, float)) or not topic or not id:
         return "Error: Invalid input values"
 
     # Получаем ссылки на фотографии
-    photos_links = GetPhotos(photos)
+    photos_links = GetPhotos(photos)  # Убедитесь, что эта функция возвращает корректные ссылки
 
     # # Проверяем, что photos_links не пустой
-    # if not photos_links:
+    # if photos_links is None:
     #     return "Error: photos_links is empty"
 
     try:
@@ -114,9 +125,9 @@ def PutItem(title: str, description: str, price: float, photos: list, topic: str
         # Используем параметризованный запрос для обновления
         cursor.execute("""
             UPDATE items
-            SET title = %s, descriptions = %s, price = %s, photos = %s, topic = %s
+            SET title = %s, descriptions = %s, price = %s, photos = %s, topic = %s, category = %s, small_category = %s
             WHERE id = %s
-        """, (title, description, price, photos_links, topic, id))
+        """, (title, description, price, photos_links, topic, category, small_category, id))
 
         pg.commit()
         return "Ok"
@@ -132,12 +143,10 @@ def PutItem(title: str, description: str, price: float, photos: list, topic: str
             logging.info("Соединение с PostgreSQL закрыто")
 
 
-
-
 @app.route("/items/change-item", methods=["PUT"])
 @chek_for_admin
 def change_item():
-    response_object = {'status': 'success'} #БаZа
+    response_object = {'status': 'success'}  # База
 
     post_data = request.get_json()
 
@@ -147,14 +156,15 @@ def change_item():
         price=post_data.get("price"),
         photos=post_data.get("photos"),
         topic=post_data.get("topic"),
-        id=post_data.get("id")
+        id=post_data.get("id"),
+        category=post_data.get("category"),
+        small_category=post_data.get("small_category")
     )
+
     if res == "Error":
         response_object["res"] = "Server Err"
-        return jsonify(response_object), 500
-    
-    response_object["res"] = res
-    return jsonify(response_object), 200
+
+    return jsonify(response_object)
 
 
 def DeleteItem(id: str) -> str:
@@ -416,59 +426,59 @@ def fil_item():
     return jsonify(response_object)
 
 
-def getItemsTopic(fil: dict, start: int, end: int) -> Tuple[Union[list, str], str]:
-    try:
-        pg = psycopg2.connect(f"""
-            host={HOST_PG}
-            dbname=postgres
-            user={USER_PG}
-            password={PASSWORD_PG}
-            port={PORT_PG}
-        """)
+# def getItemsTopic(fil: dict, start: int, end: int) -> Tuple[Union[list, str], str]:
+#     try:
+#         pg = psycopg2.connect(f"""
+#             host={HOST_PG}
+#             dbname=postgres
+#             user={USER_PG}
+#             password={PASSWORD_PG}
+#             port={PORT_PG}
+#         """)
 
-        cursor = pg.cursor(cursor_factory=psycopg2.extras.DictCursor)
+#         cursor = pg.cursor(cursor_factory=psycopg2.extras.DictCursor)
 
         cursor.execute(f"""SELECT * FROM items WHERE topic=$${fil["topic"]}$$ ORDER BY date_create DESC LIMIT {end-start+1} OFFSET {start}""")
 
-        return_data = cursor.fetchall()
+#         return_data = cursor.fetchall()
 
-        q = cursor.fetchall()
-        return_data = []
+#         q = cursor.fetchall()
+#         return_data = []
 
-        for row in q:
-            return_data.append(dict(row))
+#         for row in q:
+#             return_data.append(dict(row))
 
 
         cursor.execute(f"""SELECT COUNT(*) FROM items WHERE topic=$${fil["topic"]}$$""")
 
-        count = cursor.fetchall()
+#         count = cursor.fetchall()
 
-    except (Exception, Error) as error:
-        logging.error(f'DB: ', error)
-        return_data = f"Error"
+#     except (Exception, Error) as error:
+#         logging.error(f'DB: ', error)
+#         return_data = f"Error"
 
-    finally:
-        if pg:
-            cursor.close()
-            pg.close()
-            logging.info("Соединение с PostgreSQL закрыто")
-            return return_data, count
+#     finally:
+#         if pg:
+#             cursor.close()
+#             pg.close()
+#             logging.info("Соединение с PostgreSQL закрыто")
+#             return return_data, count
 
 
 
-@app.route("/items/show-items", methods=["GET"])
-def get_items_topic():
-    response_object = {'status': 'success'} #БаZа
+# @app.route("/items/show-items", methods=["GET"])
+# def get_items_topic():
+#     response_object = {'status': 'success'} #БаZа
 
-    start, end = int(request.args.get("start"))-1, int(request.args.get('end'))-1
+#     start, end = int(request.args.get("start"))-1, int(request.args.get('end'))-1
 
-    filtrs = {
-        'topic': request.args.get('topic'),
-    }
+#     filtrs = {
+#         'topic': request.args.get('topic'),
+#     }
 
-    response_object["res"], response_object["count"] = getItemsTopic(filtrs, start, end)
+#     response_object["res"], response_object["count"] = getItemsTopic(filtrs, start, end)
 
-    return jsonify(response_object)
+#     return jsonify(response_object)
 
 def getCategory() -> dict:
     try:
@@ -546,6 +556,42 @@ def get_one_item():
 
     response_object["res"] = search_items(search_query)
 
+    return jsonify(response_object)
+
+
+def getAllItems():
+    try:
+        pg = psycopg2.connect(f"""
+            host={HOST_PG}
+            dbname=postgres
+            user={USER_PG}
+            password={PASSWORD_PG}
+            port={PORT_PG}
+        """)
+
+        cursor = pg.cursor(cursor_factory=psycopg2.extras.DictCursor)
+
+        # Используем LIKE для поиска
+        cursor.execute("SELECT * FROM items")
+        results = cursor.fetchall()
+
+        return [dict(result) for result in results]
+
+    except (Exception, Error) as error:
+        logging.error(f'DB: ', error)
+        return []
+
+    finally:
+        if pg:
+            cursor.close()
+            pg.close()
+            logging.info("Соединение с PostgreSQL закрыто")
+
+@app.route("/items/show-items", methods=["GET"])
+def get_items_topic():
+    response_object = {'status': 'success'} #БаZа
+
+    response_object["res"] = getAllItems()
     return jsonify(response_object)
 
 

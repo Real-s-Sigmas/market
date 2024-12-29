@@ -194,6 +194,7 @@ export default {
         .search {
             position: absolute;
             top: -10px;
+            left: 12%;
             gap: 15px;
 
             .find-word {
@@ -201,8 +202,10 @@ export default {
             }
 
             input {
-                width: 70%;
+                width: 90%;
             }
+
+            
         }
 
         .greeting {
@@ -213,7 +216,7 @@ export default {
     @media (max-width: 775px) {
         .search  {
             input {
-                width: 50%;
+                width: 60%;
             }
 
             .search-find {
@@ -256,7 +259,7 @@ export default {
     @media (max-width: 400px) {
         .search  {
             input {
-                width: 28%;
+                width: 48%;
             }
         }
     }

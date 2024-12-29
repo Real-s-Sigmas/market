@@ -12,8 +12,8 @@ export default {
                 price: null,
                 photos: [],
                 topic: ``,
-                under_topic: ``,
-                full_description: ``,
+                descriptions: ``,
+                characteristics: ``,
             },
 
             topics: Category,
@@ -106,7 +106,7 @@ export default {
                 <div class="text-2xl ">
                     <label for="desc_short mt-1">Краткое описание:</label>
                     <textarea class='short-desc border border-black mt-3' rows='2' type="text" id='desc_short'
-                        v-model='form.description'></textarea>
+                        v-model='form.descriptions'></textarea>
                 </div>
             </div>
         </div>
@@ -120,7 +120,7 @@ export default {
 
         <div class="m-c flex flex-col">
             <label for="fullDescription" class='text-2xl  mt-8'>Подробное описание:</label>
-            <textarea id='fullDescription' rows='10' v-model='form.full_description'
+            <textarea id='fullDescription' rows='10' v-model='form.characteristics'
                 class='border-2 border-black mt-3 p-1 rounded'></textarea>
         </div>
         <div class="price-block m-c flex xl:justify-between xl:flex-row flex-col gap-10">
@@ -146,11 +146,11 @@ export default {
     font-size: 20px;
     font-weight: 600;
 
-    transition: all 100ms;
+    transition: all 200ms;
 }
 
 .acc:hover {
-    padding: 14px 50px !important;
+    background-color: #d95700;
 }
 
 .select-block {

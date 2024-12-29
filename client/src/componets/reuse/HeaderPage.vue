@@ -5,9 +5,9 @@ export default {
   data() {
     return {
       isOpen: true,
-      isLogged: true,
+      isLogged: false,
       burg: true,
-      isAdmin: true,
+      isAdmin: false,
     };
   },
 
@@ -16,18 +16,18 @@ export default {
       this.burg = !this.burg;
     },
     async getUser() {
-      try {
-        let response = await axios.get(`/user/profile`);
-        if (response.data.res) {
-          this.isAdmin = response.data.res.admin;
-          console.log(this.isAdmin)
-          this.isLogged = true;
-        } else {
-          this.isLogged = false;
+        try {
+          let response = await axios.get(`/user/profile`);
+          if (response.data.res) {
+            this.isAdmin = response.data.res.admin;
+            console.log(this.isAdmin)
+            this.isLogged = true;
+          } else {
+            this.isLogged = false;
+          }
+        } catch (err) {
+          console.error(err);
         }
-      } catch (err) {
-        console.error(err);
-      }
     },
   },
   mounted() {

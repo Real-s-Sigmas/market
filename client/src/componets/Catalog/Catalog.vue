@@ -39,6 +39,7 @@ export default {
   },
   mounted() {
     this.handleDataFromChild("Электроинструменты");
+    console.log()
   },
 };
 </script>
@@ -47,10 +48,10 @@ export default {
   <div class="content">
     <CatalogMenu @data-from-child="handleDataFromChild" />
     <div class="content-links mt-4">
-      <h1>{{ this.title }}</h1>
       <ul class="mt-5" v-if="tmps">
         <li v-for="item in tmps" :key="item.url" class="mr-3">
-          <a :href="`/Category/${item.category} > ${item.title}`">{{ item.title }}</a>
+          <h1>{{ this.item }}</h1>
+          <a :href="`/Category/${item.category}/${item.title}`">{{ item.title }}</a>
         </li>
       </ul>
     </div>
