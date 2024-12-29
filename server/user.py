@@ -126,7 +126,7 @@ def SignIn(phonenumber: str, password: str):
 
             # Проверка пароля
             if verify_password(user["password"], password):
-                logging.info(f"Login to: {user["id"]}")
+                logging.info(f"Login to: {user['id']}")
                 return_data = ['ok', user["id"]]
 
             else:
