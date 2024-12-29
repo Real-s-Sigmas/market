@@ -438,7 +438,7 @@ def fil_item():
 
 #         cursor = pg.cursor(cursor_factory=psycopg2.extras.DictCursor)
 
-        cursor.execute(f"""SELECT * FROM items WHERE topic=$${fil["topic"]}$$ ORDER BY date_create DESC LIMIT {end-start+1} OFFSET {start}""")
+        # cursor.execute(f"""SELECT * FROM items WHERE topic=$${fil["topic"]}$$ ORDER BY date_create DESC LIMIT {end-start+1} OFFSET {start}""")
 
 #         return_data = cursor.fetchall()
 
@@ -449,7 +449,7 @@ def fil_item():
 #             return_data.append(dict(row))
 
 
-        cursor.execute(f"""SELECT COUNT(*) FROM items WHERE topic=$${fil["topic"]}$$""")
+        # cursor.execute(f"""SELECT COUNT(*) FROM items WHERE topic=$${fil["topic"]}$$""")
 
 #         count = cursor.fetchall()
 
