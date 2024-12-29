@@ -428,7 +428,7 @@ def getItemsTopic(fil: dict, start: int, end: int) -> Tuple[Union[list, str], st
 
         cursor = pg.cursor(cursor_factory=psycopg2.extras.DictCursor)
 
-        cursor.execute(f"SELECT * FROM items WHERE topic=$${fil["topic"]}$$ ORDER BY date_create DESC LIMIT {end-start+1} OFFSET {start}")
+        cursor.execute(f"""SELECT * FROM items WHERE topic=$${fil["topic"]}$$ ORDER BY date_create DESC LIMIT {end-start+1} OFFSET {start}""")
 
         return_data = cursor.fetchall()
 
@@ -439,7 +439,7 @@ def getItemsTopic(fil: dict, start: int, end: int) -> Tuple[Union[list, str], st
             return_data.append(dict(row))
 
 
-        cursor.execute(f"SELECT COUNT(*) FROM items WHERE topic=$${fil["topic"]}$$")
+        cursor.execute(f"""SELECT COUNT(*) FROM items WHERE topic=$${fil["topic"]}$$""")
 
         count = cursor.fetchall()
 
@@ -538,12 +538,59 @@ def search_items(search_query: str) -> list:
             logging.info("Соединение с PostgreSQL закрыто")
 
 
-@app.route("/items/one-item", methods=['GET'])
+@app.route("/items/search", methods=['GET'])
 def get_one_item():
     search_query = request.args.get('search', '')
 
     response_object = {'status': 'success'}
 
     response_object["res"] = search_items(search_query)
+
+    return jsonify(response_object)
+
+
+def OneItem(id: str) -> Union[list, str]:
+    try:
+        pg = psycopg2.connect(f"""
+            host={HOST_PG}
+            dbname=postgres
+            user={USER_PG}
+            password={PASSWORD_PG}
+            port={PORT_PG}
+        """)
+
+        cursor = pg.cursor(cursor_factory=psycopg2.extras.DictCursor)
+
+        cursor.execute(f"SELECT * from items WHERE id=$${id}$$")
+
+        all_states = dict(cursor.fetchall()[0])
+        logging.info('Инфа есть')
+        return_data = {}
+
+        for key in all_states:
+            return_data[key] = all_states[key]
+
+        return_data['date_create'] = datetime.strftime(return_data['date_create'], '%d %B %Y')
+        logging.info(f'Item info {id} displayed')
+
+    except (Exception, Error) as error:
+        logging.error(f'DB: ', error)
+        return_data = f"Error"
+
+    finally:
+        if pg:
+            cursor.close()
+            pg.close()
+            logging.info("Соединение с PostgreSQL закрыто")
+            return return_data
+    return 0
+
+@app.route("/items/one-item", methods=['GET'])
+def get_one_item():
+    item_id = request.args.get('id')
+
+    response_object = {'status': 'success'}
+
+    response_object["res"] = OneItem(item_id)
 
     return jsonify(response_object)
