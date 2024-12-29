@@ -619,7 +619,7 @@ def OneItem(id: str) -> Union[list, str]:
         for key in all_states:
             return_data[key] = all_states[key]
 
-        return_data['date_create'] = datetime.strftime(return_data['date_create'], '%d %B %Y')
+        # return_data['date_create'] = datetime.strftime(return_data['date_create'], '%d %B %Y')
         logging.info(f'Item info {id} displayed')
 
     except (Exception, Error) as error:
