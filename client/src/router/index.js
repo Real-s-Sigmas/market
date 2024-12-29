@@ -147,6 +147,11 @@ const router = createRouter({
       name: "profile",
       component: () => import("../componets/Profile/ProfileComp.vue")
     },
+    {
+      path: "/changeProduct/:id",
+      name: "changeProduct",
+      component: () => import("../componets/changeProduct/changeProduct.vue")
+    },
   ],
 });
 

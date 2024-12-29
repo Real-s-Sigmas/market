@@ -1,6 +1,6 @@
 <script>
 import axios from 'axios';
-import { Category } from "./categories.js";
+import { Category } from "../admin/categories.js";
 import { Catalog } from "../Catalog/catalog.js";
 
 export default {
@@ -10,8 +10,7 @@ export default {
                 title: ``,
                 price: null,
                 photos: [],
-                category: ``,
-                small_category: ``,
+                topic: ``,
                 descriptions: ``,
                 characteristics: ``,
             },
@@ -19,14 +18,16 @@ export default {
             topics: Category,
             underTopics: [],
             error: ``,
+
+						product: {},
         }
     },
 
     watch: {
-       'form.category'(newValue) {
+       'form.topic'(newValue) {
            this.underTopics = [];
            for (let i = 0; i < Catalog.length; i++) {
-               if (Object.keys(Catalog[i])[0] == this.form.category.category) {
+               if (Object.keys(Catalog[i])[0] == this.form.topic.category) {
                    for (let j = 0; j < Catalog[i][Object.keys(Catalog[i])[0]].length; j++) {
                        this.underTopics.push(Catalog[i][Object.keys(Catalog[i])[0]][j].title);
                    }
@@ -36,16 +37,23 @@ export default {
    },
    
     methods: {
+				async getProduct() {
+					try {
+						let res = await axios.get('/items/one-item', {
+							params: {
+								id: this.$route.params.id,
+							}
+						});
+						this.product = res.data.res;
+					} catch (error) {
+						console.log(error);
+					}
+				},
+
         async addProduct() {
             try {
-                let res = await axios.post('/items/new-item', {
-                    title: this.form.title,
-                    price: this.form.price ,
-                    photos: this.form.photos ,
-                    category: this.form.category.category ,
-                    small_category: this.form.small_category ,
-                    descriptions: this.form.descriptions ,
-                    characteristics: this.form.characteristics ,
+                let res = await axios.put('/items/change-item', {
+                    form: this.product,
                 });
                 if (res.data.res == 'Error') {
                     this.error = 'Ошибка добавления товара';
@@ -67,7 +75,7 @@ export default {
                 reader.onload = () => {
                     imagesArray.push(reader.result);
                     if (imagesArray.length === files.length) {
-                        this.form.photos = imagesArray;
+                        this.product.photos = imagesArray;
                     }
                 };
                 reader.readAsDataURL(files[i]);
@@ -75,7 +83,7 @@ export default {
         },
 
         deleteImage(index) {
-            this.form.photos.splice(index, 1);
+            this.product.photos.splice(index, 1);
         }
     }
 }
@@ -96,14 +104,14 @@ export default {
                 <div class="main-inputs-block flex flex-row xl:gap-12 xl:mt-0 mt-4">
                     <div class="flex flex-col gap-2 text-2xl  flex-1">
                         <label for="title">Название:</label>
-                        <input type="text" id='title' v-model='form.title' class='mb-5'>
+                        <input type="text" id='title' v-model='product.title' class='mb-5'>
                     </div>
                     <div class="select-block">
-                        <select class='sell text-2xl px-10 pe-16 mt-3' v-model='form.category'>
+                        <select class='sell text-2xl px-10 pe-16 mt-3'  v-model='product.topic'>
                             <option selected value="">Категория</option>
                             <option :value="topic" v-for='topic in topics'>{{ topic.category }}</option>
                         </select>
-                        <select class='sell text-2xl px-10 pe-16 mt-3' v-model='form.small_category' v-if='this.form.category'>
+                        <select class='sell text-2xl px-10 pe-16 mt-3' v-model='product.under_topic' v-if='this.form.topic'>
                             <option selected value="">Подкатегория</option>
                             <option :value="title" v-for='title in underTopics'>{{ title }}</option>
                         </select>
@@ -112,13 +120,13 @@ export default {
                 <div class="text-2xl ">
                     <label for="desc_short mt-1">Краткое описание:</label>
                     <textarea class='short-desc border border-black mt-3' rows='2' type="text" id='desc_short'
-                        v-model='form.descriptions'></textarea>
+                        v-model='product.descriptions'  ></textarea>
                 </div>
             </div>
         </div>
 
         <div id="imageContainer">
-            <div class="one-image" v-for='(image, index) in form.photos'>
+            <div class="one-image" v-for='(image, index) in product.photos'>
                 <img class='image-one' :src="image" alt="Изображение">
                 <img @click='deleteImage(index)' class='close-btn' src="../../assets/close-img.png">
             </div>
@@ -126,13 +134,13 @@ export default {
 
         <div class="m-c flex flex-col">
             <label for="fullDescription" class='text-2xl  mt-8'>Подробное описание:</label>
-            <textarea id='fullDescription' rows='10' v-model='form.characteristics'
+            <textarea id='fullDescription' rows='10' v-model='product.characteristics' 
                 class='border-2 border-black mt-3 p-1 rounded'></textarea>
         </div>
         <div class="price-block m-c flex xl:justify-between xl:flex-row flex-col gap-10">
             <label for="price" class='text-2xl mt-8'>Цена товара:</label>
             <div class="flex gap-3">
-                <input id='price' v-model='form.price' type='number' class='price border-2 border-black mt-3 p-1'>
+                <input id='price' v-model='product.price'  class='price border-2 border-black mt-3 p-1'>
             </div>
             <button type='submit' class='acc mt-8'>Добавить</button>
         </div>

@@ -7,13 +7,13 @@ export default {
 			search: ``,
 			products: [ // потом убрать
 				{
-					id: 52,
-					title: "Название товара",
-					images: ['src/assets/shup.png'],
-					short_description: "Очень хороший аппарат, всем советую прям вообще во такой.ааааааааа аааааааа аааааааа fffffffff  fffffffff",
-					price: "8 800",
-					full_desctiption: "Аппарат Шуруповерт сверлило 3000 ультра мега про макс, это не только ваша уверенность в том, что вы самодостаточный, гордый мужчина, это еще и проход (как метро люблино) в трусики любой уважающей себя даме. Как говориться мужчина рожден с дрелью в руках. Покажи всем свое величие. Жена ругается, что руки у тебя кривее чем волосы на жопе, а поправить ты можешь только свой вес и то в большую сторону? У нас есть для тебя решение: Шуруповерт сверлило 3000 ультра мега про макс. Купи этот крутейший аппарат и отдолби ее до потери сознания, докажи кто в доме маТчо!",
-					rating_product: 5,
+					// id: 52,
+					// title: "Название товара",
+					// images: ['src/assets/shup.png'],
+					// short_description: "Очень хороший аппарат, всем советую прям вообще во такой.ааааааааа аааааааа аааааааа fffffffff  fffffffff",
+					// price: "8 800",
+					// full_desctiption: "Аппарат Шуруповерт сверлило 3000 ультра мега про макс, это не только ваша уверенность в том, что вы самодостаточный, гордый мужчина, это еще и проход (как метро люблино) в трусики любой уважающей себя даме. Как говориться мужчина рожден с дрелью в руках. Покажи всем свое величие. Жена ругается, что руки у тебя кривее чем волосы на жопе, а поправить ты можешь только свой вес и то в большую сторону? У нас есть для тебя решение: Шуруповерт сверлило 3000 ультра мега про макс. Купи этот крутейший аппарат и отдолби ее до потери сознания, докажи кто в доме маТчо!",
+					// rating_product: 5,
 				},
 			],
 			error: ``,
@@ -28,7 +28,7 @@ export default {
 		async loadProduct() {
 			if(this.search) {
 				try {
-					let res = await axios.get('/items/one-item', {
+					let res = await axios.get('/items/search', {
 						params: {
 							search: this.search
 						}
@@ -72,7 +72,7 @@ export default {
 
 		<div class="card-container flex xl:flex-row justify-center gap-6 mt-6 flex-wrap">
 			<div class="card rounded-2xl transition-all duration-300 hover:-translate-y-5 cursor-pointer" v-for='product in products' @click='this.$router.push(`/Product/${product.id}`)'>
-				<img class='rounded-t-2xl' :src="product.images[0]" :alt="product.title">
+				<img class='rounded-t-2xl' :src="product.photos[0]" :alt="product.title">
 				<div class="info-block p-6 flex flex-col">
 					<h3 class='text-2xl font-bold'>{{ product.title }}</h3>
 					<p class='text-slate-500'>{{ product.short_description.substring(0, 50) }}...</p>

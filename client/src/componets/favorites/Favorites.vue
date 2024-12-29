@@ -5,21 +5,21 @@ export default {
   data() {
     return {
       products: [
-        {
-          id: 52,
-          photos: [`src/assets/1111.jpeg`],
-          title: `Отвертка подзалупная. `,
-          description: `loremloremloremloremloremloremloremloremloremloremloremloremloremloremloremloremloremloremloremloremloremloremloremloremloremloremloremloremloremloremloremloremloremloremloremloremlorem`,
-          price: 52000,
-          
-        },
-        {
-          id: 52,
-          photos: [`src/assets/1111.jpeg`],
-          title: `Чё то тут`,
-          description: `Чё то там`,
-          price: 52000,
-        },
+        // {
+        //   id: 52,
+        //   photos: [`src/assets/1111.jpeg`],
+        //   title: `Отвертка подзалупная. `,
+        //   description: `loremloremloremloremloremloremloremloremloremloremloremloremloremloremloremloremloremloremloremloremloremloremloremloremloremloremloremloremloremloremloremloremloremloremloremloremlorem`,
+        //   price: 52000,
+
+        // },
+        // {
+        //   id: 52,
+        //   photos: [`src/assets/1111.jpeg`],
+        //   title: `Чё то тут`,
+        //   description: `Чё то там`,
+        //   price: 52000,
+        // },
       ],
       title: ``,
       error: ``,
@@ -28,41 +28,31 @@ export default {
   },
 
   mounted() {
-    // this.loadProducts();
+    this.loadProducts();
   },
 
   methods: {
     async loadProducts() {
       try {
-        let res = await axios.get("/user/get-favorites");
-        this.products = res.data.res;
+        let res = await axios.get("/basket/show-favs");
+        this.products = res.data;
       } catch (error) {
         this.error = "Ошибка! Невозможно найти товары";
       }
     },
 
-    async deleteProduct(id, index) {
+    async deleteProduct(id) {
       try {
-        if (!this.products[index].isFavorite) {
-          await axios.delete("/user/delete-favorites", {
-            params: {
-              id: id,
-            },
-          });
-          this.products[index].isFavorite = true;
-        } else {
-          await axios.post("/user/post-favorites", {
-            params: {
-              id: id,
-            },
-          });
-          this.products[index].isFavorite = false;
-        }
+        await axios.delete('/basket/delete-fav', {
+          params: {
+            id: id,
+          }
+        });
+        this.loadProducts();
       } catch (error) {
         this.error = "Действие невозможно. Повторите попытку позже";
         console.log(error)
       }
-      
     },
   },
 };
@@ -72,59 +62,50 @@ export default {
   <div class="orders-container mx-10">
     <h2 class="mt-10 text-3xl font-bold">Избранные товары</h2>
 
-    <h2
-      class="text-red-500 text-xl text-semibold flex justify-center mt-10 mb-4"
-      v-if="this.errorProduct"
-    >
+    <h2 class="text-red-500 text-xl text-semibold flex justify-center mt-10 mb-4" v-if="this.errorProduct">
       {{ errorProduct }}
     </h2>
 
     <div class="products-container">
-      <div
-        class="card border-b-2  py-4 mt-1"
-        v-for="(product, index) in products"
-      >
+      <div class="card border-b-2  py-4 mt-1" v-for="(product, index) in products">
         <div class="info-card flex gap-6 justify-between">
           <div class="info-container flex gap-6">
             <img class="rounded-xl image" :src="product.photos[0]" />
             <div class="info-block flex flex-col gap-0 relative text-base">
               <h3 class="text-3xl font-bold">{{ product.title }}</h3>
-              <p class="mt-5"> 
-                <b>Описание:</b> {{ product.description.substring(0, 30)
-                }}<span v-if="product.description.length >= 40">...</span>
+              <p class="mt-5">
+                <b>Описание:</b> {{ product.characteristics.substring(0, 30)
+                }}<span v-if="product.characteristics.length >= 40">...</span>
               </p>
-              <span class="absolute bottom-0 left-0"
-                ><b>Цена:</b>  <p class="price">{{ product.price }} ₽</p></span
-              >
+              <span class="absolute bottom-0 left-0"><b>Цена:</b>
+                <p class="price">{{ product.price }} ₽</p>
+              </span>
             </div>
           </div>
           <div class="actions flex gap-3">
-            <button
-              class="like-btn mt-4"
-              @click="deleteProduct(product.id, index)"
-            >
-              <svg v-if="product.isFavorite"  width="29px" height="29px" viewBox="0 0 24 24" fill="#f0853f" xmlns="http://www.w3.org/2000/svg">
-                <path fill-rule="evenodd" clip-rule="evenodd" d="M12 6.00019C10.2006 3.90317 7.19377 3.2551 4.93923 5.17534C2.68468 7.09558 2.36727 10.3061 4.13778 12.5772C5.60984 14.4654 10.0648 18.4479 11.5249 19.7369C11.6882 19.8811 11.7699 19.9532 11.8652 19.9815C11.9483 20.0062 12.0393 20.0062 12.1225 19.9815C12.2178 19.9532 12.2994 19.8811 12.4628 19.7369C13.9229 18.4479 18.3778 14.4654 19.8499 12.5772C21.6204 10.3061 21.3417 7.07538 19.0484 5.17534C16.7551 3.2753 13.7994 3.90317 12 6.00019Z" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/>
+            <button class="like-btn mt-4" @click="deleteProduct(product.id, index)">
+              <svg v-if="product.isFavorite" width="29px" height="29px" viewBox="0 0 24 24" fill="#f0853f"
+                xmlns="http://www.w3.org/2000/svg">
+                <path fill-rule="evenodd" clip-rule="evenodd"
+                  d="M12 6.00019C10.2006 3.90317 7.19377 3.2551 4.93923 5.17534C2.68468 7.09558 2.36727 10.3061 4.13778 12.5772C5.60984 14.4654 10.0648 18.4479 11.5249 19.7369C11.6882 19.8811 11.7699 19.9532 11.8652 19.9815C11.9483 20.0062 12.0393 20.0062 12.1225 19.9815C12.2178 19.9532 12.2994 19.8811 12.4628 19.7369C13.9229 18.4479 18.3778 14.4654 19.8499 12.5772C21.6204 10.3061 21.3417 7.07538 19.0484 5.17534C16.7551 3.2753 13.7994 3.90317 12 6.00019Z"
+                  stroke-width="1" stroke-linecap="round" stroke-linejoin="round" />
               </svg>
-              
-              <svg v-else width="29px" height="29px" viewBox="0 0 24 24" fill="#f0853f" xmlns="http://www.w3.org/2000/svg">
-                <path fill-rule="evenodd" clip-rule="evenodd" d="M12 6.00019C10.2006 3.90317 7.19377 3.2551 4.93923 5.17534C2.68468 7.09558 2.36727 10.3061 4.13778 12.5772C5.60984 14.4654 10.0648 18.4479 11.5249 19.7369C11.6882 19.8811 11.7699 19.9532 11.8652 19.9815C11.9483 20.0062 12.0393 20.0062 12.1225 19.9815C12.2178 19.9532 12.2994 19.8811 12.4628 19.7369C13.9229 18.4479 18.3778 14.4654 19.8499 12.5772C21.6204 10.3061 21.3417 7.07538 19.0484 5.17534C16.7551 3.2753 13.7994 3.90317 12 6.00019Z" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/>
+
+              <svg v-else width="29px" height="29px" viewBox="0 0 24 24" fill="#f0853f"
+                xmlns="http://www.w3.org/2000/svg">
+                <path fill-rule="evenodd" clip-rule="evenodd"
+                  d="M12 6.00019C10.2006 3.90317 7.19377 3.2551 4.93923 5.17534C2.68468 7.09558 2.36727 10.3061 4.13778 12.5772C5.60984 14.4654 10.0648 18.4479 11.5249 19.7369C11.6882 19.8811 11.7699 19.9532 11.8652 19.9815C11.9483 20.0062 12.0393 20.0062 12.1225 19.9815C12.2178 19.9532 12.2994 19.8811 12.4628 19.7369C13.9229 18.4479 18.3778 14.4654 19.8499 12.5772C21.6204 10.3061 21.3417 7.07538 19.0484 5.17534C16.7551 3.2753 13.7994 3.90317 12 6.00019Z"
+                  stroke-width="1" stroke-linecap="round" stroke-linejoin="round" />
               </svg>
 
             </button>
-            <button
-              class="order-btn mt-4 btn-liink"
-              @click="this.$router.push(`/Product/${product.id}`)"
-            >
+            <button class="order-btn mt-4 btn-liink" @click="this.$router.push(`/Product/${product.id}`)">
               К товару
             </button>
           </div>
         </div>
       </div>
-      <h2
-        class="text-red-500 text-xl text-semibold flex justify-center mt-10"
-        v-if="this.error"
-      >
+      <h2 class="text-red-500 text-xl text-semibold flex justify-center mt-10" v-if="this.error">
         {{ error }}
       </h2>
     </div>
@@ -132,20 +113,23 @@ export default {
 </template>
 
 <style scoped>
-.price{
-    font-size: 30px;
-    color: #ff812c;
+.price {
+  font-size: 30px;
+  color: #ff812c;
 }
-.btn-liink{
-    -webkit-box-shadow: 4px 4px 8px 0px rgba(34, 60, 80, 0.2);
+
+.btn-liink {
+  -webkit-box-shadow: 4px 4px 8px 0px rgba(34, 60, 80, 0.2);
   -moz-box-shadow: 4px 4px 8px 0px rgba(34, 60, 80, 0.2);
-  box-shadow: 4px 4px 8px 0px rgba(34, 60, 80, 0.2); 
+  box-shadow: 4px 4px 8px 0px rgba(34, 60, 80, 0.2);
 }
-.like-btn{
-    -webkit-box-shadow: 0px 2px 8px 7px rgba(34, 60, 80, 0.2);
--moz-box-shadow: 0px 2px 8px 7px rgba(34, 60, 80, 0.2);
-box-shadow: 0px 2px 8px 7px rgba(34, 60, 80, 0.2);
+
+.like-btn {
+  -webkit-box-shadow: 0px 2px 8px 7px rgba(34, 60, 80, 0.2);
+  -moz-box-shadow: 0px 2px 8px 7px rgba(34, 60, 80, 0.2);
+  box-shadow: 0px 2px 8px 7px rgba(34, 60, 80, 0.2);
 }
+
 .image {
   -webkit-box-shadow: 4px 4px 8px 0px rgba(34, 60, 80, 0.2);
   -moz-box-shadow: 4px 4px 8px 0px rgba(34, 60, 80, 0.2);
@@ -153,12 +137,12 @@ box-shadow: 0px 2px 8px 7px rgba(34, 60, 80, 0.2);
 }
 
 
-  .like-btn:hover {
-    svg {
-      fill: #fff;
-    }
+.like-btn:hover {
+  svg {
+    fill: #fff;
   }
-  
+}
+
 
 
 @media (max-width: 800px) {
@@ -281,10 +265,10 @@ input {
   object-fit: cover;
 }
 
-      @media (max-width: 620px) {
-        .orders-container {
-          margin-left: 0.5rem;
-          margin-right: 0.5rem;
-        }
-    }
+@media (max-width: 620px) {
+  .orders-container {
+    margin-left: 0.5rem;
+    margin-right: 0.5rem;
+  }
+}
 </style>

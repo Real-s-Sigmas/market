@@ -6,24 +6,24 @@ import OrdersAdminComp from '../admin/OrdersAdminComp.vue';
     data() {
       return {
         orders: [
-          {
-            id: 'akshdg26tuq-wd-1',
-            orderNum: 241,
-            description: '525252rqyhsg vdkjahsvdhjkgasvjdhgavjhsgdvjas',
-            date: '28.11.28',
-          },
-          {
-            id: 'akshdg26tuq-wd-2',
-            orderNum: 2431,
-            description: '525252rqyhsg vdkjahsvdhjkgasvjdhgavjhsgdvjas',
-            date: '28.11.28',
-          },
-          {
-            id: 'akshdg26tuq-wd-3',
-            orderNum: 2451,
-            description: '525252rqyhsg vdkjahsvdhjkgasvjdhgavjhsgdvjas',
-            date: '28.11.28',
-          },
+          // {
+          //   id: 'akshdg26tuq-wd-1',
+          //   orderNum: 241,
+          //   description: '525252rqyhsg vdkjahsvdhjkgasvjdhgavjhsgdvjas',
+          //   date: '28.11.28',
+          // },
+          // {
+          //   id: 'akshdg26tuq-wd-2',
+          //   orderNum: 2431,
+          //   description: '525252rqyhsg vdkjahsvdhjkgasvjdhgavjhsgdvjas',
+          //   date: '28.11.28',
+          // },
+          // {
+          //   id: 'akshdg26tuq-wd-3',
+          //   orderNum: 2451,
+          //   description: '525252rqyhsg vdkjahsvdhjkgasvjdhgavjhsgdvjas',
+          //   date: '28.11.28',
+          // },
         ],
         error: ``,
       }
@@ -49,7 +49,7 @@ import OrdersAdminComp from '../admin/OrdersAdminComp.vue';
     },
 
     mounted() {
-      // this.getOrders();
+      this.getOrders();
     }
       
   }  

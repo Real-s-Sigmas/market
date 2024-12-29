@@ -45,10 +45,10 @@ export default {
       try {
         let ids = [];
 
-        for (let i = 0; i < this.product.length; i++) {
+        for (let i = 0; i < this.products.length; i++) {
             ids.push({
-                id: this.product[i].id,
-                count: this.product[i].count
+                id: this.products[i].id,
+                count: this.products[i].count
              }, );
         }
 
@@ -116,8 +116,8 @@ export default {
             <div class="info-block flex flex-col gap-0 relative text-base">
               <h3 class="text-3xl font-bold">{{ product.title }}</h3>
               <p class="mt-5"> 
-                <b>Описание:</b> {{ product.description.substring(0, 30)
-                }}<span v-if="product.description.length >= 40">...</span>
+                <b>Описание:</b> {{ product.characteristics.substring(0, 40)
+                }}<span v-if="product.characteristics.length >= 40">...</span>
               </p>
               <span class="absolute bottom-0 left-0"
                 ><b>Цена:</b>  <p class="price">{{ product.price }} ₽</p></span>
@@ -152,7 +152,7 @@ export default {
 
 
   <!-- центрируйте пж -->
-  <h2 class="mt-10 text-3xl bask-empty font-bold">Корзина пуста!</h2>
+  <h2 v-if='this.products.length == 0' class="mt-10 text-3xl bask-empty font-bold">Корзина пуста!</h2>
 
 </template>
 
