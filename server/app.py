@@ -70,7 +70,8 @@ def add_tables():
                         password text,
                         email text,
                         admin bool,
-                        date_create timestamp
+                        date_create timestamp,
+                        basket text[]
                     )""")
         
         cursor.execute(f"""create table if not exists items(
@@ -79,8 +80,10 @@ def add_tables():
                         descriptions text,
                         price float,
                         photos text[],
-                        topic text, 
-                        date_create timestamp
+                        topic text,
+                        date_create timestamp,
+                        category text,
+                        small_category text
                     )""")
         
 
