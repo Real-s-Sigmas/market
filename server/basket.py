@@ -117,9 +117,8 @@ def DeleteSingleItemFromBasket(id_item: str, id_user: str) -> str:
 @chek_for_user
 def delete_item_():
     response_object = {'status': 'success'} #БаZа
-    post_data = request.get_json()
 
-    response_object["res"] = DeleteSingleItemFromBasket(post_data.get("id"), session.get("id"))
+    response_object["res"] = DeleteSingleItemFromBasket(request.args.get('id'), session.get("id"))
 
     return jsonify(response_object)
 
@@ -138,17 +137,24 @@ def ShowwItemFromBasket(id_user: str) -> Union[str, list]:
         cursor = pg.cursor(cursor_factory=psycopg2.extras.DictCursor)
 
         # Использование параметризованного запроса
-        cursor.execute("SELECT basket FROM users WHERE id = %s", (id_user,))
+        cursor.execute(f"""SELECT items.*
+                        FROM users
+                        JOIN items ON items.id = ANY(users.basket)
+                        WHERE users.id = {id_user};""")
         
-        return_data = cursor.fetchone()  # Получаем один результат (так как id уникален)
+        results = cursor.fetchall()
+        return [dict(result) for result in results]
 
-        # Преобразование результата в массив, если данные найдены
-        if return_data and return_data[0] is not None:
-            basket_array = return_data[0]  # basket уже является массивом
-        else:
-            basket_array = []  # Пустой массив, если данные отсутствуют
 
-        return basket_array
+        # return_data = cursor.fetchall() 
+
+        # # Преобразование результата в массив, если данные найдены
+        # if return_data and return_data[0] is not None:
+        #     basket_array = return_data[0]  # basket уже является массивом
+        # else:
+        #     basket_array = []  # Пустой массив, если данные отсутствуют
+
+        # return basket_array
 
     except (Exception, Error) as error:
         logging.error(f'DB: ', error)

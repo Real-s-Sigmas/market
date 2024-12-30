@@ -18,13 +18,13 @@ export default {
       starEmpty: "src/assets/star-empty.svg",
 
       product: {
-        title: "Название товара",
-        short_description:
-          "Очень хороший аппарат, всем советую прям вообще во такой.ааааааааа аааааааа аааааааа fffffffff  fffffffff",
-        price: "8 800",
-        full_desctiption:
-          "Аппарат Шуруповерт сверлило 3000 ультра мега про макс, это не только ваша уверенность в том, что вы самодостаточный, гордый мужчина, это еще и проход (как метро люблино) в трусики любой уважающей себя даме. Как говориться мужчина рожден с дрелью в руках. Покажи всем свое величие. Жена ругается, что руки у тебя кривее чем волосы на жопе, а поправить ты можешь только свой вес и то в большую сторону? У нас есть для тебя решение: Шуруповерт сверлило 3000 ультра мега про макс. Купи этот крутейший аппарат и отдолби ее до потери сознания, докажи кто в доме маТчо!",
-        rating_product: 4,
+        // title: "Название товара",
+        // short_description:
+        //   "Очень хороший аппарат, всем советую прям вообще во такой.ааааааааа аааааааа аааааааа fffffffff  fffffffff",
+        // price: "8 800",
+        // full_desctiption:
+        //   "Аппарат Шуруповерт сверлило 3000 ультра мега про макс, это не только ваша уверенность в том, что вы самодостаточный, гордый мужчина, это еще и проход (как метро люблино) в трусики любой уважающей себя даме. Как говориться мужчина рожден с дрелью в руках. Покажи всем свое величие. Жена ругается, что руки у тебя кривее чем волосы на жопе, а поправить ты можешь только свой вес и то в большую сторону? У нас есть для тебя решение: Шуруповерт сверлило 3000 ультра мега про макс. Купи этот крутейший аппарат и отдолби ее до потери сознания, докажи кто в доме маТчо!",
+        // rating_product: 4,
       },
 
       currentImageIndex: 0,
@@ -33,6 +33,8 @@ export default {
         "https://avatars.mds.yandex.net/i?id=a63e656f4279da0e7ce32f3a7fa74c6b_l-4238413-images-thumbs&n=13",
       ],
       visibleImages: 5,
+      error: ``,
+      isAdmin: false,
     };
   },
 
@@ -102,7 +104,7 @@ export default {
       this.currentImageIndex = index;
     },
 
-    async checkBasket() {
+    async cb() {
       let res = await axios.get('/item/check-basket', {
         params: {
           id: this.$route.params.id,
@@ -118,7 +120,7 @@ export default {
           count: this.product_count,
           id: this.$route.params.id,
         });
-        this.checkBasket();
+        this.checkInBasket();
       } catch (error) {
         console.error(error)
       }
@@ -127,9 +129,12 @@ export default {
     async deleteFromCart() {
       try {
         await axios.delete('/basket/delete-item', {
-          id: this.$route.params.id,
+          params: {
+            id: this.$route.params.id,
+          }
         });
-        this.checkBasket();
+        this.isInCart = false;
+        this.checkInBasket();
       } catch (error) {
         console.error(error)
       }
@@ -138,32 +143,68 @@ export default {
     async addToFavotite() {
       try {
         if(!this.isInFavorite) {
-          await axios.post('/user/post-favorites', {
+          await axios.post('/basket/add-fav', {
             id: this.$route.params.id,
           });
         } else {
-          await axios.delete('/user/delete-favorites', {
-            id: this.$route.params.id,
+          await axios.delete('/basket/delete-fav', {
+            params: {
+              id: this.$route.params.id,
+            }
           });
         }
-        this.checkBasket();
+        this.checkInFavorite();
       } catch (error) {
-        console.error(error)
+        console.error(error);
       }
     },
 
     async getProduct() {
       try {
-        let res = await axios.get('/', {
+        let res = await axios.get('/items/one-item', {
           params: {
             id: this.$route.params.id
           }
         });
-        this.product = res.data.res;
+        if(res.data.res) {
+          this.product = res.data.res;
+          console.log(this.product.photos);
+        } else {
+          this.error = 'Ошибка! Товара не существует либо он был удалён';
+        }
+      } catch (error) {
+        console.error(error);
+        this.error = 'Ошибка! Товара не существует либо он был удалён';
+      }
+    },
+
+    async checkInBasket() {
+      try {
+        let res = await axios.get('/basket/show-basket');
+        for(let i = 0; i < res.data.res.length; i++) {
+          // console.log(res.data.res[i].id == this.$route.params.id) id
+          if(this.$route.params.id == res.data.res[i]) {
+            this.isInCart = true;
+          }
+        }
       } catch (error) {
         console.error(error)
       }
-    }
+    },
+
+    async checkInFavorite() {
+      try {
+        let res = await axios.get('/basket/show-favs');
+        console.log(res.data.favs);
+        for(let i = 0; i < res.data.favs.length; i++) {
+          if(this.$route.params.id == res.data.favs[i]) {
+            this.isInFavorite = true;
+          }
+        }
+      } catch (error) {
+        console.error(error)
+      }
+    },
   },
 
   computed: {
@@ -198,34 +239,57 @@ export default {
 
       return this.photos.slice(start, end);
     },
+
+    async checkIsAdmin() {
+      try {
+        let res = await axios.get('/other/is-admin');
+        this.isAdmin = res.data.res;
+      } catch (error) {
+        console.log(error);
+      }
+    },
+
+    async deleteProduct() {
+      try {
+        await axios.delete('/items/delete-items', {
+          params: {
+            id: this.$route.params.id,
+          }
+        });
+      } catch (error) {
+        console.log(error);
+      }
+    }
   },
 
   mounted() {
-    this.checkBasket();
+    this.checkInBasket();
+    this.checkInFavorite();
     this.getProduct();
+    // this.checkIsAdmin();
   }
 };
 </script>
 <template>
   <!-- Главное окно -->
-  <div class="main-page-window">
+  <div class="main-page-window" v-if='this.product.title'>
+    <h2 v-if='this.error' class='text-red-500 text-3xl text-center'>{{ error }}</h2>
     <!-- Блок с информацией о товара (с картинкой) -->
     <div class="product-info">
       <div class="images">
-        <img class="prod-img" :src="photos[currentImageIndex]" alt="" />
+        <img class="prod-img" :src="product.photos[currentImageIndex]" alt="" />
         <div class="mini-img">
           <button @click="prevImage" :disabled="currentImageIndex === 0">
             <img class="arrow-btn" src="../../assets/arrow-prev.svg" alt="" />
           </button>
           <div
             class="img-mini"
-            v-for="(image, index) in visibleThumbnails"
+            v-for="image in product.photos"
             :key="image"
             :class="{
-              'active-thumbnail': photos.indexOf(image) == currentImageIndex,
+              'active-thumbnail': product.photos.indexOf(image) == currentImageIndex,
             }"
-            @click="selectImage(photos.indexOf(image))"
-          >
+            @click="selectImage(product.photos.indexOf(image))">
             <img :src="image" alt="" />
           </div>
           <button
@@ -239,11 +303,11 @@ export default {
 
       <!-- Бллок с информацией о товаре -->
       <div class="main-info">
-        <h3>{{ this.product.title }}</h3>
+        <h3>{{ product.title }}</h3>
 
         <!-- Блок с коротким описанием товара -->
         <p class="short-description">
-          <span>Описание: </span> {{ this.product.short_description }}
+          <span>Описание: </span> {{ product.descriptions }}
         </p>
         <a class="anc-link" href="#full-desc">Подробное описание</a>
         <div class="star-price-sum-order-fav">
@@ -251,7 +315,7 @@ export default {
             <!-- Блок с ценой -->
             <div class="price">
               <p>
-                <b>Цена:</b> <span>{{ this.product.price }}</span> ₽
+                <b>Цена:</b> <span>{{ product.price }}</span> ₽
               </p>
             </div>
           </div>
@@ -311,12 +375,16 @@ export default {
         </div>
       </div>
     </div>
+    <div class="btns-container flex justify-end gap-4 mb-10" v-if='this.isAdmin'>
+      <button @click='this.$router.push(`/changeProduct/${this.$route.params.id}`)' class='btn-change border-2 border-black p-4 rounded-2xl'>Изменить</button>
+      <button @click='deleteProduct' class='btn-change border-2 border-black p-4 rounded-2xl'>Удалить</button>
+    </div>
     <hr />
     <!-- Блок с полным описанием -->
     <div class="full-description" id="full-desc">
       <p>
         <span>Полное описание товара: </span>
-        {{ this.product.full_desctiption }}
+        {{ product.characteristics }}
       </p>
     </div>
     <hr />
@@ -324,6 +392,16 @@ export default {
 </template>
 
 <style scoped>
+.btn-change {
+  border-color: #ff812c;
+  transition: all 180ms;
+
+  &:hover {
+    background-color: #ff812c;
+    color: #fff;
+  }
+}
+
 /* Тесты */
 
 /* Служебное */

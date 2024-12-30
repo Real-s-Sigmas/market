@@ -20,7 +20,7 @@ def GetOrderHistory(id_user: str) -> Union[str, list]:
 
         cursor = pg.cursor(cursor_factory=psycopg2.extras.DictCursor)
 
-        cursor.execute(f"SELEC * FROM orders WHERE id_user=$${id_user}$$ AND status='ENDED' ORDER BY date DESC")
+        cursor.execute(f"SELECT * FROM orders WHERE id_user=$${id_user}$$ AND status='ENDED' ORDER BY date DESC")
 
         data_ = cursor.fetchall()
         return_data = []
