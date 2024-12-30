@@ -12,6 +12,9 @@ export default {
       orderRead: false,
 
       errorOrder: ``,
+
+      quantityMap: {},
+      displayedItems: []
     };
   },
 
@@ -22,12 +25,20 @@ export default {
   methods: {
     async loadProducts() {
       try {
-        let res = await axios.get("/basket/show-basket");
+        const res = await axios.get("/basket/show-basket");
         this.products = res.data.res;
+
+        // let existingProduct = 0;
+        // for(let i = 0; i < this.products.length; i++) {
+        //   existingProduct = acc.find(item => item.id === this.products[i].id);
+        // }
+        
+
       } catch (error) {
         this.error = "Ошибка! Невозможно найти товары";
       }
     },
+
 
     async deleteProduct(id) {
       try {
@@ -46,10 +57,10 @@ export default {
         let ids = [];
 
         for (let i = 0; i < this.products.length; i++) {
-            ids.push({
-                id: this.products[i].id,
-                count: this.products[i].count
-             }, );
+          ids.push({
+            id: this.products[i].id,
+            count: this.products[i].count
+          },);
         }
 
         let res = await axios.post("/order/add-oder", {
@@ -80,11 +91,7 @@ export default {
         Заказ сформирован, статус заказа вы можете посмотреть на почте, на
         которую регистрировали данный аккаунт. По готовности, заказ будет ждать
         вас в пункте выдачи. Адрес вы можете посмотреть, перейдя
-        <a
-          href="/aboutus"
-          class="text-blue-500 hover:underline transition-all duration-500"
-          >по этой ссылке</a
-        >
+        <a href="/aboutus" class="text-blue-500 hover:underline transition-all duration-500">по этой ссылке</a>
       </h2>
       <h2 v-else>{{ errorOrder }}</h2>
       <div class="close-img" @click="this.orderRead = !this.orderRead">x</div>
@@ -95,51 +102,38 @@ export default {
   <div class="orders-container mx-10" v-if="this.products.length != 0">
     <h2 class="mt-10 text-3xl font-bold">Корзина</h2>
 
-    <h2
-      class="text-red-500 text-xl text-semibold flex justify-center mt-10 mb-4"
-      v-if="this.errorProduct"
-    >
+    <h2 class="text-red-500 text-xl text-semibold flex justify-center mt-10 mb-4" v-if="this.errorProduct">
       {{ errorProduct }}
     </h2>
 
     <div class="products-container">
-      <div
-        class="card border-b-2  py-4 mt-1"
-        v-for="product in products"
-      >
+      <div class="card border-b-2  py-4 mt-1" v-for="product in products">
         <div class="info-card flex gap-6 justify-between">
           <div class="info-container flex gap-6">
-            <img
-              class="rounded-xl "
-              :src="product.photos[0]"
-            />
+            <img class="rounded-xl " :src="product.photos[0]" />
             <div class="info-block flex flex-col gap-0 relative text-base">
               <h3 class="text-3xl font-bold">{{ product.title }}</h3>
-              <p class="mt-5"> 
+              <p class="mt-5">
                 <b>Описание:</b> {{ product.characteristics.substring(0, 40)
                 }}<span v-if="product.characteristics.length >= 40">...</span>
               </p>
-              <span class="absolute bottom-0 left-0"
-                ><b>Цена:</b>  <p class="price">{{ product.price }} ₽</p></span>
+              <span>Количество: {{ displayedItems.length }}</span>
+              <span class="absolute bottom-0 left-0"><b>Цена:</b>
+                <p class="price">{{ product.price }} ₽</p>
+              </span>
             </div>
           </div>
           <div class="actions flex gap-3">
             <button class="del-btn" @click="deleteProduct(product.id)">
               Удалить из корзины
             </button>
-            <button
-              class="order-btn"
-              @click="this.$router.push(`/Product/${product.id}`)"
-            >
+            <button class="order-btn" @click="this.$router.push(`/Product/${product.id}`)">
               К товару
             </button>
           </div>
         </div>
       </div>
-      <h2
-        class="text-red-500 text-xl text-semibold flex justify-center mt-10"
-        v-if="this.error"
-      >
+      <h2 class="text-red-500 text-xl text-semibold flex justify-center mt-10" v-if="this.error">
         {{ error }}
       </h2>
     </div>
@@ -157,8 +151,6 @@ export default {
 </template>
 
 <style scoped>
-
-
 .bask-empty {
   padding-top: 30px;
   text-align: center;
@@ -203,7 +195,7 @@ img {
   }
 
   .search-find:hover {
-  background-color: #d95700;
+    background-color: #d95700;
   }
 }
 
@@ -319,7 +311,7 @@ img {
   .text-3xl {
     font-size: 1.5rem;
   }
-}   
+}
 
 
 .del-btn {
@@ -338,9 +330,9 @@ img {
 }
 
 .del-btn {
- -webkit-box-shadow: 0px 2px 8px 7px rgba(34, 60, 80, 0.2);
--moz-box-shadow: 0px 2px 8px 7px rgba(34, 60, 80, 0.2);
-box-shadow: 0px 2px 8px 7px rgba(34, 60, 80, 0.2); 
+  -webkit-box-shadow: 0px 2px 8px 7px rgba(34, 60, 80, 0.2);
+  -moz-box-shadow: 0px 2px 8px 7px rgba(34, 60, 80, 0.2);
+  box-shadow: 0px 2px 8px 7px rgba(34, 60, 80, 0.2);
 }
 
 .del-btn:hover {
@@ -424,31 +416,31 @@ input {
   object-fit: cover;
 }
 
-    @media (max-width: 620px) {
-      .orders-container {
-        margin-left: 0.5rem;
-        margin-right: 0.5rem;
-      }
-    }
+@media (max-width: 620px) {
+  .orders-container {
+    margin-left: 0.5rem;
+    margin-right: 0.5rem;
+  }
+}
 
-    @media (max-width: 470px) {
-      .del-btn {
-        font-size: 16px;
-      }
+@media (max-width: 470px) {
+  .del-btn {
+    font-size: 16px;
+  }
 
-      .order-btn {
-        font-size: 16px;
-        width: auto;
-        padding: 0 40px;
-      }
-    }
+  .order-btn {
+    font-size: 16px;
+    width: auto;
+    padding: 0 40px;
+  }
+}
 
-    @media (max-width: 400px) {
-      .actions {
-        flex-direction: column;
-        height: auto;
-      }
+@media (max-width: 400px) {
+  .actions {
+    flex-direction: column;
+    height: auto;
+  }
 
-      
-    }
+
+}
 </style>
