@@ -18,7 +18,7 @@ export default {
           }
         });
 
-        this.status = res.data.res.status;
+        this.status = res.data.res[0].status;
 
         for (let i = 0; i < res.data.res[0].ids_items.length; i++) {
           let responce = await axios.get('/items/one-item', {
@@ -48,7 +48,7 @@ export default {
 
     async changeStatus() {
       try {
-        await axios.post('/admin/change-status', {
+        await axios.put('/admin/change-status', {
           id: this.$route.params.id,
           status: this.status
         });
@@ -98,8 +98,19 @@ export default {
           </div>
         </div>
 
-        <div class="btns">
+        <div class="btns flex flex-col">
           <button @click='this.$router.push(`/Product/${order.idProduct}`)'>К товару</button>
+          <span>Текущий статус заказа: {{ status }}</span>
+          <div class="flex items-center gap-6">
+            <select class='mt-5 border-2 rounded-2xl p-4' v-model='status'>
+              <option value="" selected>Выбрать статус заказа</option>
+              <option value="NEW">NEW</option>
+              <option value="END">END</option>
+              <option value="PROCESS">PROCESS</option>
+              <option value="WAITING">WAITING</option>
+            </select>
+            <button class='text-base' @click='changeStatus'>Изменить статус заказа</button>
+          </div>
         </div>
       </div>
     </div>
