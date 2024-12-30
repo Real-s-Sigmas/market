@@ -73,6 +73,36 @@ def add_item():
 
 
 
+def UpdateBasket(id_user: str) -> Union[dict, str]:
+    return_data = 'Success'
+    try:
+        pg = psycopg2.connect(f"""
+            host={HOST_PG}
+            dbname=postgres
+            user={USER_PG}
+            password={PASSWORD_PG}
+            port={PORT_PG}
+        """)
 
+        cursor = pg.cursor(cursor_factory=psycopg2.extras.DictCursor)
+        cursor.execute("""
+                SELECT jsonb_object_agg(id_item::text, count) AS basket_dict
+                FROM basket
+                WHERE id_user = %s;
+                """, (id_user))
 
-print(UpdateBasket("9bcf470a-548b-4949-995e-d4ca7eac6980", "41c0b0e4-7cba-4a81-b590-23edabe6637b", 6))
+        return_data = dict(cursor.fetchone)
+        logging.info('Корзина обновлена')
+
+    except (Exception, Error) as error:
+        logging.info(f"Ошибка получения данных: {error}")
+        return_data = 'Error'
+
+    finally:
+        if cursor:
+            cursor.close()
+        if pg:
+            pg.close()
+            logging.info("Соединение с PostgreSQL закрыто")
+            
+    return return_data
