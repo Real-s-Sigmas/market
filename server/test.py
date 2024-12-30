@@ -63,7 +63,7 @@ def UpdateBasket(id_user: str, id_item: str, count: int) -> str:
 
 @app.route("/basket/update-item", methods=['PUT'])
 @chek_for_user
-def add_item():
+def add_item_________():
     response_object = {'status': 'success'} #БаZа
     post_data = request.get_json()
 
@@ -110,9 +110,9 @@ def GetBasket(id_user: str) -> Union[dict, str]:
 
 @app.route("/basket/get-items", methods=['GET'])
 @chek_for_user
-def add_item():
+def add_item___________________():
     response_object = {'status': 'success'} #БаZа
 
-    response_object["res"] = UpdateBasket(session.get("id"))
+    response_object["res"] = GetBasket(session.get("id"))
 
     return jsonify(response_object)
