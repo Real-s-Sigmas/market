@@ -105,6 +105,12 @@ def add_tables():
                         date_create timestamp
                     )""")
 
+        cursor.execute("""CREATE TABLE IF NOT EXISTS basket (
+                        id_user UUID NOT NULL,
+                        id_item UUID NOT NULL,
+                        count INT NOT NULL DEFAULT 1,
+                        PRIMARY KEY (id_user, id_item) -- Создаем уникальность автоматически через составной первичный ключ
+                    );""")
         #TODO: orders table
         pg.commit()
     except (Exception, Error) as error:
@@ -125,6 +131,7 @@ from comments import *
 from items import *
 from basket import *
 from photos import *
+from test import *
 
 if __name__ == '__main__':
       add_tables()

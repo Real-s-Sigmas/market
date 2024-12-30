@@ -89,8 +89,9 @@ export default {
     },
 
     nextImage() {
-      if (this.currentImageIndex < this.photos.length - 1) {
-        this.currentImageIndex++;
+      if (this.photos.length > 1 && this.currentImageIndex < this.photos.length - 2) {
+        this.currentImageIndex++
+        console.log(this.photos.length);
       }
     },
 
