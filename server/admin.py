@@ -27,7 +27,7 @@ def AllOrders() -> Union[list, str]:
 
         cursor = pg.cursor(cursor_factory=psycopg2.extras.DictCursor)
 
-        cursor.execute(f"SELECT * FROM orders ORDER BY data")
+        cursor.execute(f"SELECT * FROM orders ORDER BY date_create")
 
         data_ = cursor.fetchall()
         return_data = []
@@ -48,13 +48,12 @@ def AllOrders() -> Union[list, str]:
             return return_data
 
 @app.route('/admin/orders', methods=['GET'])
+@chek_for_admin
 def all_orders():
     responce_object = {'status': 'success'}
 
-    if check.IsAdmin():
-        responce_object['res'] = AllOrders()
-    else:
-        responce_object["res"] = "Not Admin"
+    responce_object['res'] = AllOrders()
+
 
     return jsonify(responce_object)
 
