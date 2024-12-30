@@ -5,37 +5,57 @@ export default {
     data() {
         return {
             products: [
-                {
-                    code: 8652525252,
-                    image: `src/assets/1111.jpeg`,
-                    title: `Чё то тут`,
-                    count: 52,
-                    description: `Чё то там, Чё то тамЧё то тамЧё то тамЧё то тамЧё то там`,
-                    price: 52000,
-                },
-                {
-                    code: 8652525252,
-                    image: `src/assets/1111.jpeg`,
-                    title: `Чё то тут`,
-                    count: 52,
-                    description: `Чё то там`,
-                    price: 52000,
-                },
+                // {
+                //     code: 8652525252,
+                //     image: `src/assets/1111.jpeg`,
+                //     title: `Чё то тут`,
+                //     count: 52,
+                //     description: `Чё то там, Чё то тамЧё то тамЧё то тамЧё то тамЧё то там`,
+                //     price: 52000,
+                // },
+                // {
+                //     code: 8652525252,
+                //     image: `src/assets/1111.jpeg`,
+                //     title: `Чё то тут`,
+                //     count: 52,
+                //     description: `Чё то там`,
+                //     price: 52000,
+                // },
             ],
             title: ``,
         }
     },
 
     mounted() {
-        // this.loadProducts();
+        this.loadProducts();
     },
 
     methods: {
         async loadProducts() {
             try {
-                let res = await axios.get('/orders/show-orders');
-                this.products = res.data;
-
+                let res = await axios.get('/order/get-orders');
+                
+                for(let i = 0; i < res.data.res[0].ids_items.length; i++) {
+                    let responce = await axios.get('/items/one-item', {
+                        params: {
+                            id: res.data.res[0].ids_items[i].id,
+                        }
+                    });
+                    let item = responce.data.res;
+                    this.products.push({
+                        category: item.category,
+                        characteristics: item.characteristics,
+                        date_create: item.date_create,
+                        descriptions: item.descriptions,
+                        id: item.id,
+                        photos: item.photos,
+                        price: item.price,
+                        small_category: item.small_category,
+                        title: item.title,
+                        count: res.data.res[0].ids_items[i].count
+                    });
+                }
+                console.log(this.products);
             } catch (err) {
                 console.error(err)
             }
@@ -69,9 +89,8 @@ export default {
                         <img class='rounded-xl border-2 border-black' :src="product.image">
                         <div class="info-block flex flex-col gap-0 relative text-base">
                             <h3 class='text-4xl font-bold'>{{ product.title }}</h3>
-                            <span>Код товара: {{ product.code }}</span>
                             <span>Количество: {{ product.count }}</span>
-                            <p>Описание: {{ product.description.substring(0, 40) }}<span v-if='product.description.length >= 40'>...</span> </p>
+                            <p>Описание: {{ product.descriptions.substring(0, 40) }}<span v-if='product.descriptions.length >= 40'>...</span> </p>
     
                             <span class='absolute bottom-0 left-0'>Цена: {{ product.price }}</span>
                         </div>

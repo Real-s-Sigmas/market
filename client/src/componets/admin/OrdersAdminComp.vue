@@ -15,9 +15,9 @@
 <template>
   <a :href="`/basketadmin/${order.id}`">
     <div class="comp-block">
-      <h3>№ {{ order.orderNum }}</h3>
-      <p>{{ order.description }}</p>
-      <p>{{ order.date }}</p>
+      <p class='font-bold'>{{ order.title }}</p>
+      <p>Описание: {{ order.descriptions }}</p>
+      <p>{{ order.date_create }}</p>
     </div>
   </a>
   
