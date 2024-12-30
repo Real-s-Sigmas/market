@@ -89,7 +89,10 @@ export default {
                 <div class="image-container border-black py-20 rounded-xl flex justify-center items-center select-none"
                     role='button'>
                     <input type="file" name="file[]" id='filee' multiple @change='convertImages' accept="image/*">
-                    <span>+</span>
+                    <svg width="70" height="70" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M10.8696 2L10.8696 20" stroke="#272727" stroke-width="1" stroke-linecap="round"/>
+                        <path d="M2 10.8696H20" stroke="#272727" stroke-width="1" stroke-linecap="round"/>
+                    </svg>
                 </div>
             </label>
             <div class="main-info-block flex flex-col">
