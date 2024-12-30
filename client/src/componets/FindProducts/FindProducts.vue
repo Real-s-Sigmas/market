@@ -72,7 +72,7 @@ export default {
 
 		<div class="card-container flex xl:flex-row justify-center gap-6 mt-6 flex-wrap">
 			<div class="card rounded-2xl transition-all duration-300 hover:-translate-y-5 cursor-pointer" v-for='product in products' @click='this.$router.push(`/Product/${product.id}`)'>
-				<img class='rounded-t-2xl' :src="product.images[0]" :alt="product.title">
+				<img class='rounded-t-2xl' :src="product.photos[0]" :alt="product.title">
 				<div class="info-block p-6 flex flex-col">
 					<h3 class='text-2xl font-bold'>{{ product.title }}</h3>
 					<p class='text-slate-500'>{{ product.short_description.substring(0, 50) }}...</p>

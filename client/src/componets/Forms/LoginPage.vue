@@ -35,7 +35,6 @@ export default {
           this.error = response.data.res
       } catch (err) {
         console.error(err)
-        this.error = "Ошибка сервера";
       }
   },
       
