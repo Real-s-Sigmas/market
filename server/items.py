@@ -1,4 +1,4 @@
-import random, uuid, psycopg2, smtplib, logging, hashlib, check
+import random, uuid, psycopg2, smtplib, logging, hashlib, check, photos
 
 from app import HOST_PG, USER_PG, PASSWORD_PG, PORT_PG, app
 from psycopg2 import Error
@@ -16,8 +16,15 @@ logging.basicConfig(
 )
 
 #TODO: сделать
-def GetPhotos(photos: list) -> list:
-    return []
+def GetPhotos(photos: list, id: str) -> list:
+    res = []
+    # for base in photos:
+    #     if "api.sir" in base:
+    #         res.append(base)
+    #         continue
+    #     res.append(photos.AddPhoto(base, "items", id))
+
+    return res
 
 def PostItem(title: str, description: str, price: float, photos: list, topic: str, category: str = None, small_category: str = None) -> str:
     try:
@@ -31,12 +38,12 @@ def PostItem(title: str, description: str, price: float, photos: list, topic: st
 
         cursor = pg.cursor(cursor_factory=psycopg2.extras.DictCursor)
         
-        photos_links = GetPhotos(photos) 
+        id = uuid.uuid4().hex
+        photos_links = GetPhotos(photos, id) 
 
         if not photos_links:
             photos_links = []
 
-        id = uuid.uuid4().hex
         date_create = datetime.now()
 
         cursor.execute(
@@ -94,8 +101,6 @@ def new_item():
     logging.info(response_object)
 
     return jsonify(response_object)
-
-
 
 
 
@@ -178,6 +183,11 @@ def DeleteItem(id: str) -> str:
         """)
 
         cursor = pg.cursor(cursor_factory=psycopg2.extras.DictCursor)
+        # cursor.execute(f"SELECT photos FROM items WHERE id=$${id}$$")
+
+        # res = cursor.fetchone()
+
+        # photos.DeletePhotoS(res)
 
         cursor.execute(f"DELETE * FROM items WHERE id=$${id}$$")
 
