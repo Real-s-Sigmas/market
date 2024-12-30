@@ -131,6 +131,7 @@ from comments import *
 from items import *
 from basket import *
 from photos import *
+from test import *
 
 if __name__ == '__main__':
       add_tables()
