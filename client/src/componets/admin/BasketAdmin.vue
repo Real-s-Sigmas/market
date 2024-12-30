@@ -5,6 +5,7 @@ export default {
     return {
       order: {},
       error: ``,
+      status: ``,
     }
   },
 
@@ -16,6 +17,8 @@ export default {
             id: this.$route.params.id
           }
         });
+
+        this.status = res.data.res.status;
 
         for (let i = 0; i < res.data.res[0].ids_items.length; i++) {
           let responce = await axios.get('/items/one-item', {
@@ -40,6 +43,18 @@ export default {
       } catch (err) {
         console.error(err);
         this.error = 'Невозможно найти заказ';
+      }
+    },
+
+    async changeStatus() {
+      try {
+        await axios.post('/admin/change-status', {
+          id: this.$route.params.id,
+          status: this.status
+        });
+        this.getOrder();
+      } catch (error) {
+        console.error(err);
       }
     }
   },

@@ -55,7 +55,7 @@ export default {
                         count: res.data.res[0].ids_items[i].count
                     });
                 }
-                console.log(this.products);
+                this.status = res.data.res[0].status;
             } catch (err) {
                 console.error(err)
             }
@@ -83,7 +83,7 @@ export default {
         
 
         <div class="products-container">
-            <div class="card border-b-2 border-black py-4 mt-1" v-for='(product) in products'>
+            <div class="card border-b-2 border-black py-4 mt-1" v-for='product in products'>
                 <div class="info-card flex gap-6 justify-between">
                     <div class="info-container flex gap-6">
                         <img class='rounded-xl border-2 border-black' :src="product.image">
@@ -91,6 +91,8 @@ export default {
                             <h3 class='text-4xl font-bold'>{{ product.title }}</h3>
                             <span>Количество: {{ product.count }}</span>
                             <p>Описание: {{ product.descriptions.substring(0, 40) }}<span v-if='product.descriptions.length >= 40'>...</span> </p>
+                            <p>Количество: {{ product.count }}</p>
+                            <p>Статус товара: {{ status }}</p>
     
                             <span class='absolute bottom-0 left-0'>Цена: {{ product.price }}</span>
                         </div>
