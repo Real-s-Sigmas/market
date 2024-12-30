@@ -73,7 +73,7 @@ def add_item():
 
 
 
-def UpdateBasket(id_user: str) -> Union[dict, str]:
+def GetBasket(id_user: str) -> Union[dict, str]:
     return_data = 'Success'
     try:
         pg = psycopg2.connect(f"""
@@ -106,3 +106,13 @@ def UpdateBasket(id_user: str) -> Union[dict, str]:
             logging.info("Соединение с PostgreSQL закрыто")
             
     return return_data
+
+
+@app.route("/basket/get-items", methods=['GET'])
+@chek_for_user
+def add_item():
+    response_object = {'status': 'success'} #БаZа
+
+    response_object["res"] = UpdateBasket(session.get("id"))
+
+    return jsonify(response_object)
