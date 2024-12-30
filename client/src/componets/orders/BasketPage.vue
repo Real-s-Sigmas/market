@@ -306,6 +306,12 @@ img {
   }
 }
 
+@media (max-width: 920px) {
+  .modal-page {
+    width: 100%;
+  }
+}
+
 @media (max-width: 800px) {
   .info-card {
     flex-direction: column;
