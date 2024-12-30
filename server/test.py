@@ -1,9 +1,11 @@
-import psycopg2
-from psycopg2 import Error, extras
-from dotenv import load_dotenv
-import os
-import json
-import logging
+import psycopg2, logging, check
+
+from check import chek_for_admin, chek_for_user
+from psycopg2 import Error
+from flask import jsonify, request
+from typing import Union
+from app import *
+from app import app, PASSWORD_PG, PORT_PG, USER_PG, HOST_PG, session
 
 load_dotenv()
 
@@ -58,6 +60,16 @@ def UpdateBasket(id_user: str, id_item: str, count: int) -> str:
             
     return return_data
 
+
+@app.route("/basket/update-item", methods=['PUT'])
+@chek_for_user
+def add_item():
+    response_object = {'status': 'success'} #БаZа
+    post_data = request.get_json()
+
+    response_object["res"] = UpdateBasket(session.get("id"), post_data.get("id"), post_data.get('count'))
+
+    return jsonify(response_object)
 
 
 
