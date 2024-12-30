@@ -6,28 +6,19 @@ import { Catalog } from "../Catalog/catalog.js";
 export default {
     data() {
         return {
-            form: {
-                title: ``,
-                price: null,
-                photos: [],
-                topic: ``,
-                descriptions: ``,
-                characteristics: ``,
-            },
-
             topics: Category,
             underTopics: [],
             error: ``,
 
-						product: {},
+			product: {},
         }
     },
 
     watch: {
-       'form.topic'(newValue) {
+       'product.category'(newValue) {
            this.underTopics = [];
            for (let i = 0; i < Catalog.length; i++) {
-               if (Object.keys(Catalog[i])[0] == this.form.topic.category) {
+               if (Object.keys(Catalog[i])[0] == this.product.category.category) {
                    for (let j = 0; j < Catalog[i][Object.keys(Catalog[i])[0]].length; j++) {
                        this.underTopics.push(Catalog[i][Object.keys(Catalog[i])[0]][j].title);
                    }
@@ -35,33 +26,60 @@ export default {
            }
        }
    },
+
+   mounted() {
+    this.getProduct();
+   },
    
     methods: {
-				async getProduct() {
-					try {
-						let res = await axios.get('/items/one-item', {
-							params: {
-								id: this.$route.params.id,
-							}
-						});
-						this.product = res.data.res;
-					} catch (error) {
-						console.log(error);
-					}
-				},
+        async getProduct() {
+            try {
+                let res = await axios.get('/items/one-item', {
+                    params: {
+                        id: this.$route.params.id,
+                    }
+                });
+                this.product = res.data.res;
+            } catch (error) {
+                console.log(error);
+            }
+        },
 
         async addProduct() {
             try {
-                let res = await axios.put('/items/change-item', {
-                    form: this.product,
-                });
+                let res
+                if(!this.product.category.category) { // говнокод
+                     res = await axios.put('/items/change-item', {
+                        id: this.$route.params.id,
+                        title: this.product.title,
+                        price: this.product.price ,
+                        photos: this.product.photos ,
+                        category: this.product.category ,
+                        small_category: this.product.small_category ,
+                        descriptions: this.product.descriptions ,
+                        characteristics: this.product.characteristics ,
+                    });
+                } else {
+                     res = await axios.put('/items/change-item', {
+                        id: this.$route.params.id,
+                        title: this.product.title,
+                        price: this.product.price ,
+                        photos: this.product.photos ,
+                        category: this.product.category.category ,
+                        small_category: this.product.small_category ,
+                        descriptions: this.product.descriptions ,
+                        characteristics: this.product.characteristics ,
+                    });
+                }
                 if (res.data.res == 'Error') {
                     this.error = 'Ошибка добавления товара';
+                    console.log('error');
                 } else {
                     this.$router.push('/');
                 }
             } catch (error) {
                 this.error = 'Ошибка добавления товара';
+                console.log(error);
             }
         },
 
@@ -107,12 +125,12 @@ export default {
                         <input type="text" id='title' v-model='product.title' class='mb-5'>
                     </div>
                     <div class="select-block">
-                        <select class='sell text-2xl px-10 pe-16 mt-3'  v-model='product.topic'>
-                            <option selected value="">Категория</option>
+                        <select class='sell text-2xl px-10 pe-16 mt-3'  v-model='product.category'>
+                            <option selected :value="product.category">{{ product.category }}</option>
                             <option :value="topic" v-for='topic in topics'>{{ topic.category }}</option>
                         </select>
-                        <select class='sell text-2xl px-10 pe-16 mt-3' v-model='product.under_topic' v-if='this.form.topic'>
-                            <option selected value="">Подкатегория</option>
+                        <select class='sell text-2xl px-10 pe-16 mt-3' v-model='product.small_category' v-if='this.product.category'>
+                            <option selected :value="product.small_category">{{ product.small_category }}</option>
                             <option :value="title" v-for='title in underTopics'>{{ title }}</option>
                         </select>
                     </div>
@@ -120,7 +138,7 @@ export default {
                 <div class="text-2xl ">
                     <label for="desc_short mt-1">Краткое описание:</label>
                     <textarea class='short-desc border border-black mt-3' rows='2' type="text" id='desc_short'
-                        v-model='product.descriptions'  ></textarea>
+                        v-model='product.descriptions'></textarea>
                 </div>
             </div>
         </div>
@@ -142,7 +160,7 @@ export default {
             <div class="flex gap-3">
                 <input id='price' v-model='product.price'  class='price border-2 border-black mt-3 p-1'>
             </div>
-            <button type='submit' class='acc mt-8'>Добавить</button>
+            <button type='submit' class='acc mt-8'>Изменить</button>
         </div>
         <h2 class='text-red-500 text-xl text-semibold mt-10' v-if='this.error'>{{ error }}</h2>
     </form>

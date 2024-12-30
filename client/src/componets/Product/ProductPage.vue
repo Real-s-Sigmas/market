@@ -220,6 +220,15 @@ export default {
         console.error(error)
       }
     },
+
+    async checkIsAdmin() {
+      try {
+        let res = await axios.get('/user/profile');
+        this.isAdmin = res.data.res.admin;
+      } catch (error) {
+        console.log(error);
+      }
+    },
   },
 
   computed: {
@@ -255,22 +264,14 @@ export default {
       return this.photos.slice(start, end);
     },
 
-    async checkIsAdmin() {
-      try {
-        let res = await axios.get('/other/is-admin');
-        this.isAdmin = res.data.res;
-      } catch (error) {
-        console.log(error);
-      }
-    },
-
     async deleteProduct() {
       try {
-        await axios.delete('/items/delete-items', {
+        await axios.delete('/items/delete-item', {
           params: {
             id: this.$route.params.id,
           }
         });
+        this.$router.push('/')
       } catch (error) {
         console.log(error);
       }
@@ -281,7 +282,7 @@ export default {
     this.checkInBasket();
     this.checkInFavorite();
     this.getProduct();
-    // this.checkIsAdmin();
+    this.checkIsAdmin();
   }
 };
 </script>
