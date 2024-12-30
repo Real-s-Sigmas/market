@@ -137,10 +137,11 @@ def ShowwItemFromBasket(id_user: str) -> Union[str, list]:
         cursor = pg.cursor(cursor_factory=psycopg2.extras.DictCursor)
 
         # Использование параметризованного запроса
-        cursor.execute(f"""SELECT items.*
-                        FROM users
-                        JOIN items ON items.id = ANY(users.basket)
-                        WHERE users.id = {id_user};""")
+        cursor.execute("""SELECT i.*
+                        FROM users u
+                        JOIN LATERAL UNNEST(u.basket) AS basket_id ON TRUE
+                        JOIN items i ON i.id = basket_id::uuid
+                        WHERE u.id = %s;""", (id_user,))
         
         results = cursor.fetchall()
         return [dict(result) for result in results]
@@ -278,7 +279,7 @@ def DeleteSingleFavItem(user_id: str, item_id: str) -> str:
 
 @app.route("/basket/delete-fav", methods=['DELETE'])
 def delete_fav():
-    item_id = request.get_json().get('id')
+    item_id = request.args.get('id')
     user_id = session.get("id")
 
     if user_id and item_id:
@@ -304,13 +305,14 @@ def show_fav():
             cursor = pg.cursor(cursor_factory=psycopg2.extras.DictCursor)
 
             # Извлекаем массив избранных элементов
-            cursor.execute("SELECT favs FROM users WHERE id = %s;", (user_id,))
-            favs = cursor.fetchone()
-
-            if favs and favs[0]:
-                return jsonify({'status': 'success', 'favs': favs[0]}), 200
-            else:
-                return jsonify({'status': 'success', 'favs': []}), 200  # Пустой массив, если нет избранных
+            cursor.execute("""SELECT i.*
+                            FROM users u
+                            JOIN LATERAL UNNEST(u.favs) AS basket_id ON TRUE
+                            JOIN items i ON i.id = basket_id::uuid
+                            WHERE u.id = %s;""", (user_id,))
+            
+            results = cursor.fetchall()
+            return [dict(result) for result in results]
 
         except (Exception, Error) as error:
             logging.error(f'DB: {error}')

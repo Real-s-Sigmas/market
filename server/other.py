@@ -35,21 +35,3 @@ def is_admin():
 def get_avatar():
     responce_object = {'status': 'success'}
     return jsonify(responce_object)
-
-@app.route('/topic/<path:filename>')
-def serve_file(filename):
-    path = filename
-    # if not os.path.exists('{}/{}'.format('avatar/', filename)):
-    #     logging.info({'error': 'File not found'}, 404)
-    #     return jsonify({'error': 'File not found'}), 404
-
-    return send_from_directory(directory='topic-photo/', path=path)
-
-# @app.route('/item/<path:filename>')
-# def serve_file(filename):
-#     path = filename
-#     # if not os.path.exists('{}/{}'.format('avatar/', filename)):
-#     #     logging.info({'error': 'File not found'}, 404)
-#     #     return jsonify({'error': 'File not found'}), 404
-
-#     return send_from_directory(directory='items-photo/', path=path)
