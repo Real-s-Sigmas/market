@@ -84,7 +84,7 @@ def new_item():
 
     res = PostItem(
         title=post_data.get("title"),
-        description=post_data.get("description"),
+        description=post_data.get("descriptions"),
         price=post_data.get("price"),
         photos=post_data.get("photos", []),
         topic=post_data.get("characteristics"),
@@ -110,7 +110,7 @@ def PutItem(title: str, description: str, price: float, photos: list, topic: str
         return "Error: Invalid input values"
 
     # Получаем ссылки на фотографии
-    photos_links = GetPhotos(photos)  # Убедитесь, что эта функция возвращает корректные ссылки
+    photos_links = GetPhotos(photos, id)  # Убедитесь, что эта функция возвращает корректные ссылки
 
     # # Проверяем, что photos_links не пустой
     # if photos_links is None:
@@ -157,7 +157,7 @@ def change_item():
 
     res = PutItem(
         title=post_data.get("title"),
-        description=post_data.get("description"),
+        description=post_data.get("descriptions"),
         price=post_data.get("price"),
         photos=post_data.get("photos"),
         topic=post_data.get("characteristics"),
@@ -165,9 +165,8 @@ def change_item():
         category=post_data.get("category"),
         small_category=post_data.get("small_category")
     )
-
-    if res == "Error":
-        response_object["res"] = "Server Err"
+    logging.info(res)
+    response_object["res"] = res
 
     return jsonify(response_object)
 
@@ -189,7 +188,7 @@ def DeleteItem(id: str) -> str:
 
         # photos.DeletePhotoS(res)
 
-        cursor.execute(f"DELETE * FROM items WHERE id=$${id}$$")
+        cursor.execute(f"DELETE FROM items WHERE id=$${id}$$")
 
         pg.commit()
 
@@ -208,12 +207,12 @@ def DeleteItem(id: str) -> str:
             return return_data
  
 
-@app.route("/items/delete-item", methods=["PUT"])
+@app.route("/items/delete-item", methods=["DELETE"])
 @chek_for_admin
 def delete_item():
     response_object = {'status': 'success'} #БаZа
 
-    post_data = request.get_json()
+    post_data = request.args
 
     res = DeleteItem(post_data.get("id")) # type: ignore
 
@@ -310,7 +309,7 @@ def DeleteTopic(id: str) -> str:
 def delete_topic():
     response_object = {'status': 'success'} #БаZа
 
-    post_data = request.get_json()
+    post_data = request.args
 
     res = DeleteTopic(post_data.get("id"))
 
