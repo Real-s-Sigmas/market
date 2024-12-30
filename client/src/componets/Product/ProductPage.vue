@@ -116,10 +116,11 @@ export default {
 
     async addToCart() {
       try {
-        await axios.post('/basket/add-item', {
-          count: this.product_count,
-          id: this.$route.params.id,
-        });
+        for(let i = 0; i < this.product_count; i++) {
+          await axios.post('/basket/add-item', {
+            id: this.$route.params.id,
+          });
+        }
         this.checkInBasket();
       } catch (error) {
         console.error(error)
@@ -142,18 +143,29 @@ export default {
 
     async addToFavotite() {
       try {
-        if(!this.isInFavorite) {
+        if(this.isInFavorite) {
+          this.deleteFavorite();
+        } else {
           await axios.post('/basket/add-fav', {
             id: this.$route.params.id,
           });
-        } else {
-          await axios.delete('/basket/delete-fav', {
+          this.isInFavorite = true;
+        }
+        this.checkInFavorite();
+      } catch (error) {
+        console.error(error);
+      }
+    },
+
+    async deleteFavorite() {
+      try {
+        await axios.delete('/basket/delete-fav', {
             params: {
               id: this.$route.params.id,
             }
           });
-        }
-        this.checkInFavorite();
+          this.isInFavorite = false;
+        // this.checkInFavorite();
       } catch (error) {
         console.error(error);
       }
@@ -183,7 +195,7 @@ export default {
         let res = await axios.get('/basket/show-basket');
         for(let i = 0; i < res.data.res.length; i++) {
           // console.log(res.data.res[i].id == this.$route.params.id) id
-          if(this.$route.params.id == res.data.res[i]) {
+          if(this.$route.params.id == res.data.res[i].id) {
             this.isInCart = true;
           }
         }
@@ -195,10 +207,13 @@ export default {
     async checkInFavorite() {
       try {
         let res = await axios.get('/basket/show-favs');
-        console.log(res.data.favs);
-        for(let i = 0; i < res.data.favs.length; i++) {
-          if(this.$route.params.id == res.data.favs[i]) {
+        console.log(res.data);
+        for(let i = 0; i < res.data.length; i++) {
+          console.log(this.$route.params.id, res.data[i].id);
+          if(this.$route.params.id == res.data[i].id) {
             this.isInFavorite = true;
+          } else {
+            this.isInFavorite = false;
           }
         }
       } catch (error) {
