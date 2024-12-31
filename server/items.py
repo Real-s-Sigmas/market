@@ -1,5 +1,6 @@
 import random, uuid, psycopg2, smtplib, logging, hashlib, check, photos
 
+from photos import AddPhoto, DeletePhotoS
 from app import HOST_PG, USER_PG, PASSWORD_PG, PORT_PG, app
 from psycopg2 import Error
 from flask import jsonify, request, session
@@ -18,11 +19,12 @@ logging.basicConfig(
 #TODO: сделать
 def GetPhotos(photos: list, id: str) -> list:
     res = []
-    # for base in photos:
-    #     if "api.sir" in base:
-    #         res.append(base)
-    #         continue
-    #     res.append(photos.AddPhoto(base, "items", id))
+    for base in photos:
+        if "api.sir" in base:
+            res.append(base)
+            continue
+        # res.append(AddPhoto(base, "items", id))
+        logging.info(res.append(AddPhoto(base, "items", id)))
 
     return res
 
@@ -112,9 +114,9 @@ def PutItem(title: str, description: str, price: float, photos: list, topic: str
     # Получаем ссылки на фотографии
     photos_links = GetPhotos(photos, id)  # Убедитесь, что эта функция возвращает корректные ссылки
 
-    # # Проверяем, что photos_links не пустой
-    # if photos_links is None:
-    #     return "Error: photos_links is empty"
+    # Проверяем, что photos_links не пустой
+    if photos_links is None:
+        return "Error: photos_links is empty"
 
     try:
         pg = psycopg2.connect(f"""
@@ -182,11 +184,11 @@ def DeleteItem(id: str) -> str:
         """)
 
         cursor = pg.cursor(cursor_factory=psycopg2.extras.DictCursor)
-        # cursor.execute(f"SELECT photos FROM items WHERE id=$${id}$$")
+        cursor.execute(f"SELECT photos FROM items WHERE id=$${id}$$")
 
-        # res = cursor.fetchone()
-
-        # photos.DeletePhotoS(res)
+        res = cursor.fetchone()[0]
+        logging.info(res)
+        DeletePhotoS(res)
 
         cursor.execute(f"DELETE FROM items WHERE id=$${id}$$")
 
