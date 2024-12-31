@@ -1,10 +1,13 @@
-import logging, psycopg2, check
+import logging, psycopg2, check, locale
 
 from app import app, PASSWORD_PG, PORT_PG, USER_PG, HOST_PG, MEDIA, AVATAR
 from flask import Flask, jsonify, request, session, make_response, send_from_directory
 from psycopg2 import extras, Error
 from typing import Union, Optional, Tuple
 from check import chek_for_admin, chek_for_user
+from datetime import datetime
+
+locale.setlocale(locale.LC_ALL, 'ru_RU.utf8')
 
 logging.basicConfig(
     level=logging.DEBUG,
@@ -35,6 +38,7 @@ def AllOrders() -> Union[list, str]:
             a = dict(row)
             cursor.execute(f"SELECT phonenumber FROM users where id = $${a["id_user"]}$$")
             a["phonenumber"] = cursor.fetchone()[0]
+            a['date_create'] = datetime.strftime(a['date_create'], '%d %B %Y')
             return_data.append(a)
 
         logging.info('Все заказы показаны')
@@ -82,6 +86,8 @@ def OneOrder(id: str) -> Union[list, str]:
             cursor.execute(f"SELECT phonenumber FROM users where id = $${a["id_user"]}$$")
             a["phonenumber"] = cursor.fetchone()[0]
             return_data.append(a)
+
+        return_data['date_create'] = datetime.strftime(return_data['date_create'], '%d %B %Y')
 
         logging.info('Все заказы показаны')
 
