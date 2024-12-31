@@ -18,7 +18,7 @@ import OrdersAdminComp from '../admin/OrdersAdminComp.vue';
       async getOrders() {
         try {
             let res = await axios.get('/admin/orders');
-            this.orders = res.data.res;
+            this.orders = res.data.res.reverse();
         } catch (err) {
             console.error(err)
         }
