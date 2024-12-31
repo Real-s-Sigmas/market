@@ -1,7 +1,7 @@
 import psycopg2, logging, json
 
 from psycopg2 import Error
-from flask import jsonify, request
+from flask import jsonify, request, session
 from typing import Union
 from app import *
 from app import app, PASSWORD_PG, PORT_PG, USER_PG, HOST_PG
