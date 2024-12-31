@@ -6,6 +6,8 @@ export default {
       order: {},
       error: ``,
       status: ``,
+
+      orderProducts: [],
     }
   },
 
@@ -18,28 +20,32 @@ export default {
           }
         });
 
-        this.status = res.data.res[0].status;
+        this.order = res.data.res[0];
 
-        for (let i = 0; i < res.data.res[0].ids_items.length; i++) {
+        for(let i = 0; i < this.order.ids_items.length; i++) {
+
           let responce = await axios.get('/items/one-item', {
-            params: {
-              id: res.data.res[0].ids_items[i].id,
-            }
+              params: {
+                  id: res.data.res[0].ids_items[i].id,
+              }
           });
           let item = responce.data.res;
-          this.order = {
-            category: item.category,
-            characteristics: item.characteristics,
-            date_create: item.date_create,
-            descriptions: item.descriptions,
-            id: item.id,
-            photos: item.photos,
-            price: item.price,
-            small_category: item.small_category,
-            title: item.title,
-            count: res.data.res[0].ids_items[i].count
-          };
+          this.orderProducts.push({
+              category: item.category,
+              characteristics: item.characteristics,
+              date_create: item.date_create,
+              descriptions: item.descriptions,
+              id: res.data.res[0].id,
+              photos: item.photos,
+              price: item.price,
+              small_category: item.small_category,
+              title: item.title,
+              count: res.data.res[0].ids_items[i].count
+          });
         }
+
+        this.status = res.data.res[0].status;
+
       } catch (err) {
         console.error(err);
         this.error = 'Невозможно найти заказ';
@@ -76,7 +82,8 @@ export default {
       </button>
     </div>
     <div class="orderNumber" v-if='!this.error'>
-      <p>{{ order.date_create }}</p>
+      <p>Номер телефона пользователя: {{ order.phonenumber }}</p>
+      <p>Дата создания: {{ order.date_create }}</p>
       <div class="select">
         <select class='border-2 rounded-2xl p-4' v-model='status'>
             <option value="" selected>Выбрать статус заказа</option>
@@ -93,28 +100,28 @@ export default {
       
     </div>
     
-    <div class="orders" v-if='!this.error && this.order.title'>
-      <div class="card">
+    <div class="orders" v-if='!this.error && this.orderProducts.length'>
+      <div class="card" v-for='(item, index) in orderProducts'>
         <div class="image-info">
           <div class="image">
-            <img :src="order.photos[0]" alt="">
+            <img :src="item.photos[0]" alt="">
           </div>
           <div class="info">
             <div class="code-count">
-              <p>Количество: {{ order.count }}шт</p>
+              <p>Количество: {{ item.count }}шт</p>
             </div>
 
             <div class="title-desc">
-              <h2><b>{{ order.title }}</b></h2>
-              <h4>Описание: {{ order.descriptions }}</h4>
+              <h2><b>{{ item.title }}</b></h2>
+              <h4>Описание: {{ item.descriptions }}</h4>
             </div>
 
-            <p class="price">Цена: {{ order.price }} р</p>
+            <p class="price">Цена: {{ item.price }} р</p>
           </div>
         </div>
 
         <div class="btns flex flex-col">
-          <button @click='this.$router.push(`/Product/${order.idProduct}`)'>К товару</button>
+          <button @click='this.$router.push(`/Product/${order.ids_items[index].id}`)'>К товару</button>
           <div class="flex items-center gap-6">
             
           </div>
