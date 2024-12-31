@@ -99,7 +99,7 @@ export default {
         </div>
 
         <div class="btns flex flex-col">
-          <button @click='this.$router.push(`/Product/${order.idProduct}`)'>К товару</button>
+          <button @click='this.$router.push(`/Product/${order.ids_items[0].id}`)'>К товару</button>
           <span>Текущий статус заказа: {{ status }}</span>
           <div class="flex items-center gap-6">
             <select class='mt-5 border-2 rounded-2xl p-4' v-model='status'>
