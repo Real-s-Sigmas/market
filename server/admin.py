@@ -7,7 +7,7 @@ from typing import Union, Optional, Tuple
 from check import chek_for_admin, chek_for_user
 from datetime import datetime
 
-locale.setlocale(locale.LC_ALL, 'ru_RU.utf8')
+locale.setlocale(locale.LC_ALL, ('ru_RU', 'UTF-8'))
 
 logging.basicConfig(
     level=logging.DEBUG,
