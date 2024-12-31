@@ -5,26 +5,7 @@ import OrdersAdminComp from '../admin/OrdersAdminComp.vue';
   export default {
     data() {
       return {
-        orders: [
-          // {
-          //   id: 'akshdg26tuq-wd-1',
-          //   orderNum: 241,
-          //   description: '525252rqyhsg vdkjahsvdhjkgasvjdhgavjhsgdvjas',
-          //   date: '28.11.28',
-          // },
-          // {
-          //   id: 'akshdg26tuq-wd-2',
-          //   orderNum: 2431,
-          //   description: '525252rqyhsg vdkjahsvdhjkgasvjdhgavjhsgdvjas',
-          //   date: '28.11.28',
-          // },
-          // {
-          //   id: 'akshdg26tuq-wd-3',
-          //   orderNum: 2451,
-          //   description: '525252rqyhsg vdkjahsvdhjkgasvjdhgavjhsgdvjas',
-          //   date: '28.11.28',
-          // },
-        ],
+        orders: [],
         error: ``,
       }
     },
@@ -36,16 +17,33 @@ import OrdersAdminComp from '../admin/OrdersAdminComp.vue';
     methods: {
       async getOrders() {
         try {
-          let res = await axios.get('/admin/orders');
-          this.orders = res.data.res;
-          if(this.orders.length == 0) {
-            this.error = 'Заказов нет';
-          }
-        } catch (error) {
-          this.error = 'Невозможно найти заказы';
-          console.log(error);
+            let res = await axios.get('/admin/orders');
+            
+            for(let i = 0; i < res.data.res[0].ids_items.length; i++) {
+                let responce = await axios.get('/items/one-item', {
+                    params: {
+                        id: res.data.res[0].ids_items[i].id,
+                    }
+                });
+                let item = responce.data.res;
+                this.orders.push({
+                    category: item.category,
+                    characteristics: item.characteristics,
+                    date_create: item.date_create,
+                    descriptions: item.descriptions,
+                    id: res.data.res[i].id,
+                    photos: item.photos,
+                    price: item.price,
+                    small_category: item.small_category,
+                    title: item.title,
+                    count: res.data.res[0].ids_items[i].count
+                });
+            }
+            console.log(this.orders);
+        } catch (err) {
+            console.error(err)
         }
-      }
+      },
     },
 
     mounted() {

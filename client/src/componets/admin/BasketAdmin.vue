@@ -5,6 +5,7 @@ export default {
     return {
       order: {},
       error: ``,
+      status: ``,
     }
   },
 
@@ -13,13 +14,47 @@ export default {
       try {
         let res = await axios.get('/admin/order', {
           params: {
-            id: this.$route.params.id,
+            id: this.$route.params.id
           }
         });
-        this.order = res.data.res;
-      } catch (error) {
+
+        this.status = res.data.res[0].status;
+
+        for (let i = 0; i < res.data.res[0].ids_items.length; i++) {
+          let responce = await axios.get('/items/one-item', {
+            params: {
+              id: res.data.res[0].ids_items[i].id,
+            }
+          });
+          let item = responce.data.res;
+          this.order = {
+            category: item.category,
+            characteristics: item.characteristics,
+            date_create: item.date_create,
+            descriptions: item.descriptions,
+            id: item.id,
+            photos: item.photos,
+            price: item.price,
+            small_category: item.small_category,
+            title: item.title,
+            count: res.data.res[0].ids_items[i].count
+          };
+        }
+      } catch (err) {
+        console.error(err);
         this.error = 'Невозможно найти заказ';
-        console.log(error);
+      }
+    },
+
+    async changeStatus() {
+      try {
+        await axios.put('/admin/change-status', {
+          id: this.$route.params.id,
+          status: this.status
+        });
+        this.getOrder();
+      } catch (error) {
+        console.error(err);
       }
     }
   },
@@ -31,46 +66,63 @@ export default {
 </script>
 
 <template>
-<div class="window">
-  <div class="tabs">
-    <button @click="this.$router.push('/AdminPanel/actions')">
-      Действия
-    </button>
-    <button @click="this.$router.push('/AdminPanel/orders')">
-      Заказы
-    </button>
-  </div>
-  <div class="orderNumber" v-if='!this.error'>
-    <p>№ {{ order.orderNum }}  / {{ order.date }}</p>
-  </div>
-  <div class="orders" v-if='!this.error && this.order.title'>
-    <div class="card">
-      <div class="image-info">
-        <div class="image">
-          <img :src="order.photos[0]" alt="">
-        </div>
-        <div class="info">
-          <div class="code-count">
-            <p>Код товара: <b>{{ order.code }}</b></p>
-            <p>Количество: {{ order.count }}шт</p>  
-          </div>
+  <div class="window">
+    <div class="tabs">
+      <button @click="this.$router.push('/AdminPanel/actions')">
+        Действия
+      </button>
+      <button @click="this.$router.push('/AdminPanel/orders')">
+        Заказы
+      </button>
+    </div>
+    <div class="orderNumber" v-if='!this.error'>
+      <p>{{ order.date_create }}</p>
+      <div class="select">
+        <select class='border-2 rounded-2xl p-4' v-model='status'>
+            <option value="" selected>Выбрать статус заказа</option>
+            <option value="NEW">NEW</option>
+            <option value="END">END</option>
+            <option value="PROCESS">PROCESS</option>
+            <option value="WAITING">WAITING</option>
+        </select>
           
-          <div class="title-desc">
-            <h2><b>{{ order.title }}</b></h2>
-            <h4>Описание: {{ order.description }}</h4>  
-          </div>
-          
-          <p class="price">Цена: {{ order.price }} р</p>
-        </div>  
+        <span>Текущий статус заказа: {{ status }}</span>  
+        
+        <button class='text-base' @click='changeStatus'>Изменить статус заказа</button>
       </div>
       
-      <div class="btns">
-        <button @click='this.$router.push(`/Product/${order.idProduct}`)'>К товару</button>
+    </div>
+    
+    <div class="orders" v-if='!this.error && this.order.title'>
+      <div class="card">
+        <div class="image-info">
+          <div class="image">
+            <img :src="order.photos[0]" alt="">
+          </div>
+          <div class="info">
+            <div class="code-count">
+              <p>Количество: {{ order.count }}шт</p>
+            </div>
+
+            <div class="title-desc">
+              <h2><b>{{ order.title }}</b></h2>
+              <h4>Описание: {{ order.descriptions }}</h4>
+            </div>
+
+            <p class="price">Цена: {{ order.price }} р</p>
+          </div>
+        </div>
+
+        <div class="btns flex flex-col">
+          <button @click='this.$router.push(`/Product/${order.idProduct}`)'>К товару</button>
+          <div class="flex items-center gap-6">
+            
+          </div>
+        </div>
       </div>
     </div>
+    <h2 v-else class='text-red-500 font-bold text-2xl flex justify-center'>{{ error }}</h2>
   </div>
-  <h2 v-else class='text-red-500 font-bold text-2xl flex justify-center'>{{ error }}</h2>
-</div>
 </template>
 
 <style scoped>
@@ -83,7 +135,7 @@ export default {
 
   padding: 0 100px;
 
-  
+
   .tabs {
     display: flex;
     justify-content: center;
@@ -113,12 +165,35 @@ export default {
     p {
       font-size: 20px;
     }
+
+    .select {
+      span {
+        margin: 0 15px;
+      }
+
+      display: flex;
+      gap: 15px;
+      align-items: center;
+      margin-top: 20px;
+
+      .text-base {
+        background-color: #ff813c;
+        border-radius: 8px;
+        padding: 8px 20px;
+        color: #fff;
+        transition: all 200ms;
+      }
+
+      .text-base:hover {
+        background-color: #d95700;
+      }
+    }
   }
 
   .orders {
     width: 100%;
     height: 1000px;
-    
+
 
     .card {
       display: flex;
@@ -127,12 +202,13 @@ export default {
       padding: 20px;
       border-radius: 20px;
 
-      h2, h4 {
-           display: -webkit-box !important; 
-          -webkit-line-clamp: 2 !important; 
-          -webkit-box-orient: vertical !important; 
-          overflow: hidden !important; 
-          text-overflow: ellipsis !important;
+      h2,
+      h4 {
+        display: -webkit-box !important;
+        -webkit-line-clamp: 2 !important;
+        -webkit-box-orient: vertical !important;
+        overflow: hidden !important;
+        text-overflow: ellipsis !important;
       }
 
 
@@ -153,7 +229,7 @@ export default {
         align-items: center;
         width: 90%;
         gap: 30px;
-        
+
         img {
           min-width: 250px;
           height: 250px;
@@ -186,14 +262,15 @@ export default {
         }
       }
 
-      
+
     }
+
     .card:hover {
       transform: translateY(-10px);
       -webkit-box-shadow: 4px 4px 8px 0px rgba(34, 60, 80, 0.2);
       -moz-box-shadow: 4px 4px 8px 0px rgba(34, 60, 80, 0.2);
       box-shadow: 4px 4px 8px 0px rgba(34, 60, 80, 0.2);
-      
+
     }
   }
 }
@@ -202,7 +279,7 @@ export default {
 @media (max-width: 1355px) {
   .window {
     padding: 30px;
-  } 
+  }
 }
 
 @media (max-width: 830px) {
@@ -224,10 +301,17 @@ export default {
     }
 
     .btns button {
-      width: 360px !important;
+      width: 360px ;
     }
   }
 }
+
+  @media (max-width: 780px) {
+    .select {
+      flex-direction: column;
+      align-items: start !important;
+    }
+  }
 
 @media (max-width: 670px) {
   .image-info {
@@ -253,4 +337,10 @@ export default {
       width: 150px !important;
     }
   }
-}</style>
+}
+
+@media (max-width: 400px) {
+  .btns button {
+  }
+}
+</style>

@@ -45,7 +45,7 @@ def UpdateBasket(id_user: str, id_item: str, count: int) -> str:
             return_data = "count < 0"
 
         pg.commit()
-        logging.info('Корзина обновлена')
+        logging.info(f'Корзина {id_user} обновлена')
 
     except (Exception, Error) as error:
         logging.info(f"Ошибка получения данных: {error}")
@@ -85,14 +85,14 @@ def GetBasket(id_user: str) -> Union[dict, str]:
         """)
 
         cursor = pg.cursor(cursor_factory=psycopg2.extras.DictCursor)
-        cursor.execute("""
+        cursor.execute(f"""
                 SELECT jsonb_object_agg(id_item::text, count) AS basket_dict
                 FROM basket
-                WHERE id_user = %s;
-                """, (id_user))
+                WHERE id_user = $${id_user}$$;
+                """)
 
-        return_data = dict(cursor.fetchone)
-        logging.info('Корзина обновлена')
+        return_data = dict(cursor.fetchone())
+        logging.info(f'Корзина {id_user} показана')
 
     except (Exception, Error) as error:
         logging.info(f"Ошибка получения данных: {error}")

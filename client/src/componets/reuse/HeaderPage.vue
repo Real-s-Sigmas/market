@@ -132,12 +132,12 @@ export default {
     <div class="contact">
       <p>
         Для связи: <br />
-        8 495 255 87 65
-        <a class="shortTg" href="#!"
+        8 926 439 62 06
+        <a class="shortTg" href="https://t.me/+79264396206"
           ><img src="../../assets/icons/tgicon.svg" alt=""
         /></a>
       </p>
-      <a class="tg" href="#!"
+      <a class="tg" href="https://t.me/+79264396206"
         ><img src="../../assets/icons/tgicon.svg" alt=""
       /></a>
     </div>
@@ -226,7 +226,7 @@ export default {
         >
           Кабинет
         </button>
-      <a class="shortTg" href="#!"
+      <a class="shortTg" href="https://t.me/+79264396206"
         ><img src="../../assets/icons/tgicon.svg" alt=""
       /></a>
     </div>
@@ -502,7 +502,6 @@ button {
   }
 
   .acc:hover {
-    padding: 12px 45px;
   }
 
   .fav-acc {

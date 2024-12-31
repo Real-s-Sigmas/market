@@ -29,6 +29,7 @@ export default {
 <div class="window">
   <h2>Приветствую, {{userName}}</h2>
   <a href="/ResetPassword">Изменить пароль</a>
+  <a href="/myorders"> Посмотреть заказы</a>
 </div>
 </template>
 
