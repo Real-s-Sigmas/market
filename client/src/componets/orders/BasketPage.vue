@@ -308,7 +308,7 @@ img {
 
 @media (max-width: 920px) {
   .modal-page {
-    width: 100%;
+    left: 10px;
   }
 }
 

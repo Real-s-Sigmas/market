@@ -18,28 +18,7 @@ import OrdersAdminComp from '../admin/OrdersAdminComp.vue';
       async getOrders() {
         try {
             let res = await axios.get('/admin/orders');
-            
-            for(let i = 0; i < res.data.res[0].ids_items.length; i++) {
-                let responce = await axios.get('/items/one-item', {
-                    params: {
-                        id: res.data.res[0].ids_items[i].id,
-                    }
-                });
-                let item = responce.data.res;
-                this.orders.push({
-                    category: item.category,
-                    characteristics: item.characteristics,
-                    date_create: item.date_create,
-                    descriptions: item.descriptions,
-                    id: res.data.res[i].id,
-                    photos: item.photos,
-                    price: item.price,
-                    small_category: item.small_category,
-                    title: item.title,
-                    count: res.data.res[0].ids_items[i].count
-                });
-            }
-            console.log(this.orders);
+            this.orders = res.data.res;
         } catch (err) {
             console.error(err)
         }
