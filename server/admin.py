@@ -32,7 +32,11 @@ def AllOrders() -> Union[list, str]:
         data_ = cursor.fetchall()
         return_data = []
         for row in data_:
+            a = dict(row)
+            cursor.execute(f"SELECT phonenumber FROM users where id = $${a["id_user"]}$$")
+            a["phonenumber"] = cursor.fetchone()[0]
             return_data.append(dict(row))
+
 
         logging.info('Все заказы показаны')
 
@@ -58,7 +62,7 @@ def all_orders():
     return jsonify(responce_object)
 
 
-def OneOrder(id_user: str) -> Union[list, str]:
+def OneOrder(id: str) -> Union[list, str]:
     try:
         pg = psycopg2.connect(f"""
             host={HOST_PG}
@@ -70,11 +74,14 @@ def OneOrder(id_user: str) -> Union[list, str]:
 
         cursor = pg.cursor(cursor_factory=psycopg2.extras.DictCursor)
 
-        cursor.execute(f"SELECT * FROM orders WHERE id = $${id_user}$$")
+        cursor.execute(f"SELECT * FROM orders WHERE id = $${id}$$")
         # logging.info(f"SELECT * FROM orders WHERE id = $${id_user}$$")
         data_ = cursor.fetchall()
         return_data = []
         for row in data_:
+            a = dict(row)
+            cursor.execute(f"SELECT phonenumber FROM users where id = $${a["id_user"]}$$")
+            a["phonenumber"] = cursor.fetchone()[0]
             return_data.append(dict(row))
 
         logging.info('Все заказы показаны')
