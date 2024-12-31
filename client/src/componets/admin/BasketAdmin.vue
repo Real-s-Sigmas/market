@@ -77,7 +77,22 @@ export default {
     </div>
     <div class="orderNumber" v-if='!this.error'>
       <p>{{ order.date_create }}</p>
+      <div class="select">
+        <select class='border-2 rounded-2xl p-4' v-model='status'>
+            <option value="" selected>Выбрать статус заказа</option>
+            <option value="NEW">NEW</option>
+            <option value="END">END</option>
+            <option value="PROCESS">PROCESS</option>
+            <option value="WAITING">WAITING</option>
+        </select>
+          
+        <span>Текущий статус заказа: {{ status }}</span>  
+        
+        <button class='text-base' @click='changeStatus'>Изменить статус заказа</button>
+      </div>
+      
     </div>
+    
     <div class="orders" v-if='!this.error && this.order.title'>
       <div class="card">
         <div class="image-info">
@@ -99,17 +114,9 @@ export default {
         </div>
 
         <div class="btns flex flex-col">
-          <button @click='this.$router.push(`/Product/${order.ids_items[0].id}`)'>К товару</button>
-          <span>Текущий статус заказа: {{ status }}</span>
+          <button @click='this.$router.push(`/Product/${order.idProduct}`)'>К товару</button>
           <div class="flex items-center gap-6">
-            <select class='mt-5 border-2 rounded-2xl p-4' v-model='status'>
-              <option value="" selected>Выбрать статус заказа</option>
-              <option value="NEW">NEW</option>
-              <option value="END">END</option>
-              <option value="PROCESS">PROCESS</option>
-              <option value="WAITING">WAITING</option>
-            </select>
-            <button class='text-base' @click='changeStatus'>Изменить статус заказа</button>
+            
           </div>
         </div>
       </div>
@@ -157,6 +164,29 @@ export default {
 
     p {
       font-size: 20px;
+    }
+
+    .select {
+      span {
+        margin: 0 15px;
+      }
+
+      display: flex;
+      gap: 15px;
+      align-items: center;
+      margin-top: 20px;
+
+      .text-base {
+        background-color: #ff813c;
+        border-radius: 8px;
+        padding: 8px 20px;
+        color: #fff;
+        transition: all 200ms;
+      }
+
+      .text-base:hover {
+        background-color: #d95700;
+      }
     }
   }
 
@@ -271,10 +301,17 @@ export default {
     }
 
     .btns button {
-      width: 360px !important;
+      width: 360px ;
     }
   }
 }
+
+  @media (max-width: 780px) {
+    .select {
+      flex-direction: column;
+      align-items: start !important;
+    }
+  }
 
 @media (max-width: 670px) {
   .image-info {
@@ -299,6 +336,11 @@ export default {
     button {
       width: 150px !important;
     }
+  }
+}
+
+@media (max-width: 400px) {
+  .btns button {
   }
 }
 </style>
