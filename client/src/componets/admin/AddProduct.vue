@@ -207,7 +207,7 @@ export default {
       </div>
     </div>
 
-    <!-- <div id="imageContainer">
+    <div id="imageContainer">
       <div class="one-image" v-for="(image, index) in form.photos">
         <img class="image-one" :src="image" alt="Изображение" />
         <img
@@ -216,7 +216,7 @@ export default {
           src="../../assets/close-img.png"
         />
       </div>
-    </div> -->
+    </div>
 
     <div class="m-c flex flex-col">
       <label for="fullDescription" class="text-2xl mt-8"
