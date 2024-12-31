@@ -67,11 +67,13 @@ export default {
           count: 0,
         });
         this.products.forEach((item) => {
+          console.log(item);
           if(id == item.id) {
             let i = this.products.indexOf(item)
             this.products.splice(i, 1);
           }
         });
+        this.loadProducts();
       } catch (error) {
         this.error = "Действие невозможно. Повторите попытку позже";
       }
@@ -132,7 +134,7 @@ export default {
       <div class="card border-b-2  py-4 mt-1" v-for="product in products" v-if='this.products.length'>
         <div class="info-card flex gap-6 justify-between">
           <div class="info-container flex gap-6">
-            <img class="rounded-xl" :src="product.photos[0]" />
+            <img class="rounded-xl" v-if='product.photos' :src="product.photos[0]" />
             <div class="info-block flex flex-col gap-0 relative text-base">
               <h3 class="text-3xl font-bold">{{ product.title }}</h3>
               <p class="mt-5">

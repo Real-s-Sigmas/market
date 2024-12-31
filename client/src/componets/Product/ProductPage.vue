@@ -110,8 +110,9 @@ export default {
     async addToCart() {
       try {
         for(let i = 0; i < this.product_count; i++) {
-          await axios.post('/basket/add-item', {
+          await axios.put('/basket/update-item', {
             id: this.$route.params.id,
+            count: this.product_count,
           });
         }
         this.checkInBasket();
@@ -122,10 +123,9 @@ export default {
 
     async deleteFromCart() {
       try {
-        await axios.delete('/basket/delete-item', {
-          params: {
-            id: this.$route.params.id,
-          }
+        await axios.put('/basket/update-item', {
+          id: this.$route.params.id,
+          count: 0,
         });
         this.isInCart = false;
         this.checkInBasket();
@@ -185,10 +185,10 @@ export default {
 
     async checkInBasket() {
       try {
-        let res = await axios.get('/basket/show-basket');
-        for(let i = 0; i < res.data.res.length; i++) {
-          // console.log(res.data.res[i].id == this.$route.params.id) id
-          if(this.$route.params.id == res.data.res[i].id) {
+        let res = await axios.get('/basket/get-items');
+        const keys = Object.keys(res.data.res.basket_dict);
+        for(let i = 0; i < keys.length; i++) {
+          if(this.$route.params.id == keys[i]) {
             this.isInCart = true;
           }
         }
@@ -211,6 +211,15 @@ export default {
         }
       } catch (error) {
         console.error(error)
+      }
+    },
+
+    async checkIsAdmin() {
+      try {
+        let res = await axios.get('/user/profile');
+        this.isAdmin = res.data.res.admin;
+      } catch (error) {
+        console.log(error);
       }
     },
   },
@@ -248,22 +257,14 @@ export default {
       return this.photos.slice(start, end);
     },
 
-    async checkIsAdmin() {
-      try {
-        let res = await axios.get('/other/is-admin');
-        this.isAdmin = res.data.res;
-      } catch (error) {
-        console.log(error);
-      }
-    },
-
     async deleteProduct() {
       try {
-        await axios.delete('/items/delete-items', {
+        await axios.delete('/items/delete-item', {
           params: {
             id: this.$route.params.id,
           }
         });
+        this.$router.push('/');
       } catch (error) {
         console.log(error);
       }
@@ -274,7 +275,7 @@ export default {
     this.checkInBasket();
     this.checkInFavorite();
     this.getProduct();
-    // this.checkIsAdmin();
+    this.checkIsAdmin();
   }
 };
 </script>
