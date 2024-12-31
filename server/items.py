@@ -827,7 +827,7 @@ def PutItemText(title: str, description: str, price: float, topic: str, id: str,
         """, (title, description, price, topic, category, small_category, id))
 
         pg.commit()
-        return "Ok"
+        return id
 
     except (Exception, Error) as error:
         logging.error(f'DB: {error}')
@@ -857,7 +857,7 @@ def put_item_text():
         small_category=post_data.get("small_category")
     )
 
-    if res == "Ok":
+    if res != "Error":
         logging.info(f"Update {id} success")
         response_object["res"] = f"Update {id} success"
         session["id_item"] = id
