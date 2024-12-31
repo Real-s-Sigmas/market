@@ -25,7 +25,7 @@ MEDIA = os.getenv('MEDIA')
 AVATAR = os.getenv('AVATAR')
 PASSWORD_EMAIL = os.getenv('PASSWORD_EMAIL')
 EMAIL = os.getenv('EMAIL')
-
+API = os.getenv('API_URL')
 
 
 app = Flask(__name__)
@@ -34,7 +34,7 @@ app.secret_key = "/zxc/"
 app.permanent_session_lifetime = 60 * 60 * 24 * 28
 app.config['SESSION_COOKIE_SAMESITE'] = 'None'
 app.config['SESSION_COOKIE_SECURE'] = True  # Установите True для использования HTTPS
-
+app.config['MAX_CONTENT_LENGTH'] = 1024 * 1024 * 1024
 
 # enable CORS
 CORS(app, resources={r"*": {"origins": "*", 'supports_credentials': True}})
