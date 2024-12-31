@@ -88,7 +88,7 @@ def add_tables():
 
         cursor.execute(f"""create table if not exists orders (
                         id uuid UNIQUE,
-                        ids_items text[],
+                        ids_items jsonb[],
                         id_user uuid,
                         comment VARCHAR(100),
                         contacts VARCHAR(50),
@@ -132,6 +132,7 @@ from items import *
 from basket import *
 from photos import *
 from test import *
+from order import *
 
 if __name__ == '__main__':
       add_tables()
