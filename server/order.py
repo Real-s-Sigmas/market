@@ -1,4 +1,4 @@
-import psycopg2, logging
+import psycopg2, logging, json
 
 from psycopg2 import Error
 from flask import jsonify, request
@@ -6,6 +6,7 @@ from typing import Union
 from app import *
 from app import app, PASSWORD_PG, PORT_PG, USER_PG, HOST_PG
 from check import chek_for_user
+from datetime import datetime
 
 
 def GetOrderHistory(id_user: str) -> Union[str, list]:
@@ -61,8 +62,13 @@ def GetOrders(id_user: str) -> Union[str, list]:
 
         cursor = pg.cursor(cursor_factory=psycopg2.extras.DictCursor)
 
-        cursor.execute(f"")
-        #NOTE: probably status IN SHOP in futere 
+        cursor.execute(f"SELECT * FROM orders WHERE id_user = $${id_user}$$")
+        res = cursor.fetchall()
+
+        return_data = []
+
+        for i in res:
+            return_data.append(dict(i))
 
     except (Exception, Error) as error:
         logging.error(f'DB: ', error)
@@ -97,27 +103,23 @@ def AddOrder(id_user: str, id_items: list) -> Union[str, list]:
 
         cursor = pg.cursor(cursor_factory=psycopg2.extras.DictCursor)
 
-        cursor.execute(
-            """
-            INSERT INTO orders(id, orders, status, id_user)
-            VALUES (
-                ?,
-                (COALESCE(basket, '{}') || ?::text[]),
-                ?,
-                ?
-            );
-            """,
-            (uuid.uuid4().hex, id_items, "NEW", id_user)
-        )
+        # Преобразуем каждый словарь в JSON и затем в jsonb
+        ids_items = [json.dumps(item) for item in id_items]
+
+        insert_query = """
+            INSERT INTO orders (id, ids_items, id_user, status, date_create)
+            VALUES (%s, %s::jsonb[], %s, %s, %s)
+        """
+
+        cursor.execute(insert_query, (uuid.uuid4().hex, ids_items, id_user, "NEW", datetime.now()))
 
         pg.commit()
 
         return_data = "Ok"
 
-
     except (Exception, Error) as error:
-        logging.error(f'DB: ', error)
-        return_data = f"Error"
+        logging.error(f'DB Error: {error}')
+        return_data = "Error"
 
     finally:
         if pg:
@@ -125,6 +127,7 @@ def AddOrder(id_user: str, id_items: list) -> Union[str, list]:
             pg.close()
             logging.info("Соединение с PostgreSQL закрыто")
             return return_data
+
 
 @app.route("/order/add-order", methods=["POST"])
 @chek_for_user
