@@ -25,15 +25,35 @@ export default {
   methods: {
     async loadProducts() {
       try {
-        const res = await axios.get("/basket/show-basket");
-        this.products = res.data.res;
+        const res = await axios.get("/basket/get-items");
+        let keyys = res.data.res.basket_dict;
 
-        // let existingProduct = 0;
-        // for(let i = 0; i < this.products.length; i++) {
-        //   existingProduct = acc.find(item => item.id === this.products[i].id);
-        // }
-        
+        const keys = Object.keys(keyys);
 
+        for (let i = 0; i < keys.length; i++) {
+          let responce = await axios.get('/items/one-item', {
+            params: {
+              id: keys[i]
+            }
+          });
+
+          let item = responce.data.res;
+
+          this.products.push({
+            title: item.title,
+            category: item.category,
+            characteristics: item.characteristics,
+            date_create: item.date_create,
+            descriptions: item.descriptions,
+            id: item.id,
+            photos: item.photos,
+            price: item.price,
+            small_category: item.small_category,
+            count: res.data.res.basket_dict[keys[i]]
+          });
+
+          console.log(this.products);
+        }
       } catch (error) {
         this.error = "Ошибка! Невозможно найти товары";
       }
@@ -42,12 +62,16 @@ export default {
 
     async deleteProduct(id) {
       try {
-        await axios.delete("/basket/delete-item", {
-          params: {
-            id: id,
-          },
+        await axios.put("/basket/update-item", {
+          id: id,
+          count: 0,
         });
-        this.loadProducts();
+        this.products.forEach((item) => {
+          if(id == item.id) {
+            let i = this.products.indexOf(item)
+            this.products.splice(i, 1);
+          }
+        });
       } catch (error) {
         this.error = "Действие невозможно. Повторите попытку позже";
       }
@@ -63,10 +87,8 @@ export default {
           },);
         }
 
-        let res = await axios.post("/order/add-oder", {
-          params: {
-            ids: ids,
-          },
+        let res = await axios.post("/order/add-order", {
+          ids: ids,
         });
 
         if (res.data.res == "Error") {
@@ -107,17 +129,17 @@ export default {
     </h2>
 
     <div class="products-container">
-      <div class="card border-b-2  py-4 mt-1" v-for="product in products">
+      <div class="card border-b-2  py-4 mt-1" v-for="product in products" v-if='this.products.length'>
         <div class="info-card flex gap-6 justify-between">
           <div class="info-container flex gap-6">
-            <img class="rounded-xl " :src="product.photos[0]" />
+            <img class="rounded-xl" :src="product.photos[0]" />
             <div class="info-block flex flex-col gap-0 relative text-base">
               <h3 class="text-3xl font-bold">{{ product.title }}</h3>
               <p class="mt-5">
                 <b>Описание:</b> {{ product.characteristics.substring(0, 40)
                 }}<span v-if="product.characteristics.length >= 40">...</span>
               </p>
-              <span>Количество: {{ displayedItems.length }}</span>
+              <span>Количество: {{ product.count }}</span>
               <span class="absolute bottom-0 left-0"><b>Цена:</b>
                 <p class="price">{{ product.price }} ₽</p>
               </span>
@@ -284,6 +306,12 @@ img {
   }
 }
 
+@media (max-width: 920px) {
+  .modal-page {
+    width: 100%;
+  }
+}
+
 @media (max-width: 800px) {
   .info-card {
     flex-direction: column;
@@ -443,4 +471,4 @@ input {
 
 
 }
-</style>
+</style>  
