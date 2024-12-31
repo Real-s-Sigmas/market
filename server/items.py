@@ -840,7 +840,7 @@ def PutItemText(title: str, description: str, price: float, topic: str, id: str,
             logging.info("Соединение с PostgreSQL закрыто")
 
 
-@app.route("/items/change-item", methods=["PUT"])
+@app.route("/items/put-item/text", methods=["PUT"])
 @chek_for_admin
 def put_item_text():
     response_object = {'status': 'success'}  # База
@@ -862,7 +862,7 @@ def put_item_text():
         response_object["res"] = f"Update {id} success"
         session["id_item"] = id
         session.modified = True
-        session["list"] = post_data.get("names_photos")
+        session["list"] = post_data.get("photos")
         session.modified = True
         return jsonify(response_object), 200
     else:
@@ -878,9 +878,11 @@ def PutItemImage(id: str, names_files: list, request) -> str:
     for i in names_files:
         if "/item" in i:
             info_for_db.append(i)
-    uploaded_files = request.files.getlist('Images')
+    uploaded_files = request.files.getlist('images')
+    # logging.info(uploaded_files)
 
     for uploaded_file in uploaded_files:
+        logging.info(uploaded_file)
         if uploaded_file.filename not in names_files:
             logging.info(f"{uploaded_file.filename} не найден в списке names_files, продолжаем")
             continue
@@ -918,7 +920,7 @@ def PutItemImage(id: str, names_files: list, request) -> str:
             logging.info("Соединение с PostgreSQL закрыто")
 
 
-@app.route("/items/put-item/image", methods=["POST"])
+@app.route("/items/put-item/image", methods=["PUT"])
 @chek_for_admin
 def put_item_image():
     response_object = {'status': 'success'}
