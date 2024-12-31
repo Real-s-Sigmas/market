@@ -35,8 +35,7 @@ def AllOrders() -> Union[list, str]:
             a = dict(row)
             cursor.execute(f"SELECT phonenumber FROM users where id = $${a["id_user"]}$$")
             a["phonenumber"] = cursor.fetchone()[0]
-            return_data.append(dict(row))
-
+            return_data.append(a)
 
         logging.info('Все заказы показаны')
 
@@ -82,7 +81,7 @@ def OneOrder(id: str) -> Union[list, str]:
             a = dict(row)
             cursor.execute(f"SELECT phonenumber FROM users where id = $${a["id_user"]}$$")
             a["phonenumber"] = cursor.fetchone()[0]
-            return_data.append(dict(row))
+            return_data.append(a)
 
         logging.info('Все заказы показаны')
 
