@@ -108,6 +108,8 @@ export default {
             this.percentCompleted = percentCompleted;
           },
         });
+          this.$router.push("/")
+        
       } catch (error) {
         console.error("Ошибка при отправке данных:", error);
         return;
