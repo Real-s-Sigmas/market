@@ -99,7 +99,7 @@ def get_orders():
 def SendEmailNew(email: str) -> str:
     sender = EMAIL
     send_password = PASSWORD_EMAIL
-
+    logging.info(f"will send to: {email}")
     Emailmsg = "Спасибо за заказ! Мы уже его собираем и по готовности, вам придет сообщение."
 
     msg = EmailMessage()
@@ -132,9 +132,9 @@ def SendEmailWaiting(email: str, id_order: str) -> str:
     sender = EMAIL
     send_password = PASSWORD_EMAIL
 
-    Emailmsg = f"""Ваш заказ готов, код заказа: {id_order}. 
-                Подробную информацию о получении заказа, 
-                а так же о пункте выдачи вы можете посмотреть на тут: {ABOUT_US}"""
+    Emailmsg = f"""Ваш заказ готов, код заказа: {id_order[-8:]}. 
+Подробную информацию о получении заказа.
+A так же о пункте выдачи вы можете посмотреть тут: {ABOUT_US}"""
 
     msg = EmailMessage()
 
