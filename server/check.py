@@ -135,7 +135,7 @@ def getEmail(id_user: str) -> str:
         """)
         cursor = pg.cursor(cursor_factory=psycopg2.extras.DictCursor)
 
-        cursor.execute("select email from users where id = %s", (id_user))
+        cursor.execute("SELECT email FROM users WHERE id = %s", (id_user,))
 
         return_data = cursor.fetchone()[0]
 
