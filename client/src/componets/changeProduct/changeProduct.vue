@@ -11,8 +11,8 @@ export default {
       error: ``,
 
       product: {},
-        tmps: [],
-      photos: []
+      tmps: [],
+      photos: [],
     };
   },
 
@@ -47,9 +47,8 @@ export default {
             id: this.$route.params.id,
           },
         });
-          this.product = res.data.res;
-        this.photos = res.data.res.photos
-        console.log(this.product);
+        this.product = res.data.res;
+        this.photos = res.data.res.photos;
       } catch (error) {
         console.log(error);
       }
@@ -59,8 +58,8 @@ export default {
       try {
         let res;
         if (!this.product.category.category) {
-            // говнокод
-          console.log(this.product.photos)
+          // говнокод
+          console.log(this.product.photos);
           res = await axios.put("/items/put-item/text", {
             id: this.$route.params.id,
             title: this.product.title,
@@ -72,8 +71,7 @@ export default {
             characteristics: this.product.characteristics,
           });
         } else {
-            res = await axios.put("/items/put-item/text", {
-
+          res = await axios.put("/items/put-item/text", {
             id: this.$route.params.id,
             title: this.product.title,
             price: this.product.price,
@@ -89,14 +87,14 @@ export default {
           this.error = "Ошибка добавления товара";
           console.log("error");
         } else {
-        //   this.$router.push("/");
+          //   this.$router.push("/");
         }
       } catch (error) {
         this.error = "Ошибка добавления товара";
         console.log(error);
-        }
+      }
 
-        try {
+      try {
         let res = await axios.put("/items/put-item/image", this.formdata, {
           headers: {
             "Content-Type": "multipart/form-data",
@@ -108,8 +106,6 @@ export default {
             this.percentCompleted = percentCompleted;
           },
         });
-          this.$router.push("/")
-        
       } catch (error) {
         console.error("Ошибка при отправке данных:", error);
         return;
@@ -146,11 +142,15 @@ export default {
         console.log("Неверные аргументы для convertFile");
       }
     },
+    deleteImage() {
+    this.photos = []; // Очистить массив загруженных изображений
+    if (this.product && this.product.photos) {
+      this.product.photos = []; // Очистить массив фотографий продукта
+    }
+    console.log("Изображения успешно очищены");
+  },
   },
 
-  deleteImage(index) {
-    this.product.photos.splice(index, 1);
-  },
 };
 </script>
 
@@ -251,6 +251,12 @@ export default {
     <div
       class="price-block m-c flex xl:justify-between xl:flex-row flex-col gap-10"
     >
+
+    <!-- во кнопка -->
+        <div><button class="ml-7 mt-7" @click="deleteImage">Очистить картинки</button></div>
+
+
+
       <label for="price" class="text-2xl mt-8">Цена товара:</label>
       <div class="flex gap-3">
         <input
@@ -260,13 +266,6 @@ export default {
         />
       </div>
 
-      <div class="mt-7 d-flex flex-col">
-        <ul>
-            <li v-for="(photo, index) in this.product.photos" ><a :href="photo" target="blank">Ссылка на изображение</a></li>
-        </ul>
-      </div>
-
-
       <button type="submit" class="acc mt-8">Изменить</button>
     </div>
     <h2 class="text-red-500 text-xl text-semibold mt-10" v-if="this.error">
@@ -274,8 +273,15 @@ export default {
     </h2>
   </form>
 
-
-  
+  <div class="mt-7 ml-5 d-flex">
+    <ul>
+      <li v-for="(photo, index) in this.product.photos">
+        <a :href="photo" target="blank"
+          >Ссылка на изображение №{{ index + 1 }}</a
+        >
+      </li>
+    </ul>
+  </div>
 </template>
 
 <style scoped>
