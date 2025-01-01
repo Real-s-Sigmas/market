@@ -122,3 +122,30 @@ def doQuery(query: str):
             pg.close()
             logging.info("Соединение с PostgreSQL закрыто")
             return return_data
+
+
+def getEmail(id_user: str) -> str:
+    try:
+        pg = psycopg2.connect(f"""
+            host={HOST_PG}
+            dbname=postgres
+            user={USER_PG}
+            password={PASSWORD_PG}
+            port={PORT_PG}
+        """)
+        cursor = pg.cursor(cursor_factory=psycopg2.extras.DictCursor)
+
+        cursor.execute("select email from users where id = %s", (id_user))
+
+        return_data = cursor.fetchone()[0]
+
+    except (Exception, Error) as error:
+        logging.error(f'DB: ', error)
+        return_data = f"Ошибка обращения к базе данных: {error}"
+
+    finally:
+        if pg:
+            cursor.close()
+            pg.close()
+            logging.info("Соединение с PostgreSQL закрыто")
+            return return_data

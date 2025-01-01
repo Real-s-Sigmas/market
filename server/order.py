@@ -91,6 +91,82 @@ def get_orders():
     return jsonify(response_object)
 
 
+def SendEmailNew(email: str):
+    sender = EMAIL
+    send_password = PASSWORD_EMAIL
+
+    Emailmsg = "Спасибо за заказ! Мы уже его собираем и по готовности, вам придет сообщение."
+
+    msg = EmailMessage()
+
+    msg["Subject"] = "Заказ оформлен"
+    msg["From"] = sender
+    msg["To"] = email
+    msg.set_content(Emailmsg)
+
+    try:
+        server = smtplib.SMTP('smtp.gmail.com', 587)
+        server.ehlo()
+        server.starttls()
+        server.ehlo()
+        server.login(sender, send_password)
+        server.sendmail(sender, email, msg.as_string())
+        logging.info("Email sent successfully!")
+
+    except smtplib.SMTPRecipientsRefused:
+        logging.info("Error: Recipient's email does not exist.")
+        return "err"
+
+    finally:
+        server.quit()
+        logging.info(f'Письмо об оформлении заказа отправлено на {email}')
+
+        return 'ok'
+    
+def SendEmailWaiting(email: str):
+    sender = EMAIL
+    send_password = PASSWORD_EMAIL
+
+    Emailmsg = """Ваш заказ готов, код заказа: 123456. 
+                Подробную информацию о получении заказа, 
+                а так же о пункте выдачи вы можете посмотреть на тут: https://sir-stroyremont.ru/aboutus"""
+
+    msg = EmailMessage()
+
+    msg["Subject"] = "Заказ готов"
+    msg["From"] = sender
+    msg["To"] = email
+    msg.set_content(Emailmsg)
+
+    try:
+        server = smtplib.SMTP('smtp.gmail.com', 587)
+        server.ehlo()
+        server.starttls()
+        server.ehlo()
+        server.login(sender, send_password)
+        server.sendmail(sender, email, msg.as_string())
+        logging.info("Email sent successfully!")
+
+    except smtplib.SMTPRecipientsRefused:
+        logging.info("Error: Recipient's email does not exist.")
+        return "err"
+
+    finally:
+        server.quit()
+        logging.info(f'Письмо о готовности заказа отправлено на {email}')
+
+        return 'ok'
+
+
+
+
+def sendEmail(id_user: str, type: str, id_order: str) -> str:
+    if type == "NEW":
+        return
+    elif type == "WAITING":
+        return
+    return "Error type"
+
 def AddOrder(id_user: str, id_items: list) -> Union[str, list]:
     try:
         pg = psycopg2.connect(f"""
@@ -105,17 +181,19 @@ def AddOrder(id_user: str, id_items: list) -> Union[str, list]:
 
         # Преобразуем каждый словарь в JSON и затем в jsonb
         ids_items = [json.dumps(item) for item in id_items]
-
+        id = uuid.uuid4().hex
         insert_query = """
             INSERT INTO orders (id, ids_items, id_user, status, date_create)
             VALUES (%s, %s::jsonb[], %s, %s, %s)
         """
 
-        cursor.execute(insert_query, (uuid.uuid4().hex, ids_items, id_user, "NEW", datetime.now()))
+        cursor.execute(insert_query, (id, ids_items, id_user, "NEW", datetime.now()))
 
+
+        
         pg.commit()
 
-        return_data = "Ok"
+        return_data = id
 
     except (Exception, Error) as error:
         logging.error(f'DB Error: {error}')

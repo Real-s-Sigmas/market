@@ -58,7 +58,7 @@ export default {
           id: this.$route.params.id,
           status: this.status
         });
-        this.getOrder();
+       // this.getOrder();
       } catch (error) {
         console.error(err);
       }
@@ -83,6 +83,7 @@ export default {
     </div>
     <div class="orderNumber" v-if='!this.error'>
       <p>Номер телефона пользователя: {{ order.phonenumber }}</p>
+      <p>{{order.id}}</p>
       <p>Дата создания: {{ order.date_create }}</p>
       <div class="select">
         <select class='border-2 rounded-2xl p-4' v-model='status'>

@@ -70,7 +70,7 @@ def SignUp(name: str, surname: str, phonenumber, password: str, email: str) -> s
             logging.info("Пользователь зарегестрирован!")
             return_data = "ok"
         else:
-            return_data = "Пользователь с таким именем или почтой уже существует!"
+            return_data = "Пользователь с такой почтой или номером телефона уже существует!"
             logging.warning(return_data)
 
     except (Exception, Error) as error:
