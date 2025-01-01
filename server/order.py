@@ -1,13 +1,14 @@
-import psycopg2, logging, json, os
+import psycopg2, logging, json, os, smtplib
 
 from psycopg2 import Error
 from flask import jsonify, request, session
 from typing import Union
 from app import *
-from app import app, PASSWORD_PG, PORT_PG, USER_PG, HOST_PG
+from app import app, PASSWORD_PG, PORT_PG, USER_PG, HOST_PG, EMAIL, PASSWORD_EMAIL
 from check import chek_for_user, getEmail
 from datetime import datetime
 from dotenv import load_dotenv
+from email.message import EmailMessage
 
 load_dotenv()
 
