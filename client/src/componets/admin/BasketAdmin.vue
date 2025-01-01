@@ -59,7 +59,22 @@ export default {
           status: this.status
         });
        // this.getOrder();
-      } catch (error) {
+      } catch (err) {
+        console.error(err);
+      }
+    },
+
+    // Починить удаление заказа!!!!
+
+    async deleteOrder() {
+      try {
+        console.log(this.$route.params.id);
+        await axios.delete('/order/delete-order', {
+           params: {
+              id: this.$route.params.id,
+           }
+        })
+      } catch (err) {
         console.error(err);
       }
     }
@@ -97,6 +112,7 @@ export default {
         <span>Текущий статус заказа: {{ status }}</span>  
         
         <button class='text-base' @click='changeStatus'>Изменить статус заказа</button>
+        <button class="delete-order " @click="deleteOrder">Удалить заказ</button>
       </div>
       
     </div>
