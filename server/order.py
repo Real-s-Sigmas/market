@@ -91,6 +91,13 @@ def get_orders():
     return jsonify(response_object)
 
 
+def sendEmail(id_user: str, type: str, id_order: str) -> str:
+    if type == "NEW":
+        return
+    elif type == "WAITING":
+        return
+    return "Error type"
+
 def AddOrder(id_user: str, id_items: list) -> Union[str, list]:
     try:
         pg = psycopg2.connect(f"""
@@ -105,17 +112,19 @@ def AddOrder(id_user: str, id_items: list) -> Union[str, list]:
 
         # Преобразуем каждый словарь в JSON и затем в jsonb
         ids_items = [json.dumps(item) for item in id_items]
-
+        id = uuid.uuid4().hex
         insert_query = """
             INSERT INTO orders (id, ids_items, id_user, status, date_create)
             VALUES (%s, %s::jsonb[], %s, %s, %s)
         """
 
-        cursor.execute(insert_query, (uuid.uuid4().hex, ids_items, id_user, "NEW", datetime.now()))
+        cursor.execute(insert_query, (id, ids_items, id_user, "NEW", datetime.now()))
 
+
+        
         pg.commit()
 
-        return_data = "Ok"
+        return_data = id
 
     except (Exception, Error) as error:
         logging.error(f'DB Error: {error}')
