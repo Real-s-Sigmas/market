@@ -6,6 +6,7 @@ from psycopg2 import extras, Error
 from typing import Union, Optional, Tuple
 from check import chek_for_admin, chek_for_user
 from datetime import datetime
+from order import sendEmail
 
 # locale.setlocale(locale.LC_ALL, "ru_RU")
 
@@ -128,8 +129,16 @@ def ChangeStatus(status: str, id: str)->str:
         cursor.execute(f"UPDATE orders SET status = $${status}$$ WHERE id = $${id}$$")
         pg.commit()
 
-        logging.info(f"Статус заказа {id} изменен на {status}")
-        return_data = "ok"
+        if status == 'WAITING':
+            cursor.execute(f"""select id_user from orders where id = $${id}$$""")
+            email = sendEmail(cursor.fetchone()[0], status, id)
+
+            if email != 'ok': 
+                logging.error(f"Failed to send email {id}")
+                return_data = "Failed to send email"
+            else:
+                logging.info(f"Статус заказа {id} изменен на {status}") 
+                return_data = "ok"
 
     except (Exception, Error) as error:
         logging.info(f"Ошибка получения данных: {error}")

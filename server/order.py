@@ -1,13 +1,17 @@
-import psycopg2, logging, json
+import psycopg2, logging, json, os
 
 from psycopg2 import Error
 from flask import jsonify, request, session
 from typing import Union
 from app import *
 from app import app, PASSWORD_PG, PORT_PG, USER_PG, HOST_PG
-from check import chek_for_user
+from check import chek_for_user, getEmail
 from datetime import datetime
+from dotenv import load_dotenv
 
+load_dotenv()
+
+ABOUT_US = os.getenv('ABOUT_US')
 
 def GetOrderHistory(id_user: str) -> Union[str, list]:
     try:
@@ -91,7 +95,7 @@ def get_orders():
     return jsonify(response_object)
 
 
-def SendEmailNew(email: str):
+def SendEmailNew(email: str) -> str:
     sender = EMAIL
     send_password = PASSWORD_EMAIL
 
@@ -123,13 +127,13 @@ def SendEmailNew(email: str):
 
         return 'ok'
     
-def SendEmailWaiting(email: str):
+def SendEmailWaiting(email: str, id_order: str) -> str:
     sender = EMAIL
     send_password = PASSWORD_EMAIL
 
-    Emailmsg = """Ваш заказ готов, код заказа: 123456. 
+    Emailmsg = f"""Ваш заказ готов, код заказа: {id_order}. 
                 Подробную информацию о получении заказа, 
-                а так же о пункте выдачи вы можете посмотреть на тут: https://sir-stroyremont.ru/aboutus"""
+                а так же о пункте выдачи вы можете посмотреть на тут: {ABOUT_US}"""
 
     msg = EmailMessage()
 
@@ -162,10 +166,11 @@ def SendEmailWaiting(email: str):
 
 def sendEmail(id_user: str, type: str, id_order: str) -> str:
     if type == "NEW":
-        return
+        return SendEmailNew(getEmail(id_user))
     elif type == "WAITING":
-        return
+        return SendEmailWaiting(getEmail(id_user), id_order)
     return "Error type"
+
 
 def AddOrder(id_user: str, id_items: list) -> Union[str, list]:
     try:
@@ -188,12 +193,13 @@ def AddOrder(id_user: str, id_items: list) -> Union[str, list]:
         """
 
         cursor.execute(insert_query, (id, ids_items, id_user, "NEW", datetime.now()))
-
-
         
         pg.commit()
 
-        return_data = id
+        email = sendEmail(id_user, 'NEW', id)
+
+        if email != 'ok': return_data = "Failed to send email"
+        else: return_data = id
 
     except (Exception, Error) as error:
         logging.error(f'DB Error: {error}')
