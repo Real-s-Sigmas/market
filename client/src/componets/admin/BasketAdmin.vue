@@ -152,6 +152,7 @@ export default {
 <style scoped>
 .window {
   margin-top: 50px;
+  height: auto;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -216,7 +217,7 @@ export default {
 
   .orders {
     width: 100%;
-    height: 1000px;
+    height: auto;
 
 
     .card {

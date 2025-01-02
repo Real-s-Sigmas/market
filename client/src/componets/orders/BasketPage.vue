@@ -308,7 +308,17 @@ img {
 
 @media (max-width: 920px) {
   .modal-page {
-    left: 10px;
+    left: 20%;
+    top: 20%;
+    width: 50%;
+    height: 50%;
+  }
+}
+
+@media (max-width: 630px) {
+  .modal-page {
+    left: 5%;
+    width: 90%;
   }
 }
 

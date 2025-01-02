@@ -157,7 +157,7 @@ export default {
 <template>
   <form
     @submit.prevent="addProduct"
-    class="post-container mx-0 flex flex-col mt-16"
+    class="mx-0 flex flex-col mt-16"
   >
     <div class="up-info flex xl:gap-16 justify-between">
       <label for="filee" class="input-file">
@@ -173,7 +173,26 @@ export default {
             @change="convertFile($event, 'images')"
             accept="image/*"
           />
-          <span>+</span>
+          <svg
+            width="70"
+            height="70"
+            viewBox="0 0 22 22"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M10.8696 2L10.8696 20"
+              stroke="#272727"
+              stroke-width="1"
+              stroke-linecap="round"
+            />
+            <path
+              d="M2 10.8696H20"
+              stroke="#272727"
+              stroke-width="1"
+              stroke-linecap="round"
+            />
+          </svg>
         </div>
       </label>
       <div class="main-info-block flex flex-col">
@@ -304,6 +323,8 @@ export default {
 
 .select-block {
   position: relative;
+  display: flex;
+  flex-direction: column;
 }
 
 .arrow-down {
@@ -370,6 +391,7 @@ export default {
 
 select {
   margin-top: 38px;
+  width: 300px;
   height: 52px;
   background-color: #ff812c;
   color: #fff;
@@ -395,7 +417,7 @@ textarea {
 
   font-size: 20px;
 
-  border: 3px solid #000;
+  border: 2px solid #000;
 
   border-radius: 10px;
 }
@@ -417,7 +439,7 @@ textarea {
   width: 280px;
   font-size: 185px;
   font-weight: 100 !important;
-  border: 3px solid #1e1e1e;
+  border: 2px solid #1e1e1e;
 }
 
 @media (min-width: 1400px) {
@@ -512,7 +534,7 @@ textarea {
   width: 500px;
   height: 50px;
   border: none;
-  border-bottom: 3px solid #1e1e1e;
+  border-bottom: 2px solid #1e1e1e;
   border-radius: 0 !important;
   margin-top: 24px;
 

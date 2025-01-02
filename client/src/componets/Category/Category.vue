@@ -51,7 +51,7 @@ export default {
 				v-for='product in products' @click='this.$router.push(`/Product/${product.id}`)' :key="product.title">
 				<img class='rounded-t-2xl' v-if='product.photos' :src="product.photos[0]" :alt="product.title">
 				<div class="info-block p-6 flex flex-col">
-					<h3 class='text-2xl font-bold'>{{ product.title }}</h3>
+					<h3 class='title text-2xl font-bold'>{{ product.title }}</h3>
 					<p class='text-slate-500'>{{ product.small_category}}</p>
 					<b>{{ product.price }} р.</b>
 				</div>
@@ -74,10 +74,29 @@ export default {
 
 	h3 {
 		color: #ff812c;
+		margin-bottom: 20px;
 	}
 
 	b {
 		font-size: 20px;
+		color: #000;
+	}
+
+	.title {
+		width: 100%;
+		line-height: 1.5;
+		overflow: hidden;
+		display: -webkit-box;
+		-webkit-line-clamp: 2; 
+    -webkit-box-orient: vertical; 
+    text-overflow: ellipsis;
+    word-wrap: break-word;
+	}
+}
+
+@media (max-width: 1250px) {
+	h3 {
+		font-size: 18px;
 	}
 }
 

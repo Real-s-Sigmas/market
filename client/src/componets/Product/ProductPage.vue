@@ -288,9 +288,9 @@ export default {
       <div class="images">
         <img class="prod-img" :src="product.photos[currentImageIndex]" alt="" />
         <div class="mini-img">
-          <button @click="prevImage" :disabled="currentImageIndex === 0">
-            <img class="arrow-btn" src="../../assets/arrow-prev.svg" alt="" />
-          </button>
+          <!-- <button @click="prevImage" :disabled="currentImageIndex === 0"> -->
+          <!--   <img class="arrow-btn" src="../../assets/arrow-prev.svg" alt="" /> -->
+          <!-- </button> -->
           <div
            
             class="img-mini"
@@ -302,12 +302,12 @@ export default {
             @click="selectImage(product.photos.indexOf(image))">
             <img :src="image" alt="" />
           </div>
-          <button
-            @click="nextImage"
-            :disabled="currentImageIndex == photos.length - 1"
-          >
-            <img class="arrow-btn" src="../../assets/arrow-next.svg" alt="" />
-          </button>
+          <!-- <button -->
+          <!--   @click="nextImage" -->
+          <!--   :disabled="currentImageIndex == photos.length - 1" -->
+          <!-- > -->
+          <!--   <img class="arrow-btn" src="../../assets/arrow-next.svg" alt="" /> -->
+          <!-- </button> -->
         </div>
       </div>
 
