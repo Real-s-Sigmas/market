@@ -16,6 +16,7 @@
   <a :href="`/basketadmin/${order.id}`">
     <div class="comp-block" :class="{'grey': order.status == 'END', 'yellow': order.status == 'WAITING', 'green': order.status == 'PROCESS'}">
       <p class='font-bold'>Номер пользователя: {{ order.phonenumber }}</p>
+      <p v-if='order.id'>Номер заказа: <b>{{ order.id.substring(28, 36) }}</b></p>
       <p>Количество товаров: {{ order.ids_items.length }}</p>
       <p>Статус: {{ order.status }}</p>
       <p>{{ order.date_create }}</p>

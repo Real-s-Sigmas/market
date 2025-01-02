@@ -98,7 +98,7 @@ export default {
     </div>
     <div class="orderNumber" v-if='!this.error'>
       <p>Номер телефона пользователя: {{ order.phonenumber }}</p>
-      <p>{{order.id}}</p>
+      <p v-if='order.id'>Номер заказа: <b>{{ order.id.substring(28, 36) }}</b></p>
       <p>Дата создания: {{ order.date_create }}</p>
       <div class="select">
         <select class='border-2 rounded-2xl p-4' v-model='status'>
