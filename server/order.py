@@ -1,13 +1,18 @@
-import psycopg2, logging, json
+import psycopg2, logging, json, os, smtplib
 
 from psycopg2 import Error
 from flask import jsonify, request, session
 from typing import Union
 from app import *
-from app import app, PASSWORD_PG, PORT_PG, USER_PG, HOST_PG
-from check import chek_for_user
+from app import app, PASSWORD_PG, PORT_PG, USER_PG, HOST_PG, EMAIL, PASSWORD_EMAIL
+from check import chek_for_user, getEmail
 from datetime import datetime
+from dotenv import load_dotenv
+from email.message import EmailMessage
 
+load_dotenv()
+
+ABOUT_US = os.getenv('ABOUT_US')
 
 def GetOrderHistory(id_user: str) -> Union[str, list]:
     try:
@@ -91,6 +96,83 @@ def get_orders():
     return jsonify(response_object)
 
 
+def SendEmailNew(email: str) -> str:
+    sender = EMAIL
+    send_password = PASSWORD_EMAIL
+    logging.info(f"will send to: {email}")
+    Emailmsg = "Спасибо за заказ! Мы уже его собираем и по готовности, вам придет сообщение."
+
+    msg = EmailMessage()
+
+    msg["Subject"] = "Заказ оформлен"
+    msg["From"] = sender
+    msg["To"] = email
+    msg.set_content(Emailmsg)
+
+    try:
+        server = smtplib.SMTP('smtp.gmail.com', 587)
+        server.ehlo()
+        server.starttls()
+        server.ehlo()
+        server.login(sender, send_password)
+        server.sendmail(sender, email, msg.as_string())
+        logging.info("Email sent successfully!")
+
+    except smtplib.SMTPRecipientsRefused:
+        logging.info("Error: Recipient's email does not exist.")
+        return "err"
+
+    finally:
+        server.quit()
+        logging.info(f'Письмо об оформлении заказа отправлено на {email}')
+
+        return 'ok'
+    
+def SendEmailWaiting(email: str, id_order: str) -> str:
+    sender = EMAIL
+    send_password = PASSWORD_EMAIL
+
+    Emailmsg = f"""Ваш заказ готов, код заказа: {id_order[-8:]}. 
+Подробную информацию о получении заказа.
+A так же о пункте выдачи вы можете посмотреть тут: {ABOUT_US}"""
+
+    msg = EmailMessage()
+
+    msg["Subject"] = "Заказ готов"
+    msg["From"] = sender
+    msg["To"] = email
+    msg.set_content(Emailmsg)
+
+    try:
+        server = smtplib.SMTP('smtp.gmail.com', 587)
+        server.ehlo()
+        server.starttls()
+        server.ehlo()
+        server.login(sender, send_password)
+        server.sendmail(sender, email, msg.as_string())
+        logging.info("Email sent successfully!")
+
+    except smtplib.SMTPRecipientsRefused:
+        logging.info("Error: Recipient's email does not exist.")
+        return "err"
+
+    finally:
+        server.quit()
+        logging.info(f'Письмо о готовности заказа отправлено на {email}')
+
+        return 'ok'
+
+
+
+
+def sendEmail(id_user: str, type: str, id_order: str) -> str:
+    if type == "NEW":
+        return SendEmailNew(getEmail(id_user))
+    elif type == "WAITING":
+        return SendEmailWaiting(getEmail(id_user), id_order)
+    return "Error type"
+
+
 def AddOrder(id_user: str, id_items: list) -> Union[str, list]:
     try:
         pg = psycopg2.connect(f"""
@@ -105,17 +187,20 @@ def AddOrder(id_user: str, id_items: list) -> Union[str, list]:
 
         # Преобразуем каждый словарь в JSON и затем в jsonb
         ids_items = [json.dumps(item) for item in id_items]
-
+        id = uuid.uuid4().hex
         insert_query = """
             INSERT INTO orders (id, ids_items, id_user, status, date_create)
             VALUES (%s, %s::jsonb[], %s, %s, %s)
         """
 
-        cursor.execute(insert_query, (uuid.uuid4().hex, ids_items, id_user, "NEW", datetime.now()))
-
+        cursor.execute(insert_query, (id, ids_items, id_user, "NEW", datetime.now()))
+        
         pg.commit()
 
-        return_data = "Ok"
+        email = sendEmail(id_user, 'NEW', id)
+
+        if email != 'ok': return_data = "Failed to send email"
+        else: return_data = id
 
     except (Exception, Error) as error:
         logging.error(f'DB Error: {error}')

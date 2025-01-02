@@ -3,7 +3,6 @@ import random, uuid, psycopg2, smtplib, logging, hashlib
 from app import HOST_PG, USER_PG, PASSWORD_PG, PORT_PG, PASSWORD_EMAIL, EMAIL, app
 from psycopg2 import Error
 from flask import jsonify, request, session
-from email.mime.text import MIMEText
 from datetime import datetime
 from dotenv import load_dotenv
 from typing import Union, Optional, Tuple
@@ -70,7 +69,7 @@ def SignUp(name: str, surname: str, phonenumber, password: str, email: str) -> s
             logging.info("Пользователь зарегестрирован!")
             return_data = "ok"
         else:
-            return_data = "Пользователь с таким именем или почтой уже существует!"
+            return_data = "Пользователь с такой почтой или номером телефона уже существует!"
             logging.warning(return_data)
 
     except (Exception, Error) as error:

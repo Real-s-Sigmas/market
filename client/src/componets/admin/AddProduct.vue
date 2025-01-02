@@ -63,7 +63,7 @@ export default {
           this.error = "Ошибка добавления товара";
         } else {
           await this.addProductFile();
-          this.$router.push("/");
+          location.reload()
         }
       } catch (error) {
         this.error = "Ошибка добавления товара";
@@ -82,6 +82,7 @@ export default {
             this.percentCompleted = percentCompleted;
           },
         });
+
       } catch (error) {
         console.error("Ошибка при отправке данных:", error);
         return;
@@ -120,15 +121,10 @@ export default {
       }
     },
   },
-
-  deleteImage(index) {
-    this.form.photos.splice(index, 1);
-  },
 };
 </script>
 
 <template>
-    {{ this.form.photos }}
   <form @submit.prevent="addProduct" class="mx-0 flex flex-col mt-16">
     <div class="up-info flex xl:gap-16 justify-between">
       <label for="filee" class="input-file">
@@ -207,7 +203,7 @@ export default {
       </div>
     </div>
 
-    <div id="imageContainer">
+    <!-- <div id="imageContainer">
       <div class="one-image" v-for="(image, index) in form.photos">
         <img class="image-one" :src="image" alt="Изображение" />
         <img
@@ -216,7 +212,7 @@ export default {
           src="../../assets/close-img.png"
         />
       </div>
-    </div>
+    </div> -->
 
     <div class="m-c flex flex-col">
       <label for="fullDescription" class="text-2xl mt-8"

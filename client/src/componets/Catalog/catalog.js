@@ -144,6 +144,7 @@ const Catalog = [
       },
       {
         title: "Штроборезы",
+        category: "Электроинструменты",
         url: "/elektroinstrumenty/shtoborezy",
       },
     ],
