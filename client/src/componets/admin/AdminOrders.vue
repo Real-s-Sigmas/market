@@ -29,10 +29,10 @@ export default {
       try {
         let res = await axios.get('/orders/search', {
           params: {
-            search: this.search
+            id: this.search
           }
         });
-        this.orders = res.data.res;
+        this.orders = res.data.res.reverse();
       } catch (error) {
         console.error(error)
       }
