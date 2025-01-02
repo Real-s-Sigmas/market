@@ -5,7 +5,7 @@ from flask import jsonify, request, session
 from typing import Union
 from app import *
 from app import app, PASSWORD_PG, PORT_PG, USER_PG, HOST_PG, EMAIL, PASSWORD_EMAIL
-from check import chek_for_user, getEmail
+from check import chek_for_user, getEmail, chek_for_admin
 from datetime import datetime
 from dotenv import load_dotenv
 from email.message import EmailMessage
@@ -256,7 +256,7 @@ def DeleteOrder(id_order: str):
 
 
 
-@app.route("/order/add-order", methods=["DELETE"])
+@app.route("/order/delete-order", methods=["DELETE"])
 @chek_for_user
 def delete_order():
     response_object = {'status': 'success'} #БаZа
@@ -267,7 +267,7 @@ def delete_order():
     return jsonify(response_object)
 
 
-def get_orders_by_id(order_id: str) -> dict:
+def get_orders_by_id(last_eight: str) -> dict:
     try:
         pg = psycopg2.connect(f"""
             host={HOST_PG}
@@ -278,18 +278,30 @@ def get_orders_by_id(order_id: str) -> dict:
         """)
 
         cursor = pg.cursor(cursor_factory=psycopg2.extras.DictCursor)
-
-        cursor.execute("SELECT * FROM orders WHERE id = %s", (order_id,))
-        result = cursor.fetchone()
-
-        if result:
-            return dict(result)
+        res = []
+        if last_eight != "":
+            cursor.execute("SELECT * FROM orders WHERE RIGHT(id::text, 8) = %s", (last_eight,))
+            result = cursor.fetchall()
+            for row in result:
+                a = dict(row)
+                cursor.execute(f"SELECT phonenumber FROM users where id = $${a["id_user"]}$$")
+                a["phonenumber"] = cursor.fetchone()[0]
+                # a['date_create'] = datetime.strftime(a['date_create'], '%d %B %Y')
+                res.append(a)
         else:
-            return {}
+            cursor.execute("SELECT * FROM orders")
+            result = cursor.fetchall()
+            for row in result:
+                a = dict(row)
+                cursor.execute(f"SELECT phonenumber FROM users where id = $${a["id_user"]}$$")
+                a["phonenumber"] = cursor.fetchone()[0]
+                # a['date_create'] = datetime.strftime(a['date_create'], '%d %B %Y')
+                res.append()
 
+        return res
     except (Exception, Error) as error:
         logging.error(f'DB: ', error)
-        return {}
+        return "Err"
 
     finally:
         if pg:
@@ -298,16 +310,23 @@ def get_orders_by_id(order_id: str) -> dict:
             logging.info("Соединение с PostgreSQL закрыто")
 
 
-@app.route("/orders/show-orders", methods=['GET'])
+@app.route("/orders/search", methods=['GET'])
+@chek_for_admin
 def show_orders():
     order_id = request.args.get('id')
 
     response_object = {'status': 'success'}
 
-    if order_id:
+    if not order_id is None:
         response_object["res"] = get_orders_by_id(order_id)
+        num = 200
+        if response_object["res"] == "Err": 
+            num = 500
+        return jsonify(response_object), num
+    
     else:
         response_object["status"] = 'bad request'
         response_object["message"] = "Missing order ID"
 
-    return jsonify(response_object)
+        return jsonify(response_object), 400
+
