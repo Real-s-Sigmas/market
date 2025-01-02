@@ -104,7 +104,7 @@ def sign_up():
     return jsonify(responce_object)
 
 
-def SignIn(phonenumber: str, password: str):
+def SignIn(phonenumber: str, password: str) -> list:
     try:
         pg = psycopg2.connect(f"""
             host={HOST_PG}
@@ -130,14 +130,14 @@ def SignIn(phonenumber: str, password: str):
 
             else:
                 logging.warning("Incorrect Password")
-                return_data = 'Incorrect Password'
+                return_data = ['Incorrect Password', ""]
         else:
             logging.warning("Account Doesn`t Exist")
-            return_data = "Account Doesn`t Exist"
+            return_data = ["Account Doesn`t Exist", ""]
 
     except (Exception, Error) as error:
         logging.error(f'DB: ', error)
-        return_data = f"Error"
+        return_data = [f"Error", ""]
 
     finally:
         if pg:
@@ -160,7 +160,7 @@ def sign_in():
         session.modified = True
         responce_object['res'] = 'ok'
 
-    else: responce_object['res'] = smth
+    else: responce_object['res'] = smth[0]
 
     return jsonify(responce_object)
 
