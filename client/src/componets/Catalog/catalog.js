@@ -2,677 +2,622 @@ const Catalog = [
   {
     "Электроинструменты": [
       {
-        title: "Аккумуляторные отвертки",
+        title: "Дрели",
         category: "Электроинструменты",
-        url: "/elektroinstrumenty/akkumulyatornye-otvertki",
+        url: "/electroinstrumenti/dreli",
+      },
+      {
+        title: "Шуруповерты",
+        category: "Электроинструменты",
+        url: "/electroinstrumenti/dreli",
+      },
+      {
+        title: "Первораторы",
+        category: "Электроинструменты",
+        url: "/electroinstrumenti/dreli",
+      },
+      {
+        title: "Отбойные молотки",
+        category: "Электроинструменты",
+        url: "/electroinstrumenti/dreli",
+      },
+      {
+        title: "Шлифовальные",
+        category: "Электроинструменты",
+        url: "/electroinstrumenti/dreli",
+      },
+      {
+        title: "Гайковерты",
+        category: "Электроинструменты",
+        url: "/electroinstrumenti/dreli",
       },
       {
         title: "Лобзики",
-        url: "/elektroinstrumenty/lobziki",
         category: "Электроинструменты",
+        url: "/electroinstrumenti/dreli",
       },
       {
-        title: "Полировальные машины",
+        title: "Пилы",
         category: "Электроинструменты",
-        url: "/elektroinstrumenty/polirovalnye-mashiny",
+        url: "/electroinstrumenti/dreli",
       },
       {
+        title: "Фрезеры",
         category: "Электроинструменты",
-        title: "Аккумуляторные шуруповерты и дрели",
-        url: "/elektroinstrumenty/akkumulyatornye-shurupoverty-i-dreli",
+        url: "/electroinstrumenti/dreli",
       },
       {
+        title: "Реноваторы",
         category: "Электроинструменты",
-        title: "Миксеры и низкооборотистые дрели",
-        url: "/elektroinstrumenty/miksery-i-nizkooborotistyie-dreli",
+        url: "/electroinstrumenti/dreli",
       },
       {
+        title: "Строиткльные фены",
         category: "Электроинструменты",
-        title: "Пылесосы строительные",
-        url: "/elektroinstrumenty/pylesosy-stroitelnye",
+        url: "/electroinstrumenti/dreli",
       },
       {
+        title: "Штраборезы и бороздоделы",
         category: "Электроинструменты",
-        title: "Аккумуляторный инструмент",
-        url: "/elektroinstrumenty/akkumulyatornyiy-instrument",
+        url: "/electroinstrumenti/dreli",
       },
       {
+        title: "Электрорубанки",
         category: "Электроинструменты",
-        title: "Мини-пилы циркулярные",
-        url: "/elektroinstrumenty/mini-pily-tsirkulyarnye",
-      },
-      {
-        category: "Электроинструменты",
-        title: "Рубанки",
-        url: "/elektroinstrumenty/rubanki",
-      },
-      {
-        category: "Электроинструменты",
-        title: "Бензопилы",
-        url: "/elektroinstrumenty/benzopily",
-      },
-      {
-        category: "Электроинструменты",
-        title: "МФИ (реноваторы)",
-        url: "/elektroinstrumenty/mfi-renovatory",
-      },
-      {
-        category: "Электроинструменты",
-        title: "Сабельные пилы",
-        url: "/elektroinstrumenty/sabelnye-pily",
-      },
-      {
-        category: "Электроинструменты",
-        title: "Гайковерты",
-        url: "/elektroinstrumenty/gaykoverty",
-      },
-      {
-        category: "Электроинструменты",
-        title: "Ножницы электрические листовые",
-        url: "/elektroinstrumenty/nozhnicy-elektricheskie-listovye",
-      },
-      {
-        category: "Электроинструменты",
-        title: "Степлеры",
-        url: "/elektroinstrumenty/steplery",
-      },
-      {
-        category: "Электроинструменты",
-        title: "Граверы и мини-дрели",
-        url: "/elektroinstrumenty/gravery-i-mini-dreli",
-      },
-      {
-        category: "Электроинструменты",
-        title: "Отбойные молотки электрические",
-        url: "/elektroinstrumenty/otboynie-molotki-elektricheskie",
-      },
-      {
-        category: "Электроинструменты",
-        title: "УШМ (болгарки)",
-        url: "/elektroinstrumenty/ushm-bolgarki",
-      },
-      {
-        category: "Электроинструменты",
-        title: "Дрели ударные",
-        url: "/elektroinstrumenty/dreli-udarnye",
-      },
-      {
-        category: "Электроинструменты",
-        title: "Перфораторы",
-        url: "/elektroinstrumenty/perforatory",
-      },
-      {
-        category: "Электроинструменты",
-        title: "Фены технические",
-        url: "/elektroinstrumenty/feny-tehnicheskie",
-      },
-      {
-        category: "Электроинструменты",
-        title: "Дрели, шуруповерты сетевые",
-        url: "/elektroinstrumenty/dreli-shurupoverty-setevye",
-      },
-      {
-        category: "Электроинструменты",
-        title: "Пилы торцовочные",
-        url: "/elektroinstrumenty/pily-torcovochnye",
-      },
-      { title: "Фрезеры", url: "/elektroinstrumenty/frezery" },
-      {
-        category: "Электроинструменты",
-        title: "Клеевые пистолеты",
-        url: "/elektroinstrumenty/klevye-pistolety",
-      },
-      {
-        category: "Электроинструменты",
-        title: "Пилы цепные электрические",
-        url: "/elektroinstrumenty/pily-cepnye-elektricheskie",
-      },
-      {
-        category: "Электроинструменты",
-        title: "Шлифовальные машины",
-        url: "/elektroinstrumenty/shlifovalnye-mashiny",
-      },
-      {
-        category: "Электроинструменты",
-        title: "Краскопульты",
-        url: "/elektroinstrumenty/kraskopulty",
-      },
-      {
-        category: "Электроинструменты",
-        title: "Пилы циркулярные",
-        url: "/elektroinstrumenty/pily-tsirkulyarnye",
-      },
-      {
-        title: "Штроборезы",
-        category: "Электроинструменты",
-        url: "/elektroinstrumenty/shtoborezy",
+        url: "/electroinstrumenti/dreli", 
       },
     ],
   },
   {
-    "Садовая техника": [
+    "Аккумуляторные инструменты": [
       {
-        title: "Неизвестен",
+        title: "Аккумуляторные Дрели - Шуруповерты",
         url: "/sad-i-dacha/sadovaya-texnika/benzopily",
-        category: "Садовая техника",
+        category: "Аккумуляторные инструменты",
       },
       {
-        title: "Культиваторы",
-        url: "/sad-i-dacha/sadovaya-texnika/kultivatory",
-        category: "Садовая техника",
+        title: "Аккумуляторные шлифмашины",
+        url: "/sad-i-dacha/sadovaya-texnika/benzopily",
+        category: "Аккумуляторные инструменты",
       },
       {
-        title: "Пилы цепные электрические",
-        category: "Садовая техника",
-        url: "/sad-i-dacha/sadovaya-texnika/pily-cepnye-elektricheskie",
+        title: "Аккумуляторные пилы",
+        url: "/sad-i-dacha/sadovaya-texnika/benzopily",
+        category: "Аккумуляторные инструменты",
       },
       {
-        title: "Мотоблоки",
-        category: "Садовая техника",
-        url: "/sad-i-dacha/sadovaya-texnika/motobloki",
-      },
-      {
-        title: "Газонокосилки",
-        category: "Садовая техника",
-        url: "/sad-i-dacha/sadovaya-texnika/gazonokosilki",
-      },
-      {
-        title: "Опрыскиватели",
-        category: "Садовая техника",
-        url: "/sad-i-dacha/sadovaya-texnika/opryskivateli",
-      },
-      {
-        title: "Триммеры бензиновые",
-        category: "Садовая техника",
-        url: "/sad-i-dacha/sadovaya-texnika/trimmery-benzinovye",
-      },
-      {
-        title: "Мотобуры",
-        category: "Садовая техника",
-        url: "/sad-i-dacha/sadovaya-texnika/motobury",
-      },
-      {
-        title: "Триммеры электрические",
-        category: "Садовая техника",
-        url: "/sad-i-dacha/sadovaya-texnika/trimmery-elektricheskie",
-      },
-      {
-        title: "Мотопомпы",
-        url: "/sad-i-dacha/sadovaya-texnika/motopompy",
-        category: "Садовая техника",
-      },
-      {
-        title: "Насосы",
-        url: "/sad-i-dacha/sadovaya-texnika/nasosy",
-        category: "Садовая техника",
-      },
-      {
-        title: "Дровоколы",
-        category: "Садовая техника",
-        url: "/sad-i-dacha/sadovaya-texnika/drovokoly",
-      },
-      {
-        title: "Насосные станции",
-        category: "Садовая техника",
-        url: "/sad-i-dacha/sadovaya-texnika/nasosnye-stantsii",
-      },
-      {
-        title: "Воздуходувки",
-        category: "Садовая техника",
-        url: "/sad-i-dacha/sadovaya-texnika/vozdushiduvki",
-      },
-      {
-        title: "Мойки высокого давления",
-        category: "Садовая техника",
-        url: "/sad-i-dacha/sadovaya-texnika/moyki-vysokogo-davleniya",
-      },
-      {
-        title: "Бензоинструмент",
-        category: "Садовая техника",
-        url: "/sad-i-dacha/sadovaya-texnika/benzoinstrument",
-      },
-      {
-        title: "Кусторезы",
-        category: "Садовая техника",
-        url: "/sad-i-dacha/sadovaya-texnika/kustorezy",
-      },
-      {
-        title: "Снегоуборщики",
-        category: "Садовая техника",
-        url: "/sad-i-dacha/sadovaya-texnika/snegouborschiki",
-      },
-      {
-        title: "Аккумуляторные ножницы",
-        category: "Садовая техника",
-        url: "/sad-i-dacha/sadovaya-texnika/akkumulyatornye-nozhnicy",
+        title: "Аккумуляторные перфораторы",
+        url: "/sad-i-dacha/sadovaya-texnika/benzopily",
+        category: "Аккумуляторные инструменты",
       },
     ],
   },
   {
-    "Насосы и оборудование": [
+    "Бензоинструмент": [
       {
-        title: "Насосы",
-        category: "Насосы и оборудование",
+        title: "Бензопилы",
+        category: "Бензоинструмент",
         url: "/sad-i-dacha/nasosy-i-oborudovanie/nasosy",
       },
       {
-        category: "Насосы и оборудование",
-        title: "Фитинги ПНД",
-        url: "/sad-i-dacha/nasosy-i-oborudovanie/fitingi-pnd",
+        title: "Бензотримеры",
+        category: "Бензоинструмент",
+        url: "/sad-i-dacha/nasosy-i-oborudovanie/nasosy",
       },
       {
-        category: "Насосы и оборудование",
-        title: "Насосные станции",
-        url: "/sad-i-dacha/nasosy-i-oborudovanie/nasosnye-stantsii",
+        title: "Бензобуры",
+        category: "Бензоинструмент",
+        url: "/sad-i-dacha/nasosy-i-oborudovanie/nasosy",
       },
       {
-        category: "Насосы и оборудование",
-        title: "Соединительные элементы и фильтры",
-        url: "/sad-i-dacha/nasosy-i-oborudovanie/soedinitelnye-elementy-i-filtry",
+        title: "Бензорезы",
+        category: "Бензоинструмент",
+        url: "/sad-i-dacha/nasosy-i-oborudovanie/nasosy",
       },
       {
-        category: "Насосы и оборудование",
-        title: "Автоматика для насосов",
-        url: "/sad-i-dacha/nasosy-i-oborudovanie/avtomatika-dlya-nasosov",
+        title: "Воздуходувки",
+        category: "Бензоинструмент",
+        url: "/sad-i-dacha/nasosy-i-oborudovanie/nasosy",
       },
       {
-        category: "Насосы и оборудование",
-        title: "Хомуты",
-        url: "/sad-i-dacha/nasosy-i-oborudovanie/homuty",
+        title: "Газонокосилки",
+        category: "Бензоинструмент",
+        url: "/sad-i-dacha/nasosy-i-oborudovanie/nasosy",
       },
       {
-        category: "Насосы и оборудование",
-        title: "Шланги садовые",
-        url: "/sad-i-dacha/nasosy-i-oborudovanie/shlangi-sadovye",
+        title: "Снегоуборщики",
+        category: "Бензоинструмент",
+        url: "/sad-i-dacha/nasosy-i-oborudovanie/nasosy",
       },
       {
-        category: "Насосы и оборудование",
-        title: "Мотопомпы",
-        url: "/sad-i-dacha/nasosy-i-oborudovanie/motopompy",
+        title: "Ножницы",
+        category: "Бензоинструмент",
+        url: "/sad-i-dacha/nasosy-i-oborudovanie/nasosy",
       },
       {
-        category: "Насосы и оборудование",
-        title: "Комплектующие для насосов",
-        url: "/sad-i-dacha/nasosy-i-oborudovanie/komplektuyushchie-dlya-nasosov",
-      },
-      {
-        category: "Насосы и оборудование",
-        title: "Комплектующие для мотопомп",
-        url: "/sad-i-dacha/nasosy-i-oborudovanie/komplektuyushchie-dlya-motopomp",
+        title: "Бензиновые генераторы",
+        category: "Бензоинструмент",
+        url: "/sad-i-dacha/nasosy-i-oborudovanie/nasosy",
       },
     ],
   },
- 
-
   {
-    "Садовый инструмент": [
+    "Компрессоры и пневмоинструменты": [
       {
-        title: "Все для рассады",
-        category: "Садовый инструмент",
+        title: "Масляные компрессоры",
+        category: "Компрессоры и пневмоинструменты",
         url: "/sad-i-dacha/sadovyiy-instrument/vse-dlya-rassady",
       },
       {
-        category: "Садовый инструмент",
-        title: "Совки посадочные",
+        title: "Безмасляные компрессоры",
+        category: "Компрессоры и пневмоинструменты",
         url: "/sad-i-dacha/sadovyiy-instrument/sovki-posadochnye",
       },
       {
-        title: "Лопаты",
-        category: "Садовый инструмент",
+        title: "Пневмопистолеты",
+        category: "Компрессоры и пневмоинструменты",
         url: "/sad-i-dacha/sadovyiy-instrument/lopati",
       },
       {
-        title: "Пилы и ножовки садовые",
-        category: "Садовый инструмент",
+        title: "Пневмостеплеры",
+        category: "Компрессоры и пневмоинструменты",
 
         url: "/sad-i-dacha/sadovyiy-instrument/pily-i-nojovki-sadovye",
       },
       {
-        title: "Топоры",
+        title: "Пневмогайковерты",
         url: "/sad-i-dacha/sadovyiy-instrument/topor",
-        category: "Садовый инструмент",
+        category: "Компрессоры и пневмоинструменты",
       },
       {
-        title: "Ножи садовые",
-        category: "Садовый инструмент",
+        title: "Пневматические заклепачники",
+        category: "Компрессоры и пневмоинструменты",
         url: "/sad-i-dacha/sadovyiy-instrument/nozhi-sadovye",
       },
       {
-        title: "Грабли",
+        title: "Пневматические шлифмашинки",
         url: "/sad-i-dacha/sadovyiy-instrument/grabli",
-        category: "Садовый инструмент",
+        category: "Компрессоры и пневмоинструменты",
       },
       {
-        title: "Лестницы",
+        title: "Расходники для пневмоинструментов",
         url: "/sad-i-dacha/sadovyiy-instrument/lestnicy",
-        category: "Садовый инструмент",
+        category: "Компрессоры и пневмоинструменты",
       },
       {
-        title: "Вилы",
+        title: "Пневматические краскораспылители",
         url: "/sad-i-dacha/sadovyiy-instrument/vily",
-        category: "Садовый инструмент",
-      },
-      {
-        title: "Опрыскиватели ручные",
-        url: "/sad-i-dacha/sadovyiy-instrument/opryskivateli-ruchnye",
-        category: "Садовый инструмент",
-      },
-      {
-        title: "Ведра",
-        url: "/sad-i-dacha/sadovyiy-instrument/vedra",
-        category: "Садовый инструмент",
-      },
-      {
-        title: "Уборочный инвентарь",
-        url: "/sad-i-dacha/sadovyiy-instrument/uborochnyiy-inventar",
-        category: "Садовый инструмент",
-      },
-      {
-        title: "Секаторы, сучкорезы",
-        url: "/sad-i-dacha/sadovyiy-instrument/sekatory-suchkorezy",
-        category: "Садовый инструмент",
-      },
-      {
-        title: "Инструменты для уборки снега",
-        url: "/sad-i-dacha/sadovyiy-instrument/instrumenty-dlya-uborki-snega",
-        category: "Садовый инструмент",
-      },
-      {
-        title: "Тачки садовые",
-        url: "/sad-i-dacha/sadovyiy-instrument/tachki-sadovye",
-        category: "Садовый инструмент",
+        category: "Компрессоры и пневмоинструменты",
       },
     ],
   },
   {
-    "Садовая сантехника": [
+    "Обогреватели": [
       {
-        category: "Садовая сантехника",
-        title: "Аксессуары для биотуалетов",
+        title: "Масляные радиаторы",
+        category: "Обогреватели",
         url: "/sad-i-dacha/sadovaya-santexnika/aksesuary-dlya-biotualetov",
       },
       {
-        title: "Шланги садовые",
-        category: "Садовая сантехника",
+        title: "Конвекторы",
+        category: "Обогреватели",
         url: "/sad-i-dacha/sadovaya-santexnika/shlangi-sadovye",
       },
       {
-        title: "Краны шаровые",
-        category: "Садовая сантехника",
+        title: "Электрические пушки",
+        category: "Обогреватели",
         url: "/sad-i-dacha/sadovaya-santexnika/krany-sharovye",
       },
       {
-        title: "Смесители",
-        category: "Садовая сантехника",
+        title: "Газовые пушки",
+        category: "Обогреватели",
         url: "/sad-i-dacha/sadovaya-santexnika/smesiteli",
       },
       {
-        title: "Насосы",
+        title: "Дизельные пушки",
         url: "/sad-i-dacha/sadovaya-santexnika/nasosy",
-        category: "Садовая сантехника",
+        category: "Обогреватели",
       },
       {
-        title: "Водонагреватели накопительные",
-        category: "Садовая сантехника",
+        title: "Инфракрасные обогреватели",
+        category: "Обогреватели",
         url: "/sad-i-dacha/sadovaya-santexnika/vodonagrevateli-nakopitelnye",
       },
     ],
   },
   {
-    "Расходные материалы": [
+    "Сварочное оборудование": [
       {
-        category: "Расходные материалы",
-        title: "Для бензопил",
+        category: "Сварочное оборудование",
+        title: "Сварочные аппараты",
         url: "/sad-i-dacha/rashodnye-materialy/dlya-benzopil",
       },
       {
-        title: "Комплектующие для насосов",
-        category: "Расходные материалы",
-
+        category: "Сварочное оборудование",
+        title: "Плазменные резаки",
         url: "/sad-i-dacha/rashodnye-materialy/komplektuyushchie-dlya-nasosov",
       },
       {
-        title: "Для триммеров и косилок",
-        category: "Расходные материалы",
-
+        title: "Сварочные полуавтоматы",
+        category: "Сварочное оборудование",
         url: "/sad-i-dacha/rashodnye-materialy/dlya-trimmerov-i-kosilok",
       },
       {
-        category: "Расходные материалы",
-        title: "Насосная автоматика",
+        category: "Сварочное оборудование",
+        title: "Аппараты для сварки ПВХ труб",
         url: "/sad-i-dacha/rashodnye-materialy/nasosnaya-avtomatika",
       },
       {
-        category: "Расходные материалы",
-        title: "Для мотоблоков",
+        category: "Сварочное оборудование",
+        title: "Сварочные маски",
         url: "/sad-i-dacha/rashodnye-materialy/dlya-motoblokov",
       },
       {
-        category: "Расходные материалы",
-        title: "Комплектующие для садовой техники",
+        category: "Сварочное оборудование",
+        title: "Расходники для сварочных аппаратов",
         url: "/sad-i-dacha/rashodnye-materialy/komplektuyushchie-dlya-sadovoy-texniki",
-      },
-      {
-        category: "Расходные материалы",
-        title: "Для кусторезов и ножниц",
-        url: "/sad-i-dacha/rashodnye-materialy/dlya-kustorezov-i-nozhnic",
-      },
-      {
-        category: "Расходные материалы",
-        title: "Масла для садовой техники",
-        url: "/sad-i-dacha/rashodnye-materialy/masla-dlya-sadovoy-texniki",
-      },
-      {
-        title: "Для моек высокого давления",
-        category: "Расходные материалы",
-        url: "/sad-i-dacha/rashodnye-materialy/dlya-moyok-vysokogo-davleniya",
-      },
-      {
-        category: "Расходные материалы",
-        title: "Канистры, баки, бочки",
-        url: "/sad-i-dacha/rashodnye-materialy/kanistry-baki-bochki",
-      },
-      {
-        category: "Расходные материалы",
-        title: "Для мотопомп",
-        url: "/sad-i-dacha/rashodnye-materialy/dlya-motopomp",
-      },
-      {
-        category: "Расходные материалы",
-        title: "Комплектующие к тачкам",
-        url: "/sad-i-dacha/rashodnye-materialy/komplektuyushchie-k-tachkam",
-      },
-      {
-        category: "Расходные материалы",
-        title: "Шнеки для мотобуров",
-        url: "/sad-i-dacha/rashodnye-materialy/shneki-dlya-motoburov",
-      },
-      {
-        category: "Расходные материалы",
-        title: "Черенки",
-        url: "/sad-i-dacha/rashodnye-materialy/cherenki",
-      },
-      {
-        category: "Расходные материалы",
-        title: "Удлинители и переходники для шнеков",
-        url: "/sad-i-dacha/rashodnye-materialy/udliniteli-i-perehodniki-dlya-shnekov",
-      },
-      {
-        category: "Расходные материалы",
-        title: "Ручки для черенков",
-        url: "/sad-i-dacha/rashodnye-materialy/ruchki-dlya-cherenkov",
-      },
-      {
-        category: "Расходные материалы",
-        title: "Пластины и наконечники для шнеков",
-        url: "/sad-i-dacha/rashodnye-materialy/platiny-i-nakonechniki-dlya-shnekov",
-      },
-      {
-        category: "Расходные материалы",
-        title: "Ручки для инструмента",
-        url: "/sad-i-dacha/rashodnye-materialy/ruchki-dlya-instrumenta",
-      },
-      {
-        category: "Расходные материалы",
-        title: "Аксессуары для шнеков",
-        url: "/sad-i-dacha/rashodnye-materialy/aksesuary-dlya-shnekov",
-      },
-      {
-        category: "Расходные материалы",
-        title: "Садовые перчатки",
-        url: "/sad-i-dacha/rashodnye-materialy/sadovye-perchatki",
       },
     ],
   },
   {
-    "Сварочные аппараты": [
+    "Силовая техника": [
       {
-        category: "Сварочные аппараты",
-        title: "Инверторы",
+        category: "Силовая техника",
+        title: "Виброплиты",
         url: "/svarochnoe-oborudovanie/svarochnye-apparaty/invertory",
       },
       {
-        category: "Сварочные аппараты",
-        title: "4 в 1",
+        category: "Силовая техника",
+        title: "Вибраторы глубинные",
         url: "/svarochnoe-oborudovanie/svarochnye-apparaty/4-v-1",
       },
       {
-        category: "Сварочные аппараты",
-        title: "Полуавтоматы MIG/MAG",
+        category: "Силовая техника",
+        title: "Бетономешалка",
         url: "/svarochnoe-oborudovanie/svarochnye-apparaty/poluavtomaty-migmag",
       },
       {
-        category: "Сварочные аппараты",
-        title: "380 В",
+        category: "Силовая техника",
+        title: "Швонарезчики",
         url: "/svarochnoe-oborudovanie/svarochnye-apparaty/380-v",
       },
+    ],
+  },
+  {
+    "Сад и дача": [
       {
-        category: "Сварочные аппараты",
-        title: "Полуавтоматы",
-        url: "/svarochnoe-oborudovanie/svarochnye-apparaty/poluavtomaty",
+        category: "Сад и дача",
+        title: "Воздуходувки",
+        url: "/svarochnoe-oborudovanie/svarochnye-apparaty/3-v-1",
       },
       {
-        category: "Сварочные аппараты",
-        title: "Профессиональные",
-        url: "/svarochnoe-oborudovanie/svarochnye-apparaty/professionalnye",
+        category: "Сад и дача",
+        title: "Пилы",
+        url: "/svarochnoe-oborudovanie/svarochnye-apparaty/3-v-1",
       },
       {
-        category: "Сварочные аппараты",
-        title: "Дуговая сварка MMA",
-        url: "/svarochnoe-oborudovanie/svarochnye-apparaty/dugovaya-svarka-mma",
+        category: "Сад и дача",
+        title: "Тримеры",
+        url: "/svarochnoe-oborudovanie/svarochnye-apparaty/3-v-1",
       },
       {
-        category: "Сварочные аппараты",
-        title: "Сварочные генераторы",
-        url: "/svarochnoe-oborudovanie/svarochnye-apparaty/svarochnye-generatory",
+        category: "Сад и дача",
+        title: "Газонокосилки",
+        url: "/svarochnoe-oborudovanie/svarochnye-apparaty/3-v-1",
       },
       {
-        category: "Сварочные аппараты",
-        title: "Сварка аргоном TIG",
-        url: "/svarochnoe-oborudovanie/svarochnye-apparaty/svarka-argonom-tig",
+        category: "Сад и дача",
+        title: "Культиваторы",
+        url: "/svarochnoe-oborudovanie/svarochnye-apparaty/3-v-1",
       },
       {
-        category: "Сварочные аппараты",
-        title: "Плазморезы",
-        url: "/svarochnoe-oborudovanie/svarochnye-apparaty/plazmorezy",
+        category: "Сад и дача",
+        title: "Кусторезы",
+        url: "/svarochnoe-oborudovanie/svarochnye-apparaty/3-v-1",
       },
       {
-        title: "3 в 1",
-        category: "Сварочные аппараты",
+        category: "Сад и дача",
+        title: "Потобуры",
+        url: "/svarochnoe-oborudovanie/svarochnye-apparaty/3-v-1",
+      },
+      {
+        category: "Сад и дача",
+        title: "Мотоблоки",
+        url: "/svarochnoe-oborudovanie/svarochnye-apparaty/3-v-1",
+      },
+      {
+        category: "Сад и дача",
+        title: "Опрызгиватели",
+        url: "/svarochnoe-oborudovanie/svarochnye-apparaty/3-v-1",
+      },
+      {
+        category: "Сад и дача",
+        title: "Мотопомпы",
+        url: "/svarochnoe-oborudovanie/svarochnye-apparaty/3-v-1",
+      },
+      {
+        category: "Сад и дача",
+        title: "Подметальные машины",
+        url: "/svarochnoe-oborudovanie/svarochnye-apparaty/3-v-1",
+      },
+      {
+        category: "Сад и дача",
+        title: "Садовый инвентарь",
         url: "/svarochnoe-oborudovanie/svarochnye-apparaty/3-v-1",
       },
     ],
   },
   {
-    "Аппараты плазменной резки": [
+    "Ручной инструмент": [
       {
-        category: "Аппараты плазменной резки",
-        title: "3 в 1",
-        url: "/svarochnoe-oborudovanie/svarochnye-apparaty/3-v-1",
-      },
-    ],
-  },
-  {
-    "Электроды, прутки, проволока": [
-      {
-        title: "Сварочные электроды",
-        category: "Электроды, прутки, проволока",
+        category: "Ручной инструмент",
+        title: "Слесарные инструменты",
         url: "/svarochnoe-oborudovanie/elektrody-prutki-provoloka/svarochnye-elektrody",
       },
       {
-        category: "Электроды, прутки, проволока",
-        title: "Вольфрамовые электроды",
+        category: "Ручной инструмент",
+        title: "Столярные инструменты",
         url: "/svarochnoe-oborudovanie/elektrody-prutki-provoloka/volframovye-elektrody",
       },
       {
-        category: "Электроды, прутки, проволока",
-        title: "Сварочная проволока",
+        category: "Ручной инструмент",
+        title: "Измерительные инструменты",
+        url: "/svarochnoe-oborudovanie/elektrody-prutki-provoloka/svarochnaya-provoloka",
+      },
+      {
+        category: "Ручной инструмент",
+        title: "Крепежные инструменты",
+        url: "/svarochnoe-oborudovanie/elektrody-prutki-provoloka/svarochnaya-provoloka",
+      },
+      {
+        category: "Ручной инструмент",
+        title: "Автомобильные инструменты",
+        url: "/svarochnoe-oborudovanie/elektrody-prutki-provoloka/svarochnaya-provoloka",
+      },
+      {
+        category: "Ручной инструмент",
+        title: "Режущие инструменты",
+        url: "/svarochnoe-oborudovanie/elektrody-prutki-provoloka/svarochnaya-provoloka",
+      },
+      {
+        category: "Ручной инструмент",
+        title: "Строительно-отделочные инструменты",
+        url: "/svarochnoe-oborudovanie/elektrody-prutki-provoloka/svarochnaya-provoloka",
+      },
+      {
+        category: "Ручной инструмент",
+        title: "Хозяйственные товары",
+        url: "/svarochnoe-oborudovanie/elektrody-prutki-provoloka/svarochnaya-provoloka",
+      },
+      {
+        category: "Ручной инструмент",
+        title: "Средства индивидуальной защиты",
+        url: "/svarochnoe-oborudovanie/elektrody-prutki-provoloka/svarochnaya-provoloka",
+      },
+      {
+        category: "Ручной инструмент",
+        title: "Системы хранения",
         url: "/svarochnoe-oborudovanie/elektrody-prutki-provoloka/svarochnaya-provoloka",
       },
     ],
   },
   {
-    "Принадлежности для сварки": [
+    "Крепеж и фурнитура": [
       {
-        title: "MIG/MAG Расходники для полуавтоматической сварки",
-        category: "Принадлежности для сварки",
+        title: "Гвозди",
+        category: "Крепеж и фурнитура",
         url: "/svarochnoe-oborudovanie/prinadlezhnosti-dlya-svarki/migmag-rashodniki-dlya-poluavtomaticheskoy-svarki",
       },
       {
-        title: "Клеммы заземления",
-        category: "Принадлежности для сварки",
-        url: "/svarochnoe-oborudovanie/prinadlezhnosti-dlya-svarki/klemmy-zazemleniya",
+        title: "Дюбеля",
+        category: "Крепеж и фурнитура",
+        url: "/svarochnoe-oborudovanie/prinadlezhnosti-dlya-svarki/migmag-rashodniki-dlya-poluavtomaticheskoy-svarki",
       },
       {
-        title: "TIG Расходники для аргонодуговой сварки",
-        category: "Принадлежности для сварки",
-        url: "/svarochnoe-oborudovanie/prinadlezhnosti-dlya-svarki/tig-rashodniki-dlya-argonodugovoy-svarki",
+        title: "Саморезы / Шурупы",
+        category: "Крепеж и фурнитура",
+        url: "/svarochnoe-oborudovanie/prinadlezhnosti-dlya-svarki/migmag-rashodniki-dlya-poluavtomaticheskoy-svarki",
       },
       {
-        category: "Принадлежности для сварки",
-        title: "Зажимы",
-        url: "/svarochnoe-oborudovanie/prinadlezhnosti-dlya-svarki/zhim",
+        title: "Анкерный крепеж",
+        category: "Крепеж и фурнитура",
+        url: "/svarochnoe-oborudovanie/prinadlezhnosti-dlya-svarki/migmag-rashodniki-dlya-poluavtomaticheskoy-svarki",
       },
       {
-        category: "Принадлежности для сварки",
-        title: "CUT Расходники для плазменной резки",
-        url: "/svarochnoe-oborudovanie/prinadlezhnosti-dlya-svarki/cut-rashodniki-dlya-plazmennoy-rezki",
+        title: "Метрический крепеж",
+        category: "Крепеж и фурнитура",
+        url: "/svarochnoe-oborudovanie/prinadlezhnosti-dlya-svarki/migmag-rashodniki-dlya-poluavtomaticheskoy-svarki",
       },
       {
-        category: "Принадлежности для сварки",
-        title: "Струбцины",
-        url: "/svarochnoe-oborudovanie/prinadlezhnosti-dlya-svarki/strubciny",
+        title: "Такилаж",
+        category: "Крепеж и фурнитура",
+        url: "/svarochnoe-oborudovanie/prinadlezhnosti-dlya-svarki/migmag-rashodniki-dlya-poluavtomaticheskoy-svarki",
       },
       {
-        category: "Принадлежности для сварки",
-        title: "Электрододержатели",
-        url: "/svarochnoe-oborudovanie/prinadlezhnosti-dlya-svarki/elektrododerzhately",
+        title: "Тросы / Цепи",
+        category: "Крепеж и фурнитура",
+        url: "/svarochnoe-oborudovanie/prinadlezhnosti-dlya-svarki/migmag-rashodniki-dlya-poluavtomaticheskoy-svarki",
       },
       {
-        category: "Принадлежности для сварки",
-        title: "Термопеналы и электропечи для электродов",
-        url: "/svarochnoe-oborudovanie/prinadlezhnosti-dlya-svarki/termopenaly-i-elektropechi-dlya-elektrodov",
+        title: "Хомуты / Стяжки",
+        category: "Крепеж и фурнитура",
+        url: "/svarochnoe-oborudovanie/prinadlezhnosti-dlya-svarki/migmag-rashodniki-dlya-poluavtomaticheskoy-svarki",
       },
       {
-        category: "Принадлежности для сварки",
-        title: "Вилки и разъемы",
-        url: "/svarochnoe-oborudovanie/prinadlezhnosti-dlya-svarki/vilki-i-razemy",
+        title: "Заклебки",
+        category: "Крепеж и фурнитура",
+        url: "/svarochnoe-oborudovanie/prinadlezhnosti-dlya-svarki/migmag-rashodniki-dlya-poluavtomaticheskoy-svarki",
       },
       {
-        category: "Принадлежности для сварки",
-        title: "Шлакоотбойные молотки",
-        url: "/svarochnoe-oborudovanie/prinadlezhnosti-dlya-svarki/shlakootboynie-molotki",
+        title: "Перфорированный крепеж",
+        category: "Крепеж и фурнитура",
+        url: "/svarochnoe-oborudovanie/prinadlezhnosti-dlya-svarki/migmag-rashodniki-dlya-poluavtomaticheskoy-svarki",
       },
       {
-        category: "Принадлежности для сварки",
-        title: "Уголки магнитные",
-        url: "/svarochnoe-oborudovanie/prinadlezhnosti-dlya-svarki/ugolok-magnitnye",
+        title: "Фиксаторы для арматуры",
+        category: "Крепеж и фурнитура",
+        url: "/svarochnoe-oborudovanie/prinadlezhnosti-dlya-svarki/migmag-rashodniki-dlya-poluavtomaticheskoy-svarki",
+      },
+    ],
+  },
+  {
+    "Строительные материалы": [
+      {
+        title: "Сухие строительные смеси",
+        category: "Строительные материалы",
+        url: "/sad-i-dacha/sadovyiy-instrument/vily",
       },
       {
-        category: "Принадлежности для сварки",
-        title: "Аксессуары",
-        url: "/svarochnoe-oborudovanie/prinadlezhnosti-dlya-svarki/aksesuary",
+        title: "Стеновые и фасадные материалы",
+        category: "Строительные материалы",
+        url: "/sad-i-dacha/sadovyiy-instrument/vily",
       },
+      {
+        title: "Цементы и сыпучие материалы",
+        category: "Строительные материалы",
+        url: "/sad-i-dacha/sadovyiy-instrument/vily",
+      },
+      {
+        title: "Теплоизоляция и шумоизоляция",
+        category: "Строительные материалы",
+        url: "/sad-i-dacha/sadovyiy-instrument/vily",
+      },
+      {
+        title: "Гидроизоляция",
+        category: "Строительные материалы",
+        url: "/sad-i-dacha/sadovyiy-instrument/vily",
+      },
+    ],
+  },
+  {
+    "Отделочные материалы": [
+      {
+        title: "Листовые материалы",
+        category: "Отделочные материалы",
+        url: "/sad-i-dacha/sadovyiy-instrument/vily",
+      },
+      {
+        title: "Профиль и аксессуары",
+        category: "Отделочные материалы",
+        url: "/sad-i-dacha/sadovyiy-instrument/vily",
+      },
+      {
+        title: "Клеи",
+        category: "Отделочные материалы",
+        url: "/sad-i-dacha/sadovyiy-instrument/vily",
+      },
+      {
+        title: "Шпаклевки",
+        category: "Отделочные материалы",
+        url: "/sad-i-dacha/sadovyiy-instrument/vily",
+      },
+      {
+        title: "Грунтовки",
+        category: "Отделочные материалы",
+        url: "/sad-i-dacha/sadovyiy-instrument/vily",
+      },
+      {
+        title: "Сетки",
+        category: "Отделочные материалы",
+        url: "/sad-i-dacha/sadovyiy-instrument/vily",
+      },
+    ],
+  },
+  {
+    "Пиломатериалы": [
+      {
+        title: "Доски",
+        category: "Пиломатериалы",
+        url: "/sad-i-dacha/sadovyiy-instrument/vily",
+      },
+      {
+        title: "Брус / Брусок",
+        category: "Пиломатериалы",
+        url: "/sad-i-dacha/sadovyiy-instrument/vily",
+      },
+      {
+        title: "Вагонка",
+        category: "Пиломатериалы",
+        url: "/sad-i-dacha/sadovyiy-instrument/vily",
+      },
+      {
+        title: "Имитация бревна и бруса",
+        category: "Пиломатериалы",
+        url: "/sad-i-dacha/sadovyiy-instrument/vily",
+      },
+      {
+        title: "Террасная доска",
+        category: "Пиломатериалы",
+        url: "/sad-i-dacha/sadovyiy-instrument/vily",
+      },
+      {
+        title: "Фанера",
+        category: "Пиломатериалы",
+        url: "/sad-i-dacha/sadovyiy-instrument/vily",
+      },
+      {
+        title: "ДСП",
+        category: "Пиломатериалы",
+        url: "/sad-i-dacha/sadovyiy-instrument/vily",
+      },
+      {
+        title: "Плиты OSB",
+        category: "Пиломатериалы",
+        url: "/sad-i-dacha/sadovyiy-instrument/vily",
+      },
+      {
+        title: "ЦСП (Цементно-стружечная плита)",
+        category: "Пиломатериалы",
+        url: "/sad-i-dacha/sadovyiy-instrument/vily",
+      },
+    ],
+  },
+  {
+    "Хозтовары": [
+      {
+        title: "Пленки",
+        category: "Хозтовары",
+        url: "/sad-i-dacha/sadovyiy-instrument/vily",
+      },
+      {
+        title: "Канаты",
+        category: "Хозтовары",
+        url: "/sad-i-dacha/sadovyiy-instrument/vily",
+      },
+      {
+        title: "Шпагаты",
+        category: "Хозтовары",
+        url: "/sad-i-dacha/sadovyiy-instrument/vily",
+      },
+      {
+        title: "Шнуры",
+        category: "Хозтовары",
+        url: "/sad-i-dacha/sadovyiy-instrument/vily",
+      },
+      {
+        title: "Мешки",
+        category: "Хозтовары",
+        url: "/sad-i-dacha/sadovyiy-instrument/vily",
+      },
+      {
+        title: "Перчатки / Руковицы",
+        category: "Хозтовары",
+        url: "/sad-i-dacha/sadovyiy-instrument/vily",
+      },
+      {
+        title: "Дождевики",
+        category: "Хозтовары",
+        url: "/sad-i-dacha/sadovyiy-instrument/vily",
+      },
+    ],
+  },
+  {
+    "Расходники": [
+      {
+        title: "",
+        category: "Расходники",
+        url: "/sad-i-dacha/sadovyiy-instrument/vily",
+      }
     ],
   },
 ];

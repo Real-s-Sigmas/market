@@ -23,22 +23,21 @@ export default {
     <button @click="catMenu" class="menu-btn" >|||</button>
     <div class="catalog-items grid gap-4">
       <ul>
+        <li @click="goCategory(`Аккумуляторные инструменты`)">Аккумуляторные инструменты</li>
         <li @click="goCategory(`Электроинструменты`)">Электроинструменты</li>
-        <li @click="goCategory(`Садовая техника`)">Садовая техника</li>
-        <li @click="goCategory(`Насосы и оборудование`)">Насосы и оборудование</li>
-        <li @click="goCategory(`Садовый инструмент`)">Садовый инструмент</li>
-        <li @click="goCategory(`Садовая сантехника`)">Садовая сантехника</li>
-        <li @click="goCategory(`Расходные материалы`)">Расходные материалы</li>
-        <li @click="goCategory(`Сварочные аппараты`)">Сварочные аппараты</li>
-        <li @click="goCategory(`Аппараты плазменной резки`)">
-          Аппараты плазменной резки
-        </li>
-        <li @click="goCategory(`Электроды, прутки, проволока`)">
-          Электроды, прутки, проволока
-        </li>
-        <li @click="goCategory(`Принадлежности для сварки`)">
-          Принадлежности для сварки
-        </li>
+        <li @click="goCategory(`Бензоинструмент`)">Бензоинструмент</li>
+        <li @click="goCategory(`Компрессоры и пневмоинструменты`)">Компрессоры и пневмоинструменты</li>
+        <li @click="goCategory(`Обогреватели`)">Обогреватели</li>
+        <li @click="goCategory(`Сварочное оборудование`)">Сварочное оборудование</li>
+        <li @click="goCategory(`Силовая техника`)">Силовая техника</li>
+        <li @click="goCategory(`Сад и дача`)">Сад и дача</li>
+        <li @click="goCategory(`Ручной инструмент`)">Ручной инструмент</li>
+        <li @click="goCategory(`Крепеж и фурнитура`)">Крепеж и фурнитура</li>
+        <li @click="goCategory(`Строительные материалы`)">Строительные материалы</li>
+        <li @click="goCategory(`Отделочные материалы`)">Отделочные материалы</li>
+        <li @click="goCategory(`Пиломатериалы`)">Пиломатериалы</li>
+        <li @click="goCategory(`Хозтовары`)">Хозтовары</li>
+        <li @click="goCategory(`Расходники`)">Расходники</li>
       </ul>
     </div>
   </div>
