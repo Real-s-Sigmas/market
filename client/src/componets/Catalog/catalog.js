@@ -64,7 +64,12 @@ const Catalog = [
       {
         title: "Электрорубанки",
         category: "Электроинструменты",
-        url: "/electroinstrumenti/dreli", 
+        url: "/electroinstrumenti/dreli",
+      },
+      {
+        title: "Запчасти",
+        category: "Электроинструменты",
+        url: "/electroinstrumenti/dreli",
       },
     ],
   },
@@ -90,6 +95,11 @@ const Catalog = [
         url: "/sad-i-dacha/sadovaya-texnika/benzopily",
         category: "Аккумуляторные инструменты",
       },
+      {
+        title: "Аккумуляторные лобзики",
+        url: "/sad-i-dacha/sadovaya-texnika/benzopily",
+        category: "Аккумуляторные инструменты",
+      }
     ],
   },
   {
@@ -490,6 +500,40 @@ const Catalog = [
     ],
   },
   {
+    "Строительная химия": [
+      {
+        title: "Пены",
+        category: "Строительная химия",
+        url: "/sad-i-dacha/sadovyiy-instrument/vily",
+      },
+      {
+        title: "Клеи",
+        category: "Строительная химия",
+        url: "/sad-i-dacha/sadovyiy-instrument/vily",
+      },
+      {
+        title: "Герметики",
+        category: "Строительная химия",
+        url: "/sad-i-dacha/sadovyiy-instrument/vily",
+      },
+      {
+        title: "Растворители - Очистители",
+        category: "Строительная химия",
+        url: "/sad-i-dacha/sadovyiy-instrument/vily",
+      },
+      {
+        title: "Краски",
+        category: "Строительная химия",
+        url: "/sad-i-dacha/sadovyiy-instrument/vily",
+      },
+      {
+        title: "Скотчи",
+        category: "Строительная химия",
+        url: "/sad-i-dacha/sadovyiy-instrument/vily",
+      },
+    ],
+  },
+  {
     "Отделочные материалы": [
       {
         title: "Листовые материалы",
@@ -502,7 +546,7 @@ const Catalog = [
         url: "/sad-i-dacha/sadovyiy-instrument/vily",
       },
       {
-        title: "Клеи",
+        title: "Клеи плиточные",
         category: "Отделочные материалы",
         url: "/sad-i-dacha/sadovyiy-instrument/vily",
       },
@@ -565,11 +609,11 @@ const Catalog = [
         category: "Пиломатериалы",
         url: "/sad-i-dacha/sadovyiy-instrument/vily",
       },
-      {
-        title: "ЦСП (Цементно-стружечная плита)",
-        category: "Пиломатериалы",
-        url: "/sad-i-dacha/sadovyiy-instrument/vily",
-      },
+      // {
+      //   title: "ЦСП (Цементно-стружечная плита)",
+      //   category: "Пиломатериалы",
+      //   url: "/sad-i-dacha/sadovyiy-instrument/vily",
+      // },
     ],
   },
   {
@@ -614,10 +658,51 @@ const Catalog = [
   {
     "Расходники": [
       {
-        title: "",
+        title: "Сверла / Буры",
         category: "Расходники",
         url: "/sad-i-dacha/sadovyiy-instrument/vily",
-      }
+      },
+      {
+        title: "Биты",
+        category: "Расходники",
+        url: "/sad-i-dacha/sadovyiy-instrument/vily",
+      },
+      {
+        title: "Коронки",
+        category: "Расходники",
+        url: "/sad-i-dacha/sadovyiy-instrument/vily",
+      },
+      {
+        title: "Пилки / Полотна",
+        category: "Расходники",
+        url: "/sad-i-dacha/sadovyiy-instrument/vily",
+      },
+      {
+        title: "Круги отрезные / Круги образивные / Лента образивная",
+        category: "Расходники",
+        url: "/sad-i-dacha/sadovyiy-instrument/vily",
+      },
+      {
+        title: "Диски алмазные",
+        category: "Расходники",
+        url: "/sad-i-dacha/sadovyiy-instrument/vily",
+      },
+      {
+        title: "Диски пильные",
+        category: "Расходники",
+        url: "/sad-i-dacha/sadovyiy-instrument/vily",
+      },
+      {
+        title: "Фрезы",
+        category: "Расходники",
+        url: "/sad-i-dacha/sadovyiy-instrument/vily",
+      },
+      {
+        title: "Масла / Цепи",
+        category: "Расходники",
+        url: "/sad-i-dacha/sadovyiy-instrument/vily",
+      },
+
     ],
   },
 ];

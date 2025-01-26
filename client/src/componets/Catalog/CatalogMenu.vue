@@ -19,7 +19,7 @@ export default {
 };
 </script>
 <template>
-  <div class="main-container ml-5 mt-7" :class="{ mainOpen: isOpen}">
+  <div class="main-container ml-2 mt-7" :class="{ mainOpen: isOpen}">
     <button @click="catMenu" class="menu-btn" >|||</button>
     <div class="catalog-items grid gap-4">
       <ul>
@@ -34,6 +34,7 @@ export default {
         <li @click="goCategory(`Ручной инструмент`)">Ручной инструмент</li>
         <li @click="goCategory(`Крепеж и фурнитура`)">Крепеж и фурнитура</li>
         <li @click="goCategory(`Строительные материалы`)">Строительные материалы</li>
+        <li @click="goCategory(`Строительная химия`)">Строительная химия</li>
         <li @click="goCategory(`Отделочные материалы`)">Отделочные материалы</li>
         <li @click="goCategory(`Пиломатериалы`)">Пиломатериалы</li>
         <li @click="goCategory(`Хозтовары`)">Хозтовары</li>
@@ -71,10 +72,10 @@ export default {
   box-shadow: 0px 1px 8px 0px rgba(34, 60, 80, 0.2);
   border-radius: 12px;
   overflow-y: scroll;
-  height: 78vh;
+  height: 65vh;
   min-width: 360px;
   li {
-    width: 100%;
+    width: 90%;
     line-height: 55px;
     text-align: start;
     cursor: pointer;
@@ -104,7 +105,7 @@ export default {
   .main-container {
   /*  margin-left: -320px; */
     position: absolute;
-    left: -330px;   
+    left: -370px;   
   }
 
   .mainOpen {
