@@ -424,7 +424,7 @@ const Catalog = [
         url: "/svarochnoe-oborudovanie/prinadlezhnosti-dlya-svarki/migmag-rashodniki-dlya-poluavtomaticheskoy-svarki",
       },
       {
-        title: "Саморезы / Шурупы",
+        title: "Саморезы - Шурупы",
         category: "Крепеж и фурнитура",
         url: "/svarochnoe-oborudovanie/prinadlezhnosti-dlya-svarki/migmag-rashodniki-dlya-poluavtomaticheskoy-svarki",
       },
@@ -444,12 +444,12 @@ const Catalog = [
         url: "/svarochnoe-oborudovanie/prinadlezhnosti-dlya-svarki/migmag-rashodniki-dlya-poluavtomaticheskoy-svarki",
       },
       {
-        title: "Тросы / Цепи",
+        title: "Тросы - Цепи",
         category: "Крепеж и фурнитура",
         url: "/svarochnoe-oborudovanie/prinadlezhnosti-dlya-svarki/migmag-rashodniki-dlya-poluavtomaticheskoy-svarki",
       },
       {
-        title: "Хомуты / Стяжки",
+        title: "Хомуты - Стяжки",
         category: "Крепеж и фурнитура",
         url: "/svarochnoe-oborudovanie/prinadlezhnosti-dlya-svarki/migmag-rashodniki-dlya-poluavtomaticheskoy-svarki",
       },
@@ -575,7 +575,7 @@ const Catalog = [
         url: "/sad-i-dacha/sadovyiy-instrument/vily",
       },
       {
-        title: "Брус / Брусок",
+        title: "Брус - Брусок",
         category: "Пиломатериалы",
         url: "/sad-i-dacha/sadovyiy-instrument/vily",
       },
@@ -658,7 +658,7 @@ const Catalog = [
   {
     "Расходники": [
       {
-        title: "Сверла / Буры",
+        title: "Сверла - Буры",
         category: "Расходники",
         url: "/sad-i-dacha/sadovyiy-instrument/vily",
       },
@@ -673,12 +673,12 @@ const Catalog = [
         url: "/sad-i-dacha/sadovyiy-instrument/vily",
       },
       {
-        title: "Пилки / Полотна",
+        title: "Пилки - Полотна",
         category: "Расходники",
         url: "/sad-i-dacha/sadovyiy-instrument/vily",
       },
       {
-        title: "Круги отрезные / Круги образивные / Лента образивная",
+        title: "Круги отрезные - Круги образивные - Лента образивная",
         category: "Расходники",
         url: "/sad-i-dacha/sadovyiy-instrument/vily",
       },
@@ -698,7 +698,7 @@ const Catalog = [
         url: "/sad-i-dacha/sadovyiy-instrument/vily",
       },
       {
-        title: "Масла / Цепи",
+        title: "Масла - Цепи",
         category: "Расходники",
         url: "/sad-i-dacha/sadovyiy-instrument/vily",
       },
