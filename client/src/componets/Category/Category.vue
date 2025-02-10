@@ -87,7 +87,7 @@ export default {
 		line-height: 1.5;
 		overflow: hidden;
 		display: -webkit-box;
-		-webkit-line-clamp: 2; 
+		-webkit-line-clamp: 4; 
     -webkit-box-orient: vertical; 
     text-overflow: ellipsis;
     word-wrap: break-word;

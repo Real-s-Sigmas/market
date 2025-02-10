@@ -5,7 +5,7 @@ export default {
   data() {
     return {
       catalog: Catalog,
-      title: "Электроинструменты", // Категория по умолчанию
+      title: "Аккумуляторные инструменты", // Категория по умолчанию
       tmps: null,
     };
   },
@@ -38,7 +38,7 @@ export default {
     CatalogMenu
   },
   mounted() {
-    this.handleDataFromChild("Электроинструменты");
+    this.handleDataFromChild("Аккумуляторные инструменты");
     console.log()
   },
 };

@@ -70,7 +70,6 @@ export default {
 				<div class="info-block p-6 flex flex-col">
 					<h3 class='text-2xl font-bold'>{{ product.title }}</h3>
 					<p class='text-slate-500'>{{ product.descriptions }}</p>
-					<span>Рейтинг: {{ product.rating_product }} звёзд</span>
 					<b>{{ product.price }} р.</b>
 				</div>
 			</div>

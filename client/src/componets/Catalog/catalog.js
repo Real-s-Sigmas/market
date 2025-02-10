@@ -27,7 +27,7 @@ const Catalog = [
         url: "/electroinstrumenti/dreli",
       },
       {
-        title: "Гайковерты",
+        title: "Винтоверты - Гайковерты",
         category: "Электроинструменты",
         url: "/electroinstrumenti/dreli",
       },
