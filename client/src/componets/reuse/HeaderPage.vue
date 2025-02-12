@@ -15,6 +15,12 @@ export default {
     burgmenu() {
       this.burg = !this.burg;
     },
+
+    navigateTo(route) {
+      this.isOpen = true; // Закрываем блок при навигации
+      this.$router.push(route);
+    },
+
     async getUser() {
         try {
           let response = await axios.get(`/user/profile`);
@@ -153,16 +159,16 @@ export default {
   </div>
   <div class="two-blocks" :class="{ close: this.isOpen }">
     <div class="bl block-link">
-      <button class="link-btn" @click="this.$router.push('/')">Главная</button>
-      <button class="link-btn" @click="this.$router.push('/catalog')">
+      <button class="link-btn" @click="navigateTo('/')">Главная</button>
+      <button class="link-btn" @click="navigateTo('/catalog')">
         Каталог
       </button>
-      <button class="link-btn" @click="this.$router.push('/aboutus')">
+      <button class="link-btn" @click="navigateTo('/aboutus')">
         О нас
       </button>
     </div>
     <div class="bl block-btns">
-      <a href="/Favorites">
+      <a href="/Favorites" @click="this.isOpen = !this.isOpen">
         <svg
           class="favorite"
           width="35px"
@@ -183,7 +189,7 @@ export default {
         </svg>
       </a>
 
-      <a href="/basket">
+      <a href="/basket" @click="this.isOpen = !this.isOpen">
         <svg
           width="35px"
           height="35px"
@@ -206,7 +212,7 @@ export default {
           v-if="!isLogged && !isAdmin"
           type="button"
           class="acc"
-          @click="this.$router.push('/Login')"
+          @click="navigateTo('/Login')"
         >
           Войти
         </button>
@@ -214,7 +220,7 @@ export default {
           v-else-if="isLogged && isAdmin"
           type="button"
           class="acc"
-          @click="this.$router.push('/AdminPanel/actions')"
+          @click="navigateTo('/AdminPanel/actions')"
         >
          Админ панель
         </button>
@@ -222,7 +228,7 @@ export default {
           v-else-if="isLogged"
           type="button"
           class="acc"
-          @click="this.$router.push('/Profile')"
+          @click="navigateTo('/Profile')"
         >
           Кабинет
         </button>

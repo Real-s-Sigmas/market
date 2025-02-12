@@ -2,7 +2,7 @@
 export default {
   data() {
     return {
-      isOpen: false,
+      isOpen: true,
     };
     
   },
@@ -10,6 +10,7 @@ export default {
   methods: {
     goCategory(name) {
       this.$emit("data-from-child", name);
+      this.isOpen = false;
     },
 
     catMenu() {
