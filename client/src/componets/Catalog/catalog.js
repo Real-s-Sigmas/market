@@ -22,7 +22,7 @@ const Catalog = [
         url: "/electroinstrumenti/dreli",
       },
       {
-        title: "Шлифовальные",
+        title: "Шлифовальные машинки",
         category: "Электроинструменты",
         url: "/electroinstrumenti/dreli",
       },
