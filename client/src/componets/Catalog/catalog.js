@@ -12,7 +12,7 @@ const Catalog = [
         url: "/electroinstrumenti/dreli",
       },
       {
-        title: "Первораторы",
+        title: "Перфораторы",
         category: "Электроинструменты",
         url: "/electroinstrumenti/dreli",
       },
@@ -52,12 +52,12 @@ const Catalog = [
         url: "/electroinstrumenti/dreli",
       },
       {
-        title: "Строиткльные фены",
+        title: "Строительные фены",
         category: "Электроинструменты",
         url: "/electroinstrumenti/dreli",
       },
       {
-        title: "Штраборезы и бороздоделы",
+        title: "Штроборезы и бороздоделы",
         category: "Электроинструменты",
         url: "/electroinstrumenti/dreli",
       },
@@ -327,7 +327,7 @@ const Catalog = [
       },
       {
         category: "Сад и дача",
-        title: "Потобуры",
+        title: "Мотобуры",
         url: "/svarochnoe-oborudovanie/svarochnye-apparaty/3-v-1",
       },
       {
@@ -337,7 +337,7 @@ const Catalog = [
       },
       {
         category: "Сад и дача",
-        title: "Опрызгиватели",
+        title: "Опрыскиватели",
         url: "/svarochnoe-oborudovanie/svarochnye-apparaty/3-v-1",
       },
       {
@@ -439,7 +439,7 @@ const Catalog = [
         url: "/svarochnoe-oborudovanie/prinadlezhnosti-dlya-svarki/migmag-rashodniki-dlya-poluavtomaticheskoy-svarki",
       },
       {
-        title: "Такилаж",
+        title: "Такелаж",
         category: "Крепеж и фурнитура",
         url: "/svarochnoe-oborudovanie/prinadlezhnosti-dlya-svarki/migmag-rashodniki-dlya-poluavtomaticheskoy-svarki",
       },
@@ -454,7 +454,7 @@ const Catalog = [
         url: "/svarochnoe-oborudovanie/prinadlezhnosti-dlya-svarki/migmag-rashodniki-dlya-poluavtomaticheskoy-svarki",
       },
       {
-        title: "Заклебки",
+        title: "Заклепки",
         category: "Крепеж и фурнитура",
         url: "/svarochnoe-oborudovanie/prinadlezhnosti-dlya-svarki/migmag-rashodniki-dlya-poluavtomaticheskoy-svarki",
       },
@@ -644,7 +644,7 @@ const Catalog = [
         url: "/sad-i-dacha/sadovyiy-instrument/vily",
       },
       {
-        title: "Перчатки / Руковицы",
+        title: "Перчатки / Рукавицы",
         category: "Хозтовары",
         url: "/sad-i-dacha/sadovyiy-instrument/vily",
       },
@@ -678,7 +678,7 @@ const Catalog = [
         url: "/sad-i-dacha/sadovyiy-instrument/vily",
       },
       {
-        title: "Круги отрезные - Круги образивные - Лента образивная",
+        title: "Круги отрезные - Круги абразивные - Лента абразивная",
         category: "Расходники",
         url: "/sad-i-dacha/sadovyiy-instrument/vily",
       },
