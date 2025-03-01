@@ -1,4 +1,5 @@
 import { createRouter, createWebHistory } from "vue-router";
+// import Home from '@/componets/Main/MainPage.vue';
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
@@ -6,6 +7,9 @@ const router = createRouter({
       path: "/",
       name: "home",
       component: () => import("../componets/Main/MainPage.vue"),
+      meta: {
+        title: 'Сир - Строительство и Ремонт'
+      }
     },
     {
       path: "/Product/:id",
@@ -16,11 +20,17 @@ const router = createRouter({
       path: "/Login",
       name: "login",
       component: () => import("../componets/Forms/LoginPage.vue"),
+      meta: {
+        title: 'Вход | Сир'
+      }
     },
     {
       path: "/Enter",
       name: "enter",
       component: () => import("../componets/Forms/EnterPage.vue"),
+      meta: {
+        title: 'Код подтверждения | Сир'
+      }
     },
     {
       path: "/Category",
@@ -31,11 +41,17 @@ const router = createRouter({
       path: "/Favorites",
       name: "favorites",
       component: () => import("../componets/favorites/Favorites.vue"),
+      meta: {
+        title: 'Избранные | Сир'
+      }
     },
     {
       path: "/myorders",
       name: "myorders",
       component: () => import("../componets/orders/MyordersPage.vue"),
+      meta: {
+        title: 'Мои заказы | Сир'
+      }
     },
     {
       path: "/myorders/arkhiv",
@@ -46,31 +62,49 @@ const router = createRouter({
       path: "/AddProduct",
       name: "AddProduct",
       component: () => import("../componets/admin/AddProduct.vue"),
+      meta: {
+        title: 'Добавление товара | Сир'
+      }
     },
     {
       path: "/Login",
       name: "Login",
       component: () => import("../componets/Forms/LoginPage.vue"),
+      meta: {
+        title: 'Вход | Сир'
+      }
     },
     {
       path: "/EnterEmail",
       name: "EnterEmail",
       component: () => import("../componets/Forms/EnterPage.vue"),
+      meta: {
+        title: 'Код подтверждения | Сир'
+      }
     },
     {
       path: "/edit",
       name: "Edit",
-      component: () => import("../componets/TestsComp/MenuComp.vue")
+      component: () => import("../componets/TestsComp/MenuComp.vue"),
+      meta: {
+        title: 'Редоктирование | Сир'
+      }
     },
     {
       path: "/aboutus",
       name: "AboutUs",
-      component: () => import("../componets/AboutUs/AboutComp.vue")
+      component: () => import("../componets/AboutUs/AboutComp.vue"),
+      meta: {
+        title: 'О нас | Сир'
+      }
     },
     {
       path: "/basket",
       name: "MyBasket",
-      component: () => import("../componets/orders/BasketPage.vue")
+      component: () => import("../componets/orders/BasketPage.vue"),
+      meta: {
+        title: 'Корзина | Сир'
+      }
     },
     {
       path: "/:pathMatch(.*)",
@@ -85,27 +119,42 @@ const router = createRouter({
     {
       path: "/Catalog",
       name: "catalog",
-      component: () => import("../componets/Catalog/Catalog.vue")
+      component: () => import("../componets/Catalog/Catalog.vue"),
+      meta: {
+        title: 'Каталог | Сир'
+      }
     },
     {
       path: "/Category/:firstParametr/:secondParametr",
       name: "category",
-      component: () => import("../componets/Category/Category.vue")
+      component: () => import("../componets/Category/Category.vue"),
+      meta: {
+        title: 'Категория'
+      }
     },
     {
       path: "/SignUp",
       name: "signup",
-      component: () => import("../componets/Forms/RegisterPage.vue")
+      component: () => import("../componets/Forms/RegisterPage.vue"),
+      meta: {
+        title: 'Регистрация | Сир'
+      }
     },
     {
       path: "/ResetPassword",
       name: "reset password",
-      component: () => import("../componets/Forms/EmailPassword.vue")
+      component: () => import("../componets/Forms/EmailPassword.vue"),
+      meta: {
+        title: 'Сброс пароля | Сир'
+      }
     },
     {
       path: "/NewPassword",
       name: "NewPassword",
-      component: () => import("../componets/Forms/NewPassword.vue")
+      component: () => import("../componets/Forms/NewPassword.vue"),
+      meta: {
+        title: 'Новый пароль | Сир'
+      }
     },
     {
       path: "/FindProducts",
@@ -120,12 +169,18 @@ const router = createRouter({
     {
       path: "/AdminPanel/actions",
       name: "adminpanelActions",
-      component: () => import("../componets/admin/PanelComp.vue")
+      component: () => import("../componets/admin/PanelComp.vue"),
+      meta: {
+        title: 'Действия | Сир'
+      }
     },
     {
       path: "/AdminPanel/orders",
       name: "adminpanelOrders",
-      component: () => import("../componets/admin/AdminOrders.vue")
+      component: () => import("../componets/admin/AdminOrders.vue"),
+      meta: {
+        title: 'Заказы | Сир'
+      }
     },
     {
       path: "/OrdersAdminComp",
@@ -135,7 +190,10 @@ const router = createRouter({
     {
       path: "/BasketAdmin/:id",
       name: "basketadmin",
-      component: () => import("../componets/admin/BasketAdmin.vue")
+      component: () => import("../componets/admin/BasketAdmin.vue"),
+      meta: {
+        title: 'Заказ | Сир'
+      }
     },
     {
       path: "/TestComp",
@@ -145,7 +203,10 @@ const router = createRouter({
     {
       path: "/Profile",
       name: "profile",
-      component: () => import("../componets/Profile/ProfileComp.vue")
+      component: () => import("../componets/Profile/ProfileComp.vue"),
+      meta: {
+        title: 'Профиль | Сир'
+      }
     },
     {
       path: "/changeProduct/:id",
@@ -154,5 +215,11 @@ const router = createRouter({
     },
   ],
 });
+
+router.beforeEach((to, from, next) => {
+  const title = to.meta.title || 'Сир - Строительство и ремонт';
+  document.title = title;
+  next();
+})
 
 export default router;

@@ -29,8 +29,25 @@ export default {
       isAdmin: false,
     };
   },
+  
+  created() {
+    this.getProduct();
+    this.checkInBasket();
+    this.checkInFavorite();
+    this.checkIsAdmin();
+  },
 
   methods: {
+    
+    updateTitle() {
+      if (this.product && this.product.title) {
+        document.title = `${this.product.title} | Сир`; // Обновляем заголовок
+      } else {
+        document.title = 'Товар | Сир'; // Заголовок по умолчанию
+      }
+    },
+  
+
     // Увеличивает счетчик количества товаров на 1
     plus() {
       if (this.product_count <= 10000) {
@@ -173,6 +190,7 @@ export default {
         });
         if(res.data.res) {
           this.product = res.data.res;
+          this.updateTitle();
           console.log(this.product.photos);
         } else {
           this.error = 'Ошибка! Товара не существует либо он был удалён';
@@ -182,6 +200,7 @@ export default {
         this.error = 'Ошибка! Товара не существует либо он был удалён';
       }
     },
+
 
     async checkInBasket() {
       try {
@@ -221,7 +240,13 @@ export default {
       } catch (error) {
         console.log(error);
       }
-    },
+    },  
+  },
+
+  watch: {
+    product() {
+      this.updateTitle();
+    }
   },
 
   computed: {

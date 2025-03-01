@@ -12,7 +12,14 @@ export default {
 		}
 	},
 
+	created() {
+		this.updateTitle();
+	},
+
 	methods: {
+		updateTitle() {
+			document.title = `${this.$route.params.secondParametr} | Сир`
+		},
 		async loadProduct() {
 				try {
 					let res = await axios.get('/items/show-items', {
