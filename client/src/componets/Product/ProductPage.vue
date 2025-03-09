@@ -622,6 +622,7 @@ export default {
     margin: 0 10px;
     color: #2b2b2b;
     border: 1px solid #2b2b2b;
+    background-color: rgba(255, 255, 255, 0.6);
   }
   
   .modal-nav.next {
