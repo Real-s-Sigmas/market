@@ -12,8 +12,11 @@ export default {
   <div class="wind">
     <h1 class="about-title">О нас</h1>
     <div class="img-text">
-      <img class="aboutus-img" src="../../assets/1111.jpeg" alt="" />
-      <p class="text">
+      <div class="img-block">
+        <img class="aboutus-img aboutus-img1" src="../../assets/pan1.jpg" alt="" />
+        <img class="aboutus-img aboutus-img2" src="../../assets/pan2.jpg" alt="" />
+      </div>
+            <p class="text">
         <span>С.и.Р </span>- это магазин <span>Строительства и Ремонта</span>,
         который специализируется на продаже товаров, которые помогут вам сделать
         качественный ремонт и не только. У нас вы можете найти строительные материалы: доски, фанеры, смеси,
@@ -76,7 +79,13 @@ a:hover {
 
 .img-text {
   display: flex;
+  flex-direction: column;
   gap: 60px;
+}
+
+.img-block {
+  display: flex;
+  gap: 30px
 }
 
 .text {
@@ -85,8 +94,12 @@ a:hover {
 }
 
 .aboutus-img {
-  width: 650px;
+  width: 100%;
   border-radius: 12px;
+}
+
+.aboutus-img1 {
+  width: 120%;
 }
 
 h3 {
@@ -98,7 +111,10 @@ h3 {
 
 @media (max-width: 1250px) {
   .aboutus-img {
-    width: 550px;
+  }
+  
+  .img-block {
+    flex-direction: column;
   }
 }
 

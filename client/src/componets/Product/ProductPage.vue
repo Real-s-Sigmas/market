@@ -27,6 +27,9 @@ export default {
       visibleImages: 5,
       error: ``,
       isAdmin: false,
+
+      isModalOpen: false,
+      modalImageIndex: 0,
     };
   },
   
@@ -38,6 +41,32 @@ export default {
   },
 
   methods: {
+
+    openModal(index) {
+      this.isModalOpen = true;
+      this.modalImageIndex = index;
+    },
+
+    closeModal() {
+      this.isModalOpen = false;
+    },
+
+    nextModalImage() {
+      if (this.modalImageIndex < this.product.photos.length - 1) {
+        this.modalImageIndex++;
+      }
+    },
+
+    prevModalImage() {
+      if (this.modalImageIndex > 0) {
+        this.modalImageIndex--;
+      }
+    },
+
+    selectModalImage(index) {
+      this.modalImageIndex = index;
+    },
+
     
     updateTitle() {
       if (this.product && this.product.title) {
@@ -311,7 +340,7 @@ export default {
     <!-- Блок с информацией о товара (с картинкой) -->
     <div class="product-info">
       <div class="images">
-        <img class="prod-img" :src="product.photos[currentImageIndex]" alt="" />
+        <img class="prod-img" :src="product.photos[currentImageIndex]" alt="" @click="openModal(currentImageIndex)"/>
         <div class="mini-img">
           <!-- <button @click="prevImage" :disabled="currentImageIndex === 0"> -->
           <!--   <img class="arrow-btn" src="../../assets/arrow-prev.svg" alt="" /> -->
@@ -338,7 +367,7 @@ export default {
 
       <!-- Бллок с информацией о товаре -->
       <div class="main-info">
-        <h3>{{ product.title }}</h3>
+        <h3>{{ product.title }} </h3>
 
         <!-- Блок с коротким описанием товара -->
         <p class="short-description">
@@ -424,6 +453,33 @@ export default {
       </p>
     </div>
     <hr />
+    <div v-if="isModalOpen" class="modal-overlay" @click="closeModal">
+      <div class="modal-content" @click.stop>
+        <div class="img-btn">
+
+          <button class="modal-nav prev" @click.stop="prevModalImage">‹</button>
+          <!-- <button class="close-modal" @click="closeModal">×</button> -->
+          <img
+            :src="product.photos[modalImageIndex]"
+            alt=""
+            class="modal-main-image"
+          />         
+          <button class="modal-nav next" @click.stop="nextModalImage">›</button>
+          </div>
+        <div class="modal-thumbnails">
+          <div
+            v-for="(image, index) in product.photos"
+            :key="index"
+            class="modal-thumbnail"
+            :class="{ 'active-thumbnail': index === modalImageIndex }"
+            @click="selectModalImage(index)"
+          >
+            <img :src="image" alt="" />
+          </div>
+        </div>
+        
+      </div>
+    </div>
   </div>
 </template>
 
@@ -435,6 +491,141 @@ export default {
   &:hover {
     background-color: #ff812c;
     color: #fff;
+  }
+}
+
+
+/* Модальное окно */
+
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.8);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modal-content {
+  position: relative;
+  /* background-color: #fff; */
+  padding: 20px;
+  border-radius: 12px;
+  max-width: 90%;
+  max-height: 90%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.modal-main-image {
+  max-width: 100%;
+  max-height: 70vh;
+  border-radius: 12px;
+  margin-bottom: 20px;
+}
+
+.modal-thumbnails {
+  display: flex;
+  gap: 10px;
+  overflow-x: auto;
+  padding-bottom: 10px;
+  padding: 2px;
+}
+
+.modal-thumbnail {
+  width: 80px;
+  height: 80px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  overflow: hidden;
+  cursor: pointer;
+  transition: border-color 0.2s;
+}
+
+.modal-thumbnail img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.modal-thumbnail.active-thumbnail {
+  border-color: #ff812c;
+}
+
+.img-btn {
+  display: flex;
+  position: relative;
+  align-items: center;
+  gap: 20px
+}
+
+.modal-nav {
+  border: 1px solid #fff;
+  color: #fff;
+  border-radius: 8px;
+  font-size: 40px;
+  cursor: pointer;
+  width: 80px;
+  height: 80px;
+  z-index: 1001;
+  padding-bottom: 8px;
+}
+
+.modal-nav.prev {
+}
+
+.modal-nav.next {
+}
+
+.close-modal {
+  position: absolute;
+  top: 0px;
+  right: 110px;
+  background: none;
+  border: none;
+  font-size: 36px;
+  cursor: pointer;
+  color: #000;
+}
+
+
+@media (max-width: 800px) {
+  .modal-content {
+    padding: 0;
+  }
+  
+  .modal-main-image {
+    max-height: 50vh;
+  }
+  
+  .modal-nav {
+    width: 50px;
+    height: 50px;
+    font-size: 24px;
+    padding: 5px;
+  }
+  
+  .modal-thumbnail {
+    width: 70%;
+    height: 70%;
+  }
+}
+
+@media (max-width: 530px) {
+  .modal-nav {
+    position: absolute;
+    margin: 0 10px;
+    color: #2b2b2b;
+    border: 1px solid #2b2b2b;
+  }
+  
+  .modal-nav.next {
+    right: 0;
   }
 }
 

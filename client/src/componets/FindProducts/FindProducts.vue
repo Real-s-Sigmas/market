@@ -1,6 +1,10 @@
 <script>
 import axios from 'axios';
 
+function normalizeString(str) {
+  return str.replace(/ё/g, 'е').toLowerCase();
+}
+
 export default {
 	data() {
 		return {
@@ -12,7 +16,7 @@ export default {
 
 	methods: {
 		getSearch() {
-			this.search = this.$route.query.search;
+			this.search = normalizeString(this.$route.query.search || '');
 		},
 
 		async loadProduct() {
@@ -21,13 +25,17 @@ export default {
 				try {
 					this.products = [];
 
+					const normalizedSearch = normalizeString(this.search);
+
 					let res = await axios.get('/items/search', {
 						params: {
-							search: this.search
+							search: normalizedSearch,
 						}
 					});
 	
-					this.products = res.data.res;
+					this.products = res.data.res.filter((product) =>
+						normalizeString(product.title).includes(normalizedSearch)
+					);
 	
 					if(this.products.length == 0) {
 						this.error = 'Таких товаров нет';
